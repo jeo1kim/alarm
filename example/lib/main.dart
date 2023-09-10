@@ -9,6 +9,5 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Alarm.init(showDebugLogs: true);
-
   runApp(const MaterialApp(home: ExampleAlarmHomeScreen()));
 }
