@@ -258,6 +258,10 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                     value: 'assets/one_piece.mp3',
                     child: Text('One Piece'),
                   ),
+                  DropdownMenuItem<String>(
+                    value: 'assets/cello.mp3',
+                    child: Text('Cello'),
+                  ),
                 ],
                 onChanged: (value) => setState(() => assetAudio = value!),
               ),
