@@ -15,6 +15,10 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   bool isStopButtonEnabled = false;
   String userInput = "";
   final String correctPhrase = "You raise me up";
+  int currentIndex = 0;
+
+  // Create a focus node for the hidden TextField
+  final FocusNode _hiddenTextFieldFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +30,6 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                // RawMaterialButton(
-                //   onPressed: () {
-                //     final now = DateTime.now();
-                //     Alarm.set(
-                //       alarmSettings: widget.alarmSettings.copyWith(
-                //         dateTime: DateTime(
-                //           now.year,
-                //           now.month,
-                //           now.day,
-                //           now.hour,
-                //           now.minute,
-                //           0,
-                //           0,
-                //         ).add(const Duration(minutes: 1)),
-                //       ),
-                //     ).then((_) => Navigator.pop(context));
-                //   },
-                //   child: Text(
-                //     "Snooze",
-                //     style: Theme.of(context).textTheme.titleLarge,
-                //   ),
-                // ),
                 RawMaterialButton(
                   onPressed: isStopButtonEnabled
                       ? () {
@@ -66,46 +48,69 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.grey, // Initial gray color for the phrase
-                  ),
-                  children: [
-                    for (int i = 0; i < correctPhrase.length; i++)
-                      TextSpan(
-                        text: correctPhrase[i],
-                        style: TextStyle(
-                          color: (userInput.length > i)
-                              ? (userInput[i] == correctPhrase[i]
-                              ? Colors.black // Turn black if correct
-                              : Colors.red) // Turn red if wrong
-                              : Colors.grey, // Stay gray if not typed yet
+            GestureDetector(
+              onTap: () {
+                // Give focus to the hidden TextField when the phrase is tapped
+                FocusScope.of(context).requestFocus(_hiddenTextFieldFocus);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey, // Initial gray color for the phrase
+                    ),
+                    children: [
+                      for (int i = 0; i < correctPhrase.length; i++)
+                        TextSpan(
+                          text: correctPhrase[i],
+                          style: TextStyle(
+                            color: (userInput.length > i)
+                                ? (userInput[i] == correctPhrase[i]
+                                ? Colors.black // Turn black if correct
+                                : Colors.red) // Turn red if wrong
+                                : Colors.grey, // Stay gray if not typed yet
+                          ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-            // Text field for user input
+            // Hidden TextField for user input
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: TextField(
+                focusNode: _hiddenTextFieldFocus,
+                showCursor: false,
                 onChanged: (text) {
                   setState(() {
                     userInput = text;
+                    _updateCurrentIndex();
                     isStopButtonEnabled = userInput == correctPhrase;
                   });
                 },
-
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                cursorColor: Colors.transparent, // Hide the cursor
+                style: TextStyle(
+                  color: Colors.transparent, // Hide the entered text
+                ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  // Update the current index based on user input
+  void _updateCurrentIndex() {
+    if (currentIndex < correctPhrase.length && currentIndex < userInput.length) {
+      if (correctPhrase[currentIndex] == userInput[currentIndex]) {
+        currentIndex++;
+      }
+    }
   }
 }
