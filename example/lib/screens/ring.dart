@@ -14,7 +14,7 @@ class ExampleAlarmRingScreen extends StatefulWidget {
 class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   bool isStopButtonEnabled = false;
   String userInput = "";
-  final String correctPhrase = "You raise me up, so I can stand on mountains";
+  final String correctPhrase = "You raise me up";
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +26,28 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                RawMaterialButton(
-                  onPressed: () {
-                    final now = DateTime.now();
-                    Alarm.set(
-                      alarmSettings: widget.alarmSettings.copyWith(
-                        dateTime: DateTime(
-                          now.year,
-                          now.month,
-                          now.day,
-                          now.hour,
-                          now.minute,
-                          0,
-                          0,
-                        ).add(const Duration(minutes: 1)),
-                      ),
-                    ).then((_) => Navigator.pop(context));
-                  },
-                  child: Text(
-                    "Snooze",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
+                // RawMaterialButton(
+                //   onPressed: () {
+                //     final now = DateTime.now();
+                //     Alarm.set(
+                //       alarmSettings: widget.alarmSettings.copyWith(
+                //         dateTime: DateTime(
+                //           now.year,
+                //           now.month,
+                //           now.day,
+                //           now.hour,
+                //           now.minute,
+                //           0,
+                //           0,
+                //         ).add(const Duration(minutes: 1)),
+                //       ),
+                //     ).then((_) => Navigator.pop(context));
+                //   },
+                //   child: Text(
+                //     "Snooze",
+                //     style: Theme.of(context).textTheme.titleLarge,
+                //   ),
+                // ),
                 RawMaterialButton(
                   onPressed: isStopButtonEnabled
                       ? () {
@@ -57,7 +57,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                       : null, // Disable the button when not enabled
                   fillColor: isStopButtonEnabled ? Colors.blue : Colors.grey,
                   child: Text(
-                    "Stop",
+                    "Rise",
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge
