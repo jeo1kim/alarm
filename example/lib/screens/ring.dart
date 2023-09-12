@@ -21,6 +21,22 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   final FocusNode _hiddenTextFieldFocus = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    // Add a post-frame callback to show the keyboard after the screen is built
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(_hiddenTextFieldFocus);
+    });
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the focus node when the screen is disposed
+    _hiddenTextFieldFocus.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -42,7 +58,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                     "Rise",
                     style: Theme.of(context)
                         .textTheme
-                        .titleLarge
+                        .headline6
                         ?.copyWith(color: Colors.white),
                   ),
                 ),
@@ -122,3 +138,4 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
     }
   }
 }
+
