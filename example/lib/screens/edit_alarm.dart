@@ -49,7 +49,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
       vibrate = true;
       volumeMax = true;
       showNotification = true;
-      assetAudio = 'assets/marimba.mp3';
+      assetAudio = 'assets/piano.mp3';
     } else {
       selectedTime = TimeOfDay(
         hour: widget.alarmSettings!.dateTime.hour,
@@ -239,24 +239,20 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                 value: assetAudio,
                 items: const [
                   DropdownMenuItem<String>(
-                    value: 'assets/marimba.mp3',
-                    child: Text('Marimba'),
+                    value: 'assets/piano.mp3',
+                    child: Text('Piano'),
                   ),
                   DropdownMenuItem<String>(
-                    value: 'assets/nokia.mp3',
-                    child: Text('Nokia'),
+                    value: 'assets/violin.mp3',
+                    child: Text('Violin & Piano'),
                   ),
                   DropdownMenuItem<String>(
-                    value: 'assets/mozart.mp3',
-                    child: Text('Mozart'),
+                    value: 'assets/quartet.mp3',
+                    child: Text('Quartet'),
                   ),
                   DropdownMenuItem<String>(
-                    value: 'assets/star_wars.mp3',
-                    child: Text('Star Wars'),
-                  ),
-                  DropdownMenuItem<String>(
-                    value: 'assets/one_piece.mp3',
-                    child: Text('One Piece'),
+                    value: 'assets/cello.mp3',
+                    child: Text('Cello'),
                   ),
                 ],
                 onChanged: (value) => setState(() => assetAudio = value!),
