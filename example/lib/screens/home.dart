@@ -70,7 +70,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Package alarm example app')),
+      // appBar: AppBar(title: const Text('Package alarm example app')),
       body: SafeArea(
         child: alarms.isNotEmpty
             ? ListView.separated(
@@ -108,6 +108,7 @@ class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
                   id: 42,
                   dateTime: DateTime.now(),
                   assetAudioPath: 'assets/piano.mp3',
+                  vibrate: false,
                   volumeMax: false,
                 );
                 Alarm.set(alarmSettings: alarmSettings);
