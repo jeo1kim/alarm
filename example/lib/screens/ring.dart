@@ -14,7 +14,7 @@ class ExampleAlarmRingScreen extends StatefulWidget {
 class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   bool isStopButtonEnabled = false;
   String userInput = "";
-  final String correctPhrase = "You raise me up";
+  final String correctPhrase = "You raise me up, so I can stand on mountains. You raise me up, to walk on stormy seas";
   int currentIndex = 0;
 
   // Create a focus node for the hidden TextField
@@ -58,7 +58,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                 child: RichText(
                   text: TextSpan(
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 25.0,
                       color: Colors.grey, // Initial gray color for the phrase
                     ),
                     children: [
