@@ -64,12 +64,19 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                     children: [
                       for (int i = 0; i < correctPhrase.length; i++)
                         TextSpan(
-                          text: correctPhrase[i],
+                          text: (i >= userInput.length)
+                              ? correctPhrase[i]
+                              : (correctPhrase[i] == " " && userInput[i] != " ")
+                              ? "_"
+                              : (userInput[i] == correctPhrase[i])
+                              ? userInput[i]
+                              : correctPhrase[i], // Show correct character in red
                           style: TextStyle(
                             color: (userInput.length > i)
-                                ? (userInput[i] == correctPhrase[i]
-                                ? Colors.black // Turn black if correct
-                                : Colors.red) // Turn red if wrong
+                                ? (userInput[i] == correctPhrase[i] ||
+                                userInput[i] == " ")
+                                ? Colors.black // Turn black if correct or space
+                                : Colors.red // Turn red if wrong and not space
                                 : Colors.grey, // Stay gray if not typed yet
                           ),
                         ),
@@ -93,6 +100,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                 },
                 decoration: InputDecoration(
                   border: InputBorder.none,
+                ),
                 cursorColor: Colors.transparent, // Hide the cursor
                 style: TextStyle(
                   color: Colors.transparent, // Hide the entered text
