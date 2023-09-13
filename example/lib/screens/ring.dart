@@ -1,5 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
+import 'package:alarm_example/data/verse_repository.dart';
 
 class ExampleAlarmRingScreen extends StatefulWidget {
   final AlarmSettings alarmSettings;
@@ -14,7 +15,11 @@ class ExampleAlarmRingScreen extends StatefulWidget {
 class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   bool isStopButtonEnabled = false;
   String userInput = "";
-  final String correctPhrase = "test";
+
+  late Verse verse;
+  late String verseTitle;
+  late String correctPhrase;
+
   int currentIndex = 0;
 
   // Create a focus node for the hidden TextField
@@ -23,6 +28,11 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   @override
   void initState() {
     super.initState();
+
+    verse = PhraseRepository.getRandomVerse();
+    verseTitle = verse.verse;
+    correctPhrase = verse.phrase;
+
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_hiddenTextFieldFocus);
@@ -75,6 +85,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                   ),
                 ],
               ),
+
               GestureDetector(
                 onTap: () {
                   // Give focus to the hidden TextField when the phrase is tapped
@@ -116,6 +127,13 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                 ),
               ),
               // Hidden TextField for user input
+              Text(
+                verseTitle,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: TextField(
