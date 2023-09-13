@@ -160,7 +160,7 @@ public class SwiftAlarmPlugin: NSObject, FlutterPlugin {
     }
 
     private func startSilentSound() {
-            let filename = registrar.lookupKey(forAsset: "assets/piano.mp3", fromPackage: "alarm")
+            let filename = registrar.lookupKey(forAsset: "assets/blank.mp3", fromPackage: "alarm")
             if let audioPath = Bundle.main.path(forResource: filename, ofType: nil) {
                 let audioUrl = URL(fileURLWithPath: audioPath)
                 do {

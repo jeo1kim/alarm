@@ -14,8 +14,7 @@ class ExampleAlarmRingScreen extends StatefulWidget {
 class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   bool isStopButtonEnabled = false;
   String userInput = "";
-  final String correctPhrase =
-      "You raise me up, so I can stand on mountains. You raise me up, to walk on stormy seas";
+  final String correctPhrase = "test";
   int currentIndex = 0;
 
   // Create a focus node for the hidden TextField
@@ -55,9 +54,15 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                   RawMaterialButton(
                     onPressed: isStopButtonEnabled
                         ? () {
-                      Alarm.stop(widget.alarmSettings.id)
-                          .then((_) => Navigator.pop(context));
-                    }
+                            // Alarm.stop(widget.alarmSettings.id)
+                            final now = DateTime.now();
+                            Alarm.set(
+                              alarmSettings: widget.alarmSettings.copyWith(
+                                dateTime: widget.alarmSettings.dateTime
+                                    .add(const Duration(days: 1)),
+                              ),
+                            ).then((_) => Navigator.pop(context));
+                          }
                         : null, // Disable the button when not enabled
                     fillColor: isStopButtonEnabled ? Colors.blue : Colors.grey,
                     child: Text(
@@ -88,16 +93,20 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                           TextSpan(
                             text: (i >= userInput.length)
                                 ? correctPhrase[i]
-                                : (correctPhrase[i] == " " && userInput[i] != " ")
-                                ? "_"
-                                : (userInput[i] == correctPhrase[i])
-                                ? userInput[i]
-                                : correctPhrase[i], // Show correct character in red
+                                : (correctPhrase[i] == " " &&
+                                        userInput[i] != " ")
+                                    ? "_"
+                                    : (userInput[i] == correctPhrase[i])
+                                        ? userInput[i]
+                                        : correctPhrase[i],
+                            // Show correct character in red
                             style: TextStyle(
                               color: (userInput.length > i)
                                   ? (userInput[i] == correctPhrase[i])
-                                  ? Colors.black // Turn black if correct or space
-                                  : Colors.red // Turn red if wrong and not space
+                                      ? Colors
+                                          .black // Turn black if correct or space
+                                      : Colors
+                                          .red // Turn red if wrong and not space
                                   : Colors.grey, // Stay gray if not typed yet
                             ),
                           ),
@@ -122,7 +131,8 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                   ),
-                  cursorColor: Colors.transparent, // Hide the cursor
+                  cursorColor: Colors.transparent,
+                  // Hide the cursor
                   style: TextStyle(
                     color: Colors.transparent, // Hide the entered text
                   ),
