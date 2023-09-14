@@ -1,16 +1,9 @@
 import 'package:alarm_example/screens/home.dart';
+import 'package:alarm_example/screens/onboarding/number_page.dart';
+import 'package:alarm_example/screens/onboarding/onboarding_page_2.dart';
 import 'package:flutter/material.dart';
-
 import 'onboarding_page_1.dart';
 
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: OnboardingScreen(),
-//     );
-//   }
-// }
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -56,7 +49,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 5; i++)
                   Container(
                     margin: EdgeInsets.all(14),
                     width: 12,
@@ -83,7 +76,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onNext: _nextPage,
                   ),
                   OnboardingPage(
-                    pageText: "Page 2",
+                    pageText: "Transformative mission that dispel sleep inertia",
+                    onNext: _nextPage,
+                  ),
+                  NumberPage(
+                    onNext: _nextPage,
+                  ),
+                  OnboardingPageSetTime(
                     onNext: _nextPage,
                   ),
                   OnboardingPage(
@@ -125,11 +124,14 @@ class OnboardingPage extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.only(bottom: 100), // Add the desired bottom margin
             child: SizedBox(
-              width: 200, // Set the desired width
+              height: 50,
+              width: 320, // Set the desired width
               child: ElevatedButton(
                 onPressed: onNext,
-                child: Text("Next"),
-              ),
+                child: Text(
+                  "Next",
+                  style: TextStyle(fontSize: 20),
+                ),              ),
             ),
           ),
         ),

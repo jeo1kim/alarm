@@ -10,5 +10,9 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Alarm.init(showDebugLogs: true);
-  runApp(const MaterialApp(home: OnboardingScreen()));
+  runApp(const MaterialApp(
+      // theme: ThemeData(
+      //   primaryColor: Colors.yellow,
+      // ),
+      home: OnboardingScreen()));
 }
