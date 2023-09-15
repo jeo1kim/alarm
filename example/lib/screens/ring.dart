@@ -95,7 +95,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                   padding: const EdgeInsets.all(20.0),
                   child: RichText(
                     text: TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 25.0,
                         color: Colors.grey, // Initial gray color for the phrase
                       ),
@@ -129,7 +129,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
               // Hidden TextField for user input
               Text(
                 verseTitle,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -146,12 +146,12 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                       isStopButtonEnabled = userInput == correctPhrase;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                   ),
                   cursorColor: Colors.transparent,
                   // Hide the cursor
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.transparent, // Hide the entered text
                   ),
                 ),

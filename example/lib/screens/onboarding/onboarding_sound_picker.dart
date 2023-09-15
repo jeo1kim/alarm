@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class SoundChoice {
   final String name;
   bool isSelected;
   bool isPlaying;
+  final String assetAudio;
 
   SoundChoice(
-      {required this.name, this.isSelected = false, this.isPlaying = false});
+      {required this.name, required this.assetAudio, this.isSelected = false, this.isPlaying = false});
 }
 
 class OnBoardingSoundPickPage extends StatefulWidget {
@@ -22,11 +24,34 @@ class OnBoardingSoundPickPage extends StatefulWidget {
 
 class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
   List<SoundChoice> soundChoices = [
-    SoundChoice(name: "Piano"),
-    SoundChoice(name: "Cello"),
-    SoundChoice(name: "Violin"),
-    SoundChoice(name: "Quartet"),
+    SoundChoice(name: "Piano", assetAudio: 'piano.mp3'),
+    SoundChoice(name: "Cello", assetAudio: 'cello.mp3'),
+    SoundChoice(name: "Violin", assetAudio: 'violin.mp3'),
+    SoundChoice(name: "Quartet", assetAudio: 'quartet.mp3'),
   ];
+  final AudioPlayer audioPlayer = AudioPlayer();
+
+  // Add a method to play audio
+  Future<void> _playAudio(String assetAudio) async {
+    await audioPlayer.stop(); // Stop any currently playing audio
+    await audioPlayer.play(AssetSource(assetAudio));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Add a post-frame callback to show the keyboard after the screen is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).unfocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.dispose(); // Dispose of the audio player when done
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +62,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 100),
+              SizedBox(height: 10),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
@@ -81,7 +106,9 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                       setState(() {
                         for (var choice in soundChoices) {
                           choice.isSelected = choice == soundChoice;
+                          choice.isPlaying = false; // Set isPlaying to false for all choices
                         }
+                        audioPlayer.stop();
                       });
                     },
                     title: Padding(
@@ -90,7 +117,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                       child: Text(
                           soundChoice.name,
                           style: TextStyle(
-                              color: soundChoice.isSelected ? Colors.blue : Colors.black,
+                              color: soundChoice.isSelected ? Colors.blue : Colors.black45,
                               fontSize: 20)),
                     ),
                     trailing: Visibility(
@@ -101,6 +128,11 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                             soundChoice.isPlaying = !soundChoice.isPlaying;
                           });
                           // Handle playing or stopping the sound here
+                          if (soundChoice.isPlaying) {
+                            _playAudio(soundChoice.assetAudio);
+                          } else {
+                            audioPlayer.stop();
+                          }
                         },
                         child: Container(
                           width: 35,

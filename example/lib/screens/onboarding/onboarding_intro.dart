@@ -1,12 +1,29 @@
 import 'package:alarm_example/animation/sunrise_animation.dart';
 import 'package:flutter/material.dart';
 
-class OnBoardingIntroPage extends StatelessWidget {
-  final String pageText = "Awaken to the Wisdom of His Word";
-  final String additionalText = "RISE, your faithful morning call";
+
+class OnBoardingIntroPage extends StatefulWidget {
   final VoidCallback onNext;
 
-  OnBoardingIntroPage({required this.onNext});
+  const OnBoardingIntroPage({super.key, required this.onNext});
+
+  @override
+  State<OnBoardingIntroPage> createState() => _OnBoardingIntroPage();
+}
+
+class _OnBoardingIntroPage extends State<OnBoardingIntroPage> {
+  final String pageText = "Awaken to the Wisdom of His Word";
+  final String additionalText = "RISE, your faithful morning call";
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Add a post-frame callback to show the keyboard after the screen is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).unfocus();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +61,7 @@ class OnBoardingIntroPage extends StatelessWidget {
               height: 50,
               width: 320, // Set the desired width
               child: ElevatedButton(
-                onPressed: onNext,
+                onPressed: widget.onNext,
                 child: Text(
                   "Next",
                   style: TextStyle(fontSize: 20),

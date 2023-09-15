@@ -13,7 +13,16 @@ class OnBoardingTimePIckerPage extends StatefulWidget {
 class _OnBoardingTimePIckerPageState extends State<OnBoardingTimePIckerPage> {
   var hour = 0;
   var minute = 0;
-  var timeFormat = "AM";
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Add a post-frame callback to show the keyboard after the screen is built
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      FocusScope.of(context).unfocus();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +123,7 @@ class _OnBoardingTimePIckerPageState extends State<OnBoardingTimePIckerPage> {
             child: ElevatedButton(
               onPressed: widget.onNext,
               child: Text(
-                "Next",
+                "Set",
                 style: TextStyle(fontSize: 20),
               ),
             ),

@@ -1,8 +1,9 @@
 import 'package:alarm_example/screens/home.dart';
-import 'package:alarm_example/screens/onboarding/number_page.dart';
-import 'package:alarm_example/screens/onboarding/onboarding_page_2.dart';
 import 'package:flutter/material.dart';
-import 'onboarding_page_1.dart';
+import 'onboarding_intro.dart';
+import 'onboarding_sound_picker.dart';
+import 'onboarding_time_picker.dart';
+import 'onboarding_unlock.dart';
 
 
 class OnboardingScreen extends StatefulWidget {
@@ -20,6 +21,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Add a post-frame callback to show the keyboard after the screen is built
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      FocusScope.of(context).unfocus();
+    });
   }
 
   void _nextPage() {
@@ -85,8 +96,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   OnBoardingSoundPickPage(
                     onNext: _nextPage,
                   ),
-                  OnBoardingPage(
-                    pageText: "Page 3",
+                  OnBoardingUnlockPage(
                     onNext: _nextPage,
                   ),
                 ],
