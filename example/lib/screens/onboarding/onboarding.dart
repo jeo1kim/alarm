@@ -1,3 +1,5 @@
+import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:alarm_example/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'onboarding_intro.dart';
@@ -7,6 +9,7 @@ import 'onboarding_unlock.dart';
 
 
 class OnboardingScreen extends StatefulWidget {
+
   const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
@@ -16,6 +19,44 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
+
+  late bool creating;
+  late TimeOfDay selectedTime;
+  late bool loopAudio;
+  late bool vibrate;
+  late bool volumeMax;
+  late bool showNotification;
+  late String assetAudio;
+  bool loading = false;
+
+  bool isToday() {
+    final now = DateTime.now();
+    final dateTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      selectedTime.hour,
+      selectedTime.minute,
+      0,
+      0,
+    );
+
+    return now.isBefore(dateTime);
+  }
+
+  AlarmSettings alarmSettings = AlarmSettings(
+    id: 42,
+    dateTime: DateTime.now(),
+    assetAudioPath: 'assets/piano.mp3',
+    vibrate: false,
+    volumeMax: false,
+  );
+
+  void updateAlarmSettings(AlarmSettings? updatedSettings) {
+    setState(() {
+      alarmSettings = updatedSettings!;
+    });
+  }
 
   @override
   void dispose() {
@@ -28,9 +69,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.initState();
 
     // Add a post-frame callback to show the keyboard after the screen is built
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).unfocus();
     });
+  }
+
+  void _createAlarm() {
+    setState(() => loading = true);
+    updateAlarmSettings(alarmSettings);
+
+    Alarm.set(alarmSettings: alarmSettings);
+    setState(() => loading = false);
   }
 
   void _nextPage() {
@@ -40,6 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.ease,
       );
     } else {
+      _createAlarm();
       // Navigate to ExampleAlarmHomeScreen when on the last page.
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -90,10 +140,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     pageText: "Transformative mission that dispel sleep inertia",
                     onNext: _nextPage,
                   ),
-                  OnBoardingTimePIckerPage(
+                  OnBoardingTimePickerPage(
+                    alarmSettings: alarmSettings,
+                    updateAlarmSettings: updateAlarmSettings, // Pass the callback
                     onNext: _nextPage,
                   ),
                   OnBoardingSoundPickPage(
+                    alarmSettings: alarmSettings,
+                    updateAlarmSettings: updateAlarmSettings, // Pass the callback
                     onNext: _nextPage,
                   ),
                   OnBoardingUnlockPage(

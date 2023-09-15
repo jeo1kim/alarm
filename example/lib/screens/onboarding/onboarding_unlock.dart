@@ -31,7 +31,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
 
     verse = PhraseRepository.getRandomVerse();
     verseTitle = "Psalm 23:1";
-    correctPhrase = "The Lord is my shepherd, I lack nothing.";
+    correctPhrase = "test";
 
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance?.addPostFrameCallback((_) {

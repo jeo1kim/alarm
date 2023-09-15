@@ -1,3 +1,4 @@
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -7,15 +8,25 @@ class SoundChoice {
   bool isPlaying;
   final String assetAudio;
 
-  SoundChoice(
-      {required this.name, required this.assetAudio, this.isSelected = false, this.isPlaying = false});
+  SoundChoice({
+    required this.name,
+    required this.assetAudio,
+    this.isSelected = false,
+    this.isPlaying = false
+  });
 }
 
 class OnBoardingSoundPickPage extends StatefulWidget {
   final String pageText = "Choose the song you prefer";
   final VoidCallback onNext;
+  final AlarmSettings? alarmSettings;
+  final Function(AlarmSettings?) updateAlarmSettings; // Add this callback
 
-  const OnBoardingSoundPickPage({super.key, required this.onNext});
+  const OnBoardingSoundPickPage({
+    super.key, this.alarmSettings,
+    required this.updateAlarmSettings, // Add this line
+    required this.onNext
+  });
 
   @override
   _OnBoardingSoundPickPageState createState() =>
@@ -29,6 +40,8 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
     SoundChoice(name: "Violin", assetAudio: 'violin.mp3'),
     SoundChoice(name: "Quartet", assetAudio: 'quartet.mp3'),
   ];
+  SoundChoice? selectedSoundChoice; // Add this variable
+
   final AudioPlayer audioPlayer = AudioPlayer();
 
   // Add a method to play audio
@@ -83,69 +96,73 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
             itemCount: soundChoices.length,
             itemBuilder: (context, index) {
               final soundChoice = soundChoices[index];
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                // Add vertical spacing
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: soundChoice.isSelected
-                          ? Colors.blue
-                          : Colors.white,
-                      width: 1.8, // Adjust the border width as needed
+              return GestureDetector(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  // Add vertical spacing
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color:
+                            soundChoice.isSelected ? Colors.blue : Colors.white,
+                        width: 1.8, // Adjust the border width as needed
+                      ),
+                      borderRadius: BorderRadius.circular(
+                          8), // Optional: Add border radius
                     ),
-                    borderRadius:
-                        BorderRadius.circular(8), // Optional: Add border radius
-                  ),
-                  child: ListTile(
-                    selected: soundChoice.isSelected,
-                    tileColor: soundChoice.isSelected
-                        ? Colors.lightBlue
-                        : Colors.black12,
-                    onTap: () {
-                      setState(() {
-                        for (var choice in soundChoices) {
-                          choice.isSelected = choice == soundChoice;
-                          choice.isPlaying = false; // Set isPlaying to false for all choices
-                        }
-                        audioPlayer.stop();
-                      });
-                    },
-                    title: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 18),
-                      // Add vertical padding
-                      child: Text(
-                          soundChoice.name,
-                          style: TextStyle(
-                              color: soundChoice.isSelected ? Colors.blue : Colors.black45,
-                              fontSize: 20)),
-                    ),
-                    trailing: Visibility(
-                      visible: soundChoice.isSelected,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            soundChoice.isPlaying = !soundChoice.isPlaying;
-                          });
-                          // Handle playing or stopping the sound here
-                          if (soundChoice.isPlaying) {
-                            _playAudio(soundChoice.assetAudio);
-                          } else {
-                            audioPlayer.stop();
+                    child: ListTile(
+                      selected: soundChoice.isSelected,
+                      tileColor: soundChoice.isSelected
+                          ? Colors.lightBlue
+                          : Colors.black12,
+                      onTap: () {
+                        setState(() {
+                          selectedSoundChoice = soundChoice;
+                          for (var choice in soundChoices) {
+                            choice.isSelected = choice == soundChoice;
+                            choice.isPlaying =
+                                false; // Set isPlaying to false for all choices
                           }
-                        },
-                        child: Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            soundChoice.isPlaying
-                                ? Icons.pause
-                                : Icons.play_arrow,
-                            color: Colors.white,
+                          audioPlayer.stop();
+                        });
+                      },
+                      title: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        // Add vertical padding
+                        child: Text(soundChoice.name,
+                            style: TextStyle(
+                                color: soundChoice.isSelected
+                                    ? Colors.blue
+                                    : Colors.black45,
+                                fontSize: 20)),
+                      ),
+                      trailing: Visibility(
+                        visible: soundChoice.isSelected,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              soundChoice.isPlaying = !soundChoice.isPlaying;
+                            });
+                            // Handle playing or stopping the sound here
+                            if (soundChoice.isPlaying) {
+                              _playAudio(soundChoice.assetAudio);
+                            } else {
+                              audioPlayer.stop();
+                            }
+                          },
+                          child: Container(
+                            width: 35,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              soundChoice.isPlaying
+                                  ? Icons.pause
+                                  : Icons.play_arrow,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -168,7 +185,13 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
               height: 50,
               width: 320,
               child: ElevatedButton(
-                onPressed: widget.onNext,
+                onPressed: () {
+                  final updatedAlarmSettings = widget.alarmSettings?.copyWith(
+                      assetAudioPath:
+                          "assets/${selectedSoundChoice!.assetAudio}");
+                  widget.updateAlarmSettings(updatedAlarmSettings);
+                  widget.onNext();
+                },
                 child: Text(
                   "Next",
                   style: TextStyle(fontSize: 20),

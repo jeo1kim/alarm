@@ -1,16 +1,24 @@
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-class OnBoardingTimePIckerPage extends StatefulWidget {
+class OnBoardingTimePickerPage extends StatefulWidget {
   final VoidCallback onNext;
+  final AlarmSettings? alarmSettings;
+  final Function(AlarmSettings?) updateAlarmSettings; // Add this callback
 
-  const OnBoardingTimePIckerPage({super.key, required this.onNext});
+  const OnBoardingTimePickerPage({
+    super.key,
+    this.alarmSettings,
+    required this.updateAlarmSettings, // Add this line
+    required this.onNext
+  });
 
   @override
-  State<OnBoardingTimePIckerPage> createState() => _OnBoardingTimePIckerPageState();
+  State<OnBoardingTimePickerPage> createState() => _OnBoardingTimePickerPageState();
 }
 
-class _OnBoardingTimePIckerPageState extends State<OnBoardingTimePIckerPage> {
+class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
   var hour = 0;
   var minute = 0;
 
@@ -19,7 +27,7 @@ class _OnBoardingTimePIckerPageState extends State<OnBoardingTimePIckerPage> {
     super.initState();
 
     // Add a post-frame callback to show the keyboard after the screen is built
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).unfocus();
     });
   }
@@ -56,16 +64,16 @@ class _OnBoardingTimePIckerPageState extends State<OnBoardingTimePIckerPage> {
                         zeroPad: true,
                         infiniteLoop: true,
                         itemWidth: 80,
-                        itemHeight: 60,
+                        itemHeight: 80,
                         onChanged: (value) {
                           setState(() {
                             hour = value;
                           });
                         },
                         textStyle:
-                            const TextStyle(color: Colors.grey, fontSize: 20),
+                            const TextStyle(color: Colors.grey, fontSize: 30),
                         selectedTextStyle:
-                            const TextStyle(color: Colors.black, fontSize: 30),
+                            const TextStyle(color: Colors.black, fontSize: 40),
                         decoration: const BoxDecoration(
                           border: Border(
                               top: BorderSide(
@@ -87,16 +95,16 @@ class _OnBoardingTimePIckerPageState extends State<OnBoardingTimePIckerPage> {
                         zeroPad: true,
                         infiniteLoop: true,
                         itemWidth: 80,
-                        itemHeight: 60,
+                        itemHeight: 80,
                         onChanged: (value) {
                           setState(() {
                             minute = value;
                           });
                         },
                         textStyle:
-                            const TextStyle(color: Colors.grey, fontSize: 20),
+                            const TextStyle(color: Colors.grey, fontSize: 30),
                         selectedTextStyle:
-                            const TextStyle(color: Colors.black, fontSize: 30),
+                            const TextStyle(color: Colors.black, fontSize: 40),
                         decoration: const BoxDecoration(
                           border: Border(
                               top: BorderSide(
@@ -121,7 +129,23 @@ class _OnBoardingTimePIckerPageState extends State<OnBoardingTimePIckerPage> {
             height: 50,
             width: 320, // Set the desired width
             child: ElevatedButton(
-              onPressed: widget.onNext,
+              onPressed: () {
+                final now = DateTime.now();
+                final updatedAlarmSettings = widget.alarmSettings?.copyWith(
+                  dateTime: DateTime(
+                    now.year,
+                    now.month,
+                    now.day,
+                    hour,
+                    minute,
+                    0,
+                    0,
+                  ),
+                );
+                widget.updateAlarmSettings(updatedAlarmSettings);
+
+                widget.onNext();
+              },
               child: Text(
                 "Set",
                 style: TextStyle(fontSize: 20),
