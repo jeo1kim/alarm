@@ -1,12 +1,12 @@
 import 'package:alarm_example/animation/sunrise_animation.dart';
 import 'package:flutter/material.dart';
 
-class OnboardingPageOne extends StatelessWidget {
+class OnBoardingIntroPage extends StatelessWidget {
   final String pageText = "Awaken to the Wisdom of His Word";
   final String additionalText = "RISE, your faithful morning call";
   final VoidCallback onNext;
 
-  OnboardingPageOne({required this.onNext});
+  OnBoardingIntroPage({required this.onNext});
 
   @override
   Widget build(BuildContext context) {

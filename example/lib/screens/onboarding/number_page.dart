@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-class NumberPage extends StatefulWidget {
+class OnBoardingTimePIckerPage extends StatefulWidget {
   final VoidCallback onNext;
 
-  const NumberPage({super.key, required this.onNext});
+  const OnBoardingTimePIckerPage({super.key, required this.onNext});
 
   @override
-  State<NumberPage> createState() => _NumberPageState();
+  State<OnBoardingTimePIckerPage> createState() => _OnBoardingTimePIckerPageState();
 }
 
-class _NumberPageState extends State<NumberPage> {
+class _OnBoardingTimePIckerPageState extends State<OnBoardingTimePIckerPage> {
   var hour = 0;
   var minute = 0;
   var timeFormat = "AM";

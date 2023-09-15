@@ -23,7 +23,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _nextPage() {
-    if (_currentPage < 2) {
+    if (_currentPage < 4) {
       _pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.ease,
@@ -72,20 +72,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   });
                 },
                 children: [
-                  OnboardingPageOne(
+                  OnBoardingIntroPage(
                     onNext: _nextPage,
                   ),
-                  OnboardingPage(
+                  OnBoardingPage(
                     pageText: "Transformative mission that dispel sleep inertia",
                     onNext: _nextPage,
                   ),
-                  NumberPage(
+                  OnBoardingTimePIckerPage(
                     onNext: _nextPage,
                   ),
-                  OnboardingPageSetTime(
+                  OnBoardingSoundPickPage(
                     onNext: _nextPage,
                   ),
-                  OnboardingPage(
+                  OnBoardingPage(
                     pageText: "Page 3",
                     onNext: _nextPage,
                   ),
@@ -100,11 +100,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-class OnboardingPage extends StatelessWidget {
+class OnBoardingPage extends StatelessWidget {
   final String pageText;
   final VoidCallback onNext;
 
-  OnboardingPage({required this.pageText, required this.onNext});
+  OnBoardingPage({required this.pageText, required this.onNext});
 
   @override
   Widget build(BuildContext context) {
