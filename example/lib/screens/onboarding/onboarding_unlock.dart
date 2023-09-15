@@ -30,8 +30,8 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
     super.initState();
 
     verse = PhraseRepository.getRandomVerse();
-    verseTitle = verse.verse;
-    correctPhrase = verse.phrase;
+    verseTitle = "Psalm 23:1";
+    correctPhrase = "The Lord is my shepherd, I lack nothing.";
 
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance?.addPostFrameCallback((_) {
@@ -56,11 +56,14 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
                       SizedBox(
                         height: 50,
                         width: 320,
-                        child: RawMaterialButton(
+                        child: ElevatedButton(
                           onPressed: isStopButtonEnabled
                               ? widget.onNext
                               : null, // Disable the button when not enabled
-                          fillColor: isStopButtonEnabled ? Colors.blue : Colors.grey,
+                          style:
+                          ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(isStopButtonEnabled ? Colors.blue : Colors.grey),
+                          ),
                           child: Text(
                             "Type to unlock",
                             style: Theme.of(context)
