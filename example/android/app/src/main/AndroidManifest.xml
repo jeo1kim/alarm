@@ -1,11 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gdelataillade.alarm.alarm_example">
+    package="com.sharepeace.rise_alarm">
    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
    <uses-permission android:name="android.permission.WAKE_LOCK"/>
    <!-- For apps with targetSDK=31 (Android 12) -->
    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="com.android.vending.BILLING"/>
    <application
-        android:label="alarm_example"
+        android:label="Rise Bible Alarm"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <service

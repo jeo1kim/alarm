@@ -1,4 +1,4 @@
-package com.gdelataillade.alarm.alarm_example
+package com.sharepeace.rise_alarm
 
 import io.flutter.embedding.android.FlutterActivity
 
