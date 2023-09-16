@@ -59,9 +59,10 @@ flutter:
   assets:
     - assets/cello.mp3
     - assets/piano.mp3
-    - assets/audio/piano.mp3
+    - assets/piano2.mp3
     - assets/quartet.mp3
     - assets/violin.mp3
+    - assets/sample-15s.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

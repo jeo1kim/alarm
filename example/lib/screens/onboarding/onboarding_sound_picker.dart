@@ -180,7 +180,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
         ),
         Center(
           child: Container(
-            margin: EdgeInsets.only(bottom: 100),
+            margin: const EdgeInsets.only(bottom: 100),
             child: SizedBox(
               height: 50,
               width: 320,
@@ -192,7 +192,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                   widget.updateAlarmSettings(updatedAlarmSettings);
                   widget.onNext();
                 },
-                child: Text(
+                child: const Text(
                   "Next",
                   style: TextStyle(fontSize: 20),
                 ),

@@ -77,7 +77,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _createAlarm() {
     setState(() => loading = true);
     updateAlarmSettings(alarmSettings);
-
     Alarm.set(alarmSettings: alarmSettings);
     setState(() => loading = false);
   }
