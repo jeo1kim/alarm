@@ -4,12 +4,12 @@ import 'package:numberpicker/numberpicker.dart';
 
 class OnBoardingTimePickerPage extends StatefulWidget {
   final VoidCallback onNext;
-  final AlarmSettings? alarmSettings;
-  final Function(AlarmSettings?) updateAlarmSettings; // Add this callback
+  final AlarmSettings alarmSettings;
+  final Function(AlarmSettings) updateAlarmSettings; // Add this callback
 
   const OnBoardingTimePickerPage({
     super.key,
-    this.alarmSettings,
+    required this.alarmSettings,
     required this.updateAlarmSettings, // Add this line
     required this.onNext
   });
@@ -131,7 +131,7 @@ class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
             child: ElevatedButton(
               onPressed: () {
                 final now = DateTime.now();
-                final updatedAlarmSettings = widget.alarmSettings?.copyWith(
+                final updatedAlarmSettings = widget.alarmSettings.copyWith(
                   dateTime: DateTime(
                     now.year,
                     now.month,

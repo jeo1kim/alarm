@@ -48,13 +48,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     id: 42,
     dateTime: DateTime.now(),
     assetAudioPath: 'assets/piano.mp3',
+    loopAudio: true,
     vibrate: false,
     volumeMax: false,
+    notificationTitle: 'Time to Rise',
+    notificationBody: 'Daily Word of God',
+    stopOnNotificationOpen: false,
   );
 
-  void updateAlarmSettings(AlarmSettings? updatedSettings) {
+  void updateAlarmSettings(AlarmSettings updatedSettings) {
     setState(() {
-      alarmSettings = updatedSettings!;
+      alarmSettings = alarmSettings.copyWith(
+          id: updatedSettings.id,
+          dateTime: updatedSettings.dateTime,
+      );
     });
   }
 
@@ -77,7 +84,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _createAlarm() {
     setState(() => loading = true);
     updateAlarmSettings(alarmSettings);
-    Alarm.set(alarmSettings: alarmSettings);
+    Alarm.set(alarmSettings: alarmSettings).then((res) {
+      // if (res) {
+      //   Navigator.of(context).pushReplacement(
+      //     MaterialPageRoute(
+      //       builder: (_) => AlarmHomeScreen(),
+      //     ),
+      //   );
+      // }
+    });
     setState(() => loading = false);
   }
 
@@ -89,12 +104,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       );
     } else {
       _createAlarm();
-      // Navigate to ExampleAlarmHomeScreen when on the last page.
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => AlarmHomeScreen(),
-        ),
-      );
+              MaterialPageRoute(
+                builder: (_) => AlarmHomeScreen(),
+              ),
+            );
     }
   }
 
@@ -102,63 +116,65 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (int i = 0; i < 5; i++)
-                  Container(
-                    margin: EdgeInsets.all(14),
-                    width: 12,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentPage == i
-                          ? Colors.blue
-                          : Colors.grey.withOpacity(0.5),
-                    ),
-                  ),
-              ],
-            ),
-            Expanded(
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (int page) {
-                  setState(() {
-                    _currentPage = page;
-                  });
-                },
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  OnBoardingIntroPage(
-                    onNext: _nextPage,
-                  ),
-                  OnBoardingPage(
-                    pageText: "Transformative mission that dispel sleep inertia",
-                    onNext: _nextPage,
-                  ),
-                  OnBoardingTimePickerPage(
-                    alarmSettings: alarmSettings,
-                    updateAlarmSettings: updateAlarmSettings, // Pass the callback
-                    onNext: _nextPage,
-                  ),
-                  OnBoardingSoundPickPage(
-                    alarmSettings: alarmSettings,
-                    updateAlarmSettings: updateAlarmSettings, // Pass the callback
-                    onNext: _nextPage,
-                  ),
-                  OnBoardingUnlockPage(
-                    onNext: _nextPage,
-                  ),
+                  for (int i = 0; i < 5; i++)
+                    Container(
+                      margin: EdgeInsets.all(14),
+                      width: 12,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _currentPage == i
+                            ? Colors.blue
+                            : Colors.grey.withOpacity(0.5),
+                      ),
+                    ),
                 ],
               ),
-            ),
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (int page) {
+                    setState(() {
+                      _currentPage = page;
+                    });
+                  },
+                  children: [
+                    OnBoardingIntroPage(
+                      onNext: _nextPage,
+                    ),
+                    OnBoardingPage(
+                      pageText: "Transformative mission that dispel sleep inertia",
+                      onNext: _nextPage,
+                    ),
+                    OnBoardingTimePickerPage(
+                      alarmSettings: alarmSettings,
+                      updateAlarmSettings: updateAlarmSettings,
+                      // Pass the callback
+                      onNext: _nextPage,
+                    ),
+                    OnBoardingSoundPickPage(
+                      alarmSettings: alarmSettings,
+                      updateAlarmSettings: updateAlarmSettings,
+                      // Pass the callback
+                      onNext: _nextPage,
+                    ),
+                    OnBoardingUnlockPage(
+                      onNext: _nextPage,
+                    ),
+                  ],
+                ),
+              ),
 
-          ],
-        ),
-      )
+            ],
+          ),
+        )
     );
   }
 }
@@ -185,7 +201,8 @@ class OnBoardingPage extends StatelessWidget {
         ),
         Center(
           child: Container(
-            margin: EdgeInsets.only(bottom: 100), // Add the desired bottom margin
+            margin: EdgeInsets.only(bottom: 100),
+            // Add the desired bottom margin
             child: SizedBox(
               height: 50,
               width: 320, // Set the desired width
@@ -194,7 +211,7 @@ class OnBoardingPage extends StatelessWidget {
                 child: Text(
                   "Next",
                   style: TextStyle(fontSize: 20),
-                ),              ),
+                ),),
             ),
           ),
         ),

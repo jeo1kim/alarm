@@ -18,12 +18,12 @@ class SoundChoice {
 class OnBoardingSoundPickPage extends StatefulWidget {
   final String pageText = "Choose the song you prefer";
   final VoidCallback onNext;
-  final AlarmSettings? alarmSettings;
-  final Function(AlarmSettings?) updateAlarmSettings; // Add this callback
+  final AlarmSettings alarmSettings;
+  final Function(AlarmSettings) updateAlarmSettings; // Add this callback
 
   const OnBoardingSoundPickPage(
       {super.key,
-      this.alarmSettings,
+      required this.alarmSettings,
       required this.updateAlarmSettings, // Add this line
       required this.onNext});
 
@@ -193,7 +193,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                             ?.copyWith(
                                 assetAudioPath:
                                     "assets/${selectedSoundChoice!.assetAudio}");
-                        widget.updateAlarmSettings(updatedAlarmSettings);
+                        widget.updateAlarmSettings(updatedAlarmSettings!);
                         widget.onNext();
                       }
                     : null, // Disable the button when no song is selected
