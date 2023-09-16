@@ -6,14 +6,14 @@ import 'package:alarm_example/screens/ring.dart';
 import 'package:alarm_example/widgets/tile.dart';
 import 'package:flutter/material.dart';
 
-class ExampleAlarmHomeScreen extends StatefulWidget {
-  const ExampleAlarmHomeScreen({Key? key}) : super(key: key);
+class AlarmHomeScreen extends StatefulWidget {
+  const AlarmHomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<ExampleAlarmHomeScreen> createState() => _ExampleAlarmHomeScreenState();
+  State<AlarmHomeScreen> createState() => _AlarmHomeScreenState();
 }
 
-class _ExampleAlarmHomeScreenState extends State<ExampleAlarmHomeScreen> {
+class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   late List<AlarmSettings> alarms;
 
   static StreamSubscription? subscription;

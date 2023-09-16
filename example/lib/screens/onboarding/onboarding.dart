@@ -92,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       // Navigate to ExampleAlarmHomeScreen when on the last page.
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => ExampleAlarmHomeScreen(),
+          builder: (_) => AlarmHomeScreen(),
         ),
       );
     }
