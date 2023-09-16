@@ -8,12 +8,11 @@ class SoundChoice {
   bool isPlaying;
   final String assetAudio;
 
-  SoundChoice({
-    required this.name,
-    required this.assetAudio,
-    this.isSelected = false,
-    this.isPlaying = false
-  });
+  SoundChoice(
+      {required this.name,
+      required this.assetAudio,
+      this.isSelected = false,
+      this.isPlaying = false});
 }
 
 class OnBoardingSoundPickPage extends StatefulWidget {
@@ -22,11 +21,11 @@ class OnBoardingSoundPickPage extends StatefulWidget {
   final AlarmSettings? alarmSettings;
   final Function(AlarmSettings?) updateAlarmSettings; // Add this callback
 
-  const OnBoardingSoundPickPage({
-    super.key, this.alarmSettings,
-    required this.updateAlarmSettings, // Add this line
-    required this.onNext
-  });
+  const OnBoardingSoundPickPage(
+      {super.key,
+      this.alarmSettings,
+      required this.updateAlarmSettings, // Add this line
+      required this.onNext});
 
   @override
   _OnBoardingSoundPickPageState createState() =>
@@ -43,6 +42,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
   SoundChoice? selectedSoundChoice; // Add this variable
 
   final AudioPlayer audioPlayer = AudioPlayer();
+  bool isSongSelected = false;
 
   // Add a method to play audio
   Future<void> _playAudio(String assetAudio) async {
@@ -124,6 +124,8 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                                 false; // Set isPlaying to false for all choices
                           }
                           audioPlayer.stop();
+                          isSongSelected =
+                              true; // Set isSongSelected to true when a song is selected
                         });
                       },
                       title: Padding(
@@ -185,13 +187,21 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
               height: 50,
               width: 320,
               child: ElevatedButton(
-                onPressed: () {
-                  final updatedAlarmSettings = widget.alarmSettings?.copyWith(
-                      assetAudioPath:
-                          "assets/${selectedSoundChoice!.assetAudio}");
-                  widget.updateAlarmSettings(updatedAlarmSettings);
-                  widget.onNext();
-                },
+                onPressed: isSongSelected
+                    ? () {
+                        final updatedAlarmSettings = widget.alarmSettings
+                            ?.copyWith(
+                                assetAudioPath:
+                                    "assets/${selectedSoundChoice!.assetAudio}");
+                        widget.updateAlarmSettings(updatedAlarmSettings);
+                        widget.onNext();
+                      }
+                    : null, // Disable the button when no song is selected
+                style: ElevatedButton.styleFrom(
+                  primary: isSongSelected
+                      ? Colors.blue
+                      : Colors.grey, // Set button color
+                ),
                 child: const Text(
                   "Next",
                   style: TextStyle(fontSize: 20),

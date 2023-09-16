@@ -19,7 +19,7 @@ class OnBoardingTimePickerPage extends StatefulWidget {
 }
 
 class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
-  var hour = 0;
+  var hour = 7;
   var minute = 0;
 
   @override
