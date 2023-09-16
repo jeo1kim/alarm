@@ -38,7 +38,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
     SoundChoice(name: "Piano", assetAudio: 'piano.mp3'),
     SoundChoice(name: "Cello", assetAudio: 'cello.mp3'),
     SoundChoice(name: "Violin", assetAudio: 'violin.mp3'),
-    SoundChoice(name: "Quartet", assetAudio: 'quartet.mp3'),
+    SoundChoice(name: "Clarinet", assetAudio: 'clarinet.mp3'),
   ];
   SoundChoice? selectedSoundChoice; // Add this variable
 
