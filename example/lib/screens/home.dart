@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:alarm/alarm.dart';
 import 'package:alarm_example/screens/edit_alarm.dart';
+import 'package:alarm_example/screens/paywall/paywall.dart';
 import 'package:alarm_example/screens/ring.dart';
 import 'package:alarm_example/widgets/tile.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     super.initState();
     loadAlarms();
     subscription ??= Alarm.ringStream.stream.listen(
-          (alarmSettings) {
+      (alarmSettings) {
         if (alarmSettings.id != 42) {
           navigateToRingScreen(alarmSettings);
         }
@@ -74,7 +75,23 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: const Text('Package alarm example app')),
+      appBar: AppBar(
+        title: const Text('Your App Title'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.arrow_upward),
+            onPressed: () {
+              // Navigate to the UpgradeScreen when the button is clicked.
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        PaywallScreen()), // Replace 'UpgradeScreen' with the actual name of your upgrade screen widget.
+              );
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: alarms.isNotEmpty
             ? ListView.separated(
