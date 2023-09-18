@@ -8,7 +8,7 @@ class StoreConfig {
   static late StoreConfig _instance;
 
   factory StoreConfig({required Store store, required String apiKey}) {
-    _instance ??= StoreConfig._internal(store, apiKey);
+    _instance = StoreConfig._internal(store, apiKey);
     return _instance;
   }
 

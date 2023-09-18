@@ -10,7 +10,9 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import '../app_data.dart';
 import '../utils/constant.dart';
+import '../utils/store_config.dart';
 
 class AlarmHomeScreen extends StatefulWidget {
   const AlarmHomeScreen({Key? key}) : super(key: key);
@@ -65,8 +67,45 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     }
   }
 
+  Future<void> initPlatformState() async {
+    // Enable debug logs before calling `configure`.
+    await Purchases.setDebugLogsEnabled(true);
+
+    /*
+    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+
+    - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
+    */
+    PurchasesConfiguration configuration;
+    if (StoreConfig.isForGooglePlay()) {
+      configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
+        ..appUserID = null
+        ..observerMode = false;
+    } else {
+      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
+        ..appUserID = null
+        ..observerMode = false;
+    }
+    await Purchases.configure(configuration);
+
+    appData.appUserID = await Purchases.appUserID;
+
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
+      appData.appUserID = await Purchases.appUserID;
+
+      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+      (customerInfo.entitlements.all[entitlementID] != null &&
+          customerInfo.entitlements.all[entitlementID]!.isActive)
+          ? appData.entitlementIsActive = true
+          : appData.entitlementIsActive = false;
+
+      setState(() {});
+    });
+  }
+
   @override
   void initState() {
+    initPlatformState();
     super.initState();
     loadAlarms();
     subscription ??= Alarm.ringStream.stream.listen(

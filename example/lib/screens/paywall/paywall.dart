@@ -23,7 +23,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
             Container(
                 height: 70.0,
                 width: double.infinity,
-                decoration: const BoxDecoration(color: Colors.black),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: const Center(child: Text('APP NAME'))),
             const Padding(
               padding:
@@ -38,7 +38,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
               itemBuilder: (BuildContext context, int index) {
                 var myProductList = widget.offering?.availablePackages;
                 return Card(
-                  color: Colors.black,
+                  color: Colors.white,
                   child: ListTile(
                     onTap: () async {
                       try {
