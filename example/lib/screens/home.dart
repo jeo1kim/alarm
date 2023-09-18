@@ -78,7 +78,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     */
     PurchasesConfiguration configuration;
     if (StoreConfig.isForGooglePlay()) {
-      configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
+      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
         ..appUserID = null
         ..observerMode = false;
     } else {
