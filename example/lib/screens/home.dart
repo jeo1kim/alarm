@@ -6,6 +6,11 @@ import 'package:alarm_example/screens/paywall/paywall.dart';
 import 'package:alarm_example/screens/ring.dart';
 import 'package:alarm_example/widgets/tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:purchases_flutter/models/customer_info_wrapper.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
+
+import '../utils/constant.dart';
 
 class AlarmHomeScreen extends StatefulWidget {
   const AlarmHomeScreen({Key? key}) : super(key: key);
@@ -18,6 +23,47 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   late List<AlarmSettings> alarms;
 
   static StreamSubscription? subscription;
+
+  void performMagic() async {
+    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+
+    if (customerInfo.entitlements.all[entitlementID] != null &&
+        customerInfo.entitlements.all[entitlementID]?.isActive == true) {
+      // User has subscription, show them the feature
+    } else {
+      Offerings? offerings;
+      try {
+        offerings = await Purchases.getOfferings();
+      } on PlatformException catch (e) {
+        // Error finding the offerings, handle the error.
+      }
+
+      if (offerings == null || offerings.current == null) {
+        // offerings are empty, show a message to your user
+      } else {
+        // current offering is available, show paywall
+        // ignore: use_build_context_synchronously
+        await showModalBottomSheet(
+          useRootNavigator: true,
+          isDismissible: true,
+          isScrollControlled: true,
+          backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          ),
+          context: context,
+          builder: (BuildContext context) {
+            return StatefulBuilder(
+                builder: (BuildContext context, StateSetter setModalState) {
+                  return PaywallScreen(
+                    offering: offerings?.current,
+                  );
+                });
+          },
+        );
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -81,13 +127,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
           IconButton(
             icon: Icon(Icons.arrow_upward),
             onPressed: () {
-              // Navigate to the UpgradeScreen when the button is clicked.
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        PaywallScreen()), // Replace 'UpgradeScreen' with the actual name of your upgrade screen widget.
-              );
+              performMagic();
             },
           ),
         ],

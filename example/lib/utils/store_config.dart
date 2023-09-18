@@ -5,7 +5,7 @@ enum Store { appleStore, googlePlay }
 class StoreConfig {
   final Store store;
   final String apiKey;
-  static StoreConfig _instance;
+  static late StoreConfig _instance;
 
   factory StoreConfig({required Store store, required String apiKey}) {
     _instance ??= StoreConfig._internal(store, apiKey);
