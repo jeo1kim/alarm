@@ -102,9 +102,11 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                   // Add vertical spacing
                   child: Container(
                     decoration: BoxDecoration(
+                      color: soundChoice.isSelected ? Color(0xFFF3BB1C) : Color(0xFFFFDFA6),
+
                       border: Border.all(
                         color:
-                            soundChoice.isSelected ? Colors.blue : Colors.white,
+                            soundChoice.isSelected ? Theme.of(context).primaryColor : Color(0xFFFFDFA6),
                         width: 1.8, // Adjust the border width as needed
                       ),
                       borderRadius: BorderRadius.circular(
@@ -113,7 +115,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                     child: ListTile(
                       selected: soundChoice.isSelected,
                       tileColor: soundChoice.isSelected
-                          ? Colors.lightBlue
+                          ? Color(0xFFEAB634)
                           : Colors.black12,
                       onTap: () {
                         setState(() {
@@ -134,7 +136,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                         child: Text(soundChoice.name,
                             style: TextStyle(
                                 color: soundChoice.isSelected
-                                    ? Colors.blue
+                                    ? Colors.black
                                     : Colors.black45,
                                 fontSize: 20)),
                       ),
@@ -156,7 +158,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: Theme.of(context).primaryColor,
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
@@ -199,7 +201,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                     : null, // Disable the button when no song is selected
                 style: ElevatedButton.styleFrom(
                   primary: isSongSelected
-                      ? Colors.blue
+                      ? Theme.of(context).primaryColor
                       : Colors.grey, // Set button color
                 ),
                 child: const Text(

@@ -62,7 +62,7 @@ class SunrisePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.yellow;
+    final paint = Paint()..color = Color(0xFFFF9B36);
     final sunRadius = 50.0;
     final sunX = size.width / 2;
     final sunY = size.height * (1 - animationValue);

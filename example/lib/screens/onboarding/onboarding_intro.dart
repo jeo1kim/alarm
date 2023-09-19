@@ -13,7 +13,7 @@ class OnBoardingIntroPage extends StatefulWidget {
 
 class _OnBoardingIntroPage extends State<OnBoardingIntroPage> {
   final String pageText = "Awaken to the Wisdom of His Word";
-  final String additionalText = "RISE, your faithful morning call";
+  final String additionalText = "RISE to your faithful morning call";
 
   @override
   void initState() {
