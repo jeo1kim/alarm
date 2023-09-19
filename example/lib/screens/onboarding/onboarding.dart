@@ -85,13 +85,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     setState(() => loading = true);
     updateAlarmSettings(alarmSettings);
     Alarm.set(alarmSettings: alarmSettings).then((res) {
-      // if (res) {
-      //   Navigator.of(context).pushReplacement(
-      //     MaterialPageRoute(
-      //       builder: (_) => AlarmHomeScreen(),
-      //     ),
-      //   );
-      // }
+      if (res) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => AlarmHomeScreen(),
+          ),
+        );
+      }
     });
     setState(() => loading = false);
   }
@@ -104,11 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       );
     } else {
       _createAlarm();
-      Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (_) => AlarmHomeScreen(),
-              ),
-            );
+
     }
   }
 

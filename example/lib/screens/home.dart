@@ -4,7 +4,9 @@ import 'package:alarm/alarm.dart';
 import 'package:alarm_example/screens/edit_alarm.dart';
 import 'package:alarm_example/screens/paywall/paywall.dart';
 import 'package:alarm_example/screens/ring.dart';
+import 'package:alarm_example/screens/settings/settings.dart';
 import 'package:alarm_example/widgets/tile.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
@@ -57,10 +59,10 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
           builder: (BuildContext context) {
             return StatefulBuilder(
                 builder: (BuildContext context, StateSetter setModalState) {
-                  return PaywallScreen(
-                    offering: offerings?.current,
-                  );
-                });
+              return PaywallScreen(
+                offering: offerings?.current,
+              );
+            });
           },
         );
       }
@@ -95,7 +97,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
 
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
       (customerInfo.entitlements.all[entitlementID] != null &&
-          customerInfo.entitlements.all[entitlementID]!.isActive)
+              customerInfo.entitlements.all[entitlementID]!.isActive)
           ? appData.entitlementIsActive = true
           : appData.entitlementIsActive = false;
 
@@ -122,6 +124,14 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
       alarms = Alarm.getAlarms();
       alarms.sort((a, b) => a.dateTime.isBefore(b.dateTime) ? 0 : 1);
     });
+  }
+
+  Future<void> navigateToSettingsScreen() async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SettingsScreen(),
+        ));
   }
 
   Future<void> navigateToRingScreen(AlarmSettings alarmSettings) async {
@@ -161,12 +171,18 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your App Title'),
+        title: const Text('Rise Alarm'),
         actions: [
           IconButton(
             icon: Icon(Icons.arrow_upward),
             onPressed: () {
               performMagic();
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              navigateToSettingsScreen();
             },
           ),
         ],
@@ -197,33 +213,35 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
                 ),
               ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            FloatingActionButton(
-              onPressed: () {
-                final alarmSettings = AlarmSettings(
-                  id: 42,
-                  dateTime: DateTime.now(),
-                  assetAudioPath: 'assets/piano.mp3',
-                  vibrate: false,
-                  volumeMax: false,
-                );
-                Alarm.set(alarmSettings: alarmSettings);
-              },
-              backgroundColor: Colors.red,
-              heroTag: null,
-              child: const Text("RING NOW", textAlign: TextAlign.center),
-            ),
-            FloatingActionButton(
-              onPressed: () => navigateToAlarmScreen(null),
-              child: const Icon(Icons.alarm_add_rounded, size: 33),
-            ),
-          ],
-        ),
-      ),
+      floatingActionButton: kDebugMode
+          ? Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      final alarmSettings = AlarmSettings(
+                        id: 42,
+                        dateTime: DateTime.now(),
+                        assetAudioPath: 'assets/piano.mp3',
+                        vibrate: false,
+                        volumeMax: false,
+                      );
+                      Alarm.set(alarmSettings: alarmSettings);
+                    },
+                    backgroundColor: Colors.red,
+                    heroTag: null,
+                    child: const Text("RING NOW", textAlign: TextAlign.center),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () => navigateToAlarmScreen(null),
+                    child: const Icon(Icons.alarm_add_rounded, size: 33),
+                  ),
+                ],
+              ),
+            )
+          : null, // Set the FloatingActionButton to null in production mode
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
