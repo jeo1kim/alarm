@@ -62,7 +62,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
                               : null, // Disable the button when not enabled
                           style:
                           ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(isStopButtonEnabled ? Color(0xFFF3BB1C) : Colors.grey),
+                            backgroundColor: MaterialStateProperty.all(isStopButtonEnabled ? Theme.of(context).primaryColor : Colors.grey),
                           ),
                           child: Text(
                             "Type to unlock",
