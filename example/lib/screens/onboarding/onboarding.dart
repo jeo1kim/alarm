@@ -136,6 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Expanded(
                 child: PageView(
                   controller: _pageController,
+                  physics: NeverScrollableScrollPhysics(), // Disable swiping
                   onPageChanged: (int page) {
                     setState(() {
                       _currentPage = page;

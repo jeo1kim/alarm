@@ -78,8 +78,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                             }
                           : null, // Disable the button when not enabled
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            isStopButtonEnabled ? Colors.blue : Colors.grey),
+                        backgroundColor: MaterialStateProperty.all(isStopButtonEnabled ? Theme.of(context).primaryColor : Colors.grey),
                       ),
                       child: Text(
                         "Type to Unlock",
