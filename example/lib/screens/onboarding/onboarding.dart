@@ -29,21 +29,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   late String assetAudio;
   bool loading = false;
 
-  bool isToday() {
-    final now = DateTime.now();
-    final dateTime = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      selectedTime.hour,
-      selectedTime.minute,
-      0,
-      0,
-    );
-
-    return now.isBefore(dateTime);
-  }
-
   AlarmSettings alarmSettings = AlarmSettings(
     id: 42,
     dateTime: DateTime.now(),
@@ -104,7 +89,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       );
     } else {
       _createAlarm();
-
     }
   }
 

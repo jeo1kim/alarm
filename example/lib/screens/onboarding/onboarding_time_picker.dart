@@ -74,12 +74,10 @@ class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
                             const TextStyle(color: Colors.grey, fontSize: 30),
                         selectedTextStyle:
                             const TextStyle(color: Colors.black, fontSize: 40),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(
-                                color: Colors.blue,
-                              ),
-                              bottom: BorderSide(color: Colors.blue)),
+                              top: BorderSide(color: Theme.of(context).primaryColor,),
+                              bottom: BorderSide(color: Theme.of(context).primaryColor)),
                         ),
                       ),
                       SizedBox(width: 15),
@@ -105,12 +103,10 @@ class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
                             const TextStyle(color: Colors.grey, fontSize: 30),
                         selectedTextStyle:
                             const TextStyle(color: Colors.black, fontSize: 40),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(
-                                color: Colors.blue,
-                              ),
-                              bottom: BorderSide(color: Colors.blue)),
+                              top: BorderSide(color: Theme.of(context).primaryColor,),
+                              bottom: BorderSide(color: Theme.of(context).primaryColor)),
                         ),
                       ),
                     ],
