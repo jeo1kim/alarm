@@ -1,6 +1,8 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 
+import '../theme/theme_constants.dart';
+
 class ExampleAlarmEditScreen extends StatefulWidget {
   final AlarmSettings? alarmSettings;
 
@@ -138,7 +140,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
-                      .copyWith(color: Colors.blueAccent),
+                      .copyWith(color: kPrimaryColor),
                 ),
               ),
               TextButton(
@@ -150,7 +152,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
-                            .copyWith(color: Colors.blueAccent),
+                            .copyWith(color: kPrimaryColor),
                       ),
               ),
             ],
@@ -160,22 +162,30 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
             style: Theme.of(context)
                 .textTheme
                 .titleMedium!
-                .copyWith(color: Colors.blueAccent.withOpacity(0.8)),
+                .copyWith(color: Colors.black45.withOpacity(0.8)),
           ),
-          RawMaterialButton(
-            onPressed: pickTime,
-            fillColor: Colors.grey[200],
-            child: Container(
-              margin: const EdgeInsets.all(20),
-              child: Text(
-                selectedTime.format(context),
-                style: Theme.of(context)
-                    .textTheme
-                    .displayMedium!
-                    .copyWith(color: Colors.blueAccent),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: kPrimaryColor, // Define the border color here
+                width: 2.0, // Define the border width here
+              ),
+            ),
+            child: RawMaterialButton(
+              onPressed: pickTime,
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                child: Text(
+                  selectedTime.format(context),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium!
+                      .copyWith(color: kPrimaryColor),
+                ),
               ),
             ),
           ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -237,6 +247,7 @@ class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
               ),
               DropdownButton(
                 value: assetAudio,
+                dropdownColor: kBackgroundColor,
                 items: const [
                   DropdownMenuItem<String>(
                     value: 'assets/piano.mp3',

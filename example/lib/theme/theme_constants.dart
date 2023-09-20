@@ -8,6 +8,7 @@ const kContentColorDarkTheme = Color(0xFFF5FCF9);
 const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 const kBackgroundColor = Color(0xFFF5E5CF);
+const kBackgroundColor2 = Color(0xFFFAF3EA);
 
 const kDefaultPadding = 20.0;
 
@@ -30,6 +31,7 @@ ThemeData lightThemeData(BuildContext context) {
       selectedIconTheme: const IconThemeData(color: kPrimaryColor),
       showUnselectedLabels: true,
     ),
+
   );
 }
 
