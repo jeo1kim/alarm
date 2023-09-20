@@ -211,25 +211,25 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
       ),
       floatingActionButton: kDebugMode
           ? Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(30),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FloatingActionButton(
-                    onPressed: () {
-                      final alarmSettings = AlarmSettings(
-                        id: 42,
-                        dateTime: DateTime.now(),
-                        assetAudioPath: 'assets/piano.mp3',
-                        vibrate: false,
-                        volumeMax: false,
-                      );
-                      Alarm.set(alarmSettings: alarmSettings);
-                    },
-                    backgroundColor: Colors.red,
-                    heroTag: null,
-                    child: const Text("RING NOW", textAlign: TextAlign.center),
-                  ),
+                  // FloatingActionButton(
+                  //   onPressed: () {
+                  //     final alarmSettings = AlarmSettings(
+                  //       id: 42,
+                  //       dateTime: DateTime.now(),
+                  //       assetAudioPath: 'assets/piano.mp3',
+                  //       vibrate: false,
+                  //       volumeMax: false,
+                  //     );
+                  //     Alarm.set(alarmSettings: alarmSettings);
+                  //   },
+                  //   backgroundColor: Colors.red,
+                  //   heroTag: null,
+                  //   child: const Text("RING NOW", textAlign: TextAlign.center),
+                  // ),
                   FloatingActionButton(
                     onPressed: () => navigateToAlarmScreen(null),
                     child: const Icon(Icons.alarm_add_rounded, size: 33),
