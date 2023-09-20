@@ -36,6 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     loopAudio: true,
     vibrate: false,
     volumeMax: false,
+    fadeDuration: 10,
     notificationTitle: 'Time to Rise',
     notificationBody: 'Daily Word of God',
     stopOnNotificationOpen: false,
@@ -46,6 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       alarmSettings = alarmSettings.copyWith(
           id: updatedSettings.id,
           dateTime: updatedSettings.dateTime,
+          assetAudioPath: updatedSettings.assetAudioPath
       );
     });
   }
@@ -68,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _createAlarm() {
     setState(() => loading = true);
-    updateAlarmSettings(alarmSettings);
+    // updateAlarmSettings(alarmSettings);
     Alarm.set(alarmSettings: alarmSettings).then((res) {
       if (res) {
         Navigator.of(context).pushReplacement(

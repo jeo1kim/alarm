@@ -111,11 +111,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     super.initState();
     loadAlarms();
     subscription ??= Alarm.ringStream.stream.listen(
-      (alarmSettings) {
-        if (alarmSettings.id != 42) {
-          navigateToRingScreen(alarmSettings);
-        }
-      },
+      (alarmSettings) => navigateToRingScreen(alarmSettings),
     );
   }
 

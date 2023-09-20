@@ -127,16 +127,20 @@ class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
             child: ElevatedButton(
               onPressed: () {
                 final now = DateTime.now();
+                DateTime dateTime = DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                  hour,
+                  minute,
+                  0,
+                  0,
+                );
+                if (dateTime.isBefore(DateTime.now())) {
+                  dateTime = dateTime.add(const Duration(days: 1));
+                }
                 final updatedAlarmSettings = widget.alarmSettings.copyWith(
-                  dateTime: DateTime(
-                    now.year,
-                    now.month,
-                    now.day,
-                    hour,
-                    minute,
-                    0,
-                    0,
-                  ),
+                  dateTime: dateTime,
                 );
                 widget.updateAlarmSettings(updatedAlarmSettings);
 
