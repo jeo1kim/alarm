@@ -13,7 +13,6 @@ import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../app_data.dart';
-import '../theme/theme_constants.dart';
 import '../utils/constant.dart';
 import '../utils/store_config.dart';
 
@@ -52,9 +51,9 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
           useRootNavigator: true,
           isDismissible: true,
           isScrollControlled: true,
-          backgroundColor: kBackgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+          backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
           ),
           context: context,
           builder: (BuildContext context) {
@@ -145,7 +144,6 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     final res = await showModalBottomSheet<bool?>(
         context: context,
         isScrollControlled: true,
-        backgroundColor: kBackgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),

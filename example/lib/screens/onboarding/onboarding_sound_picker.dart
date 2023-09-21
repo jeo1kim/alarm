@@ -75,7 +75,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 10),
+              SizedBox(height: 30),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
@@ -84,14 +84,13 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 40),
             ],
           ),
         ),
         Expanded(
-          flex: 2, // Adjust the flex value as needed
+          flex: 4, // Adjust the flex value as needed
           child: ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 40),
+            padding: EdgeInsets.symmetric(horizontal: 30),
             // Add left and right padding
             itemCount: soundChoices.length,
             itemBuilder: (context, index) {
