@@ -9,6 +9,7 @@ const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 const kBackgroundColor = Color(0xFFF5E5CF);
 const kBackgroundColor2 = Color(0xFFFAF3EA);
+const kBackgroundGrey = Color(0xFFE1DCDC);
 
 const kDefaultPadding = 20.0;
 

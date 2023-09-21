@@ -1,6 +1,9 @@
-import 'package:alarm_example/utils/constant.dart';
+import 'package:alarm_example/screens/paywall/package_container.dart';
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import '../../app_data.dart';
+import '../../theme/theme_constants.dart';
+import '../../utils/constant.dart';
 
 class PaywallScreen extends StatefulWidget {
   final Offering? offering;
@@ -12,97 +15,95 @@ class PaywallScreen extends StatefulWidget {
 }
 
 class _PaywallScreenState extends State<PaywallScreen> {
-  int selectedPackageIndex = -1; // Initially, no package is selected.
+  int selectedPackageIndex = 0;
+  String buttonText = 'Start Free Trial';
+  String ctaText = '7 days free, then';
+  String headerText = 'Start Your Free Trial';
+  String subtitle1 = 'Try free and subscribe';
+  String subtitle2 = 'No charge until';
+
+  @override
+  void initState() {
+    super.initState();
+    updateButtonText();
+  }
+
+  void updateButtonText() {
+    final selectedPackage =
+    widget.offering!.availablePackages[selectedPackageIndex];
+    buttonText = (selectedPackage.storeProduct.price == 19.99)
+        ? 'Start Free Trial'
+        : 'Start Premium';
+    ctaText = (selectedPackage.storeProduct.price == 19.99)
+        ? '7 days free, then ${selectedPackage.storeProduct.priceString} /year'
+        : '${selectedPackage.storeProduct.priceString}/month';
+    headerText = (selectedPackage.storeProduct.price == 19.99)
+        ? 'Start Your Free Trial'
+        : 'Unlock Premium';
+    subtitle1 = (selectedPackage.storeProduct.price == 19.99)
+        ? 'Try free and subscribe'
+        : 'Subscribe now';
+    subtitle2 = (selectedPackage.storeProduct.price == 19.99)
+        ? 'No charge until your 7 day free trial ends. Cancel anytime.'
+        : '';
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                SizedBox(height: 80),
-                // Add spacing at the top
-                Center(
-                  child: Text(
-                    'Start your free trial',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Stack(
+      children: [
+        Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  const SizedBox(height: 80),
+                  Center(
+                    child: Text(
+                      headerText,
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Center(
-                  child: Text(
-                    'Get unlimited features today!',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: Text(
+                      'Get unlimited features today!',
+                      style: TextStyle(fontSize: 16, color: Colors.black87.withOpacity(0.7)),
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
-                // Add spacing
-                Padding(
-                  padding: EdgeInsets.only(left: 80),
-                  child: Column(
-                    children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.check,
-                              color: Colors.green,
-                            ),
-                            SizedBox(width: 5),
-                            Text('Multiple alarms',
-                                style: TextStyle(fontSize: 18)),
-                          ]),
-                      SizedBox(height: 5),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.check,
-                              color: Colors.green,
-                            ),
-                            SizedBox(width: 5),
-                            Text('Premium songs',
-                                style: TextStyle(fontSize: 18)),
-                          ]),
-                      SizedBox(height: 5),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.check,
-                              color: Colors.green,
-                            ),
-                            SizedBox(width: 5),
-                            Text('10 vs 100 Bible verse',
-                                style: TextStyle(fontSize: 18)),
-                          ]),
-                    ],
+                  const SizedBox(height: 20),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 80),
+                    child: Column(
+                      children: [
+                        CheckRow(text: 'Multiple alarms'),
+                        CheckRow(text: 'Premium songs'),
+                        CheckRow(text: '10 vs 100 Bible verse'),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
-                // Add spacing
-                Center(
-                  child: Text(
-                    'Try free and subscribe',
-                    style: TextStyle(fontSize: 20),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Text(
+                      subtitle1,
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                // Add spacing
-                Center(
-                  child: Text(
-                    'No charge until',
-                    style: TextStyle(fontSize: 16),
+                  const SizedBox(height: 10),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      child: Text(
+                        subtitle2,
+                        style: TextStyle(fontSize: 13),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
-                // Add spacing
-                Container(
-                  child:
+                  const SizedBox(height: 20),
                   Wrap(
                     alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: List.generate(
                       widget.offering?.availablePackages.length ?? 0,
                           (index) {
@@ -111,141 +112,138 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
                         return GestureDetector(
                           onTap: () {
-                            // Update the selected package index.
                             setState(() {
                               selectedPackageIndex = index;
+                              updateButtonText();
                             });
                           },
-                          child: Container(
-                            width: 150,
-                            height: 180,
-                            margin: EdgeInsets.all(8),
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              border: Border.all(
-                                color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
-                                width: isSelected ? 2.0 : 1.8,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  package.storeProduct.title,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  package.storeProduct.priceString,
-                                  style: TextStyle(fontSize: 14),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
+                          child: PackageContainer(
+                            package: package,
+                            isSelected: isSelected,
+                            onTap: () {
+                              setState(() {
+                                selectedPackageIndex = index;
+                                updateButtonText();
+                              });
+                            },
                           ),
                         );
                       },
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-                // Add spacing
-                Center(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, right: 30, bottom: 8),
-                    child: Text(
-                      footerText,
-                      style: TextStyle(
-                        color: Colors.black45,
-                        fontSize: 10,
+                  const SizedBox(height: 20),
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 30, right: 30, bottom: 8),
+                      child: Text(
+                        footerText,
+                        style: TextStyle(
+                          color: Colors.black45,
+                          fontSize: 10,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                // Add spacing
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Privacy',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 10,
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Privacy',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 10,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 16),
-                    Text(
-                      'Terms',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 10,
+                      SizedBox(width: 16),
+                      Text(
+                        'Terms',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 10,
+                        ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: SizedBox(
+                    height: 50,
+                    width: 320,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (selectedPackageIndex >= 0) {
+                          try {
+                            final customerInfo = await Purchases.purchasePackage(
+                              widget.offering!
+                                  .availablePackages[selectedPackageIndex],
+                            );
+                            final entitlement =
+                            customerInfo.entitlements.all[entitlementID];
+                            appData.entitlementIsActive =
+                                entitlement?.isActive ?? false;
+                            // Handle the purchase and entitlement activation here.
+                          } catch (e) {
+                            print(e);
+                          }
+                        }
+                      },
+                      child: Text(buttonText, style: TextStyle(fontSize: 18)),
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: 30),
-                // Add spacing
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 25, top: 15),
+                  child: Text(
+                    ctaText,
+                    style: TextStyle(color: Colors.black45),
+                  ),
+                ),
               ],
             ),
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: SizedBox(
-                  height: 50,
-                  width: 320,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (selectedPackageIndex >= 0) {
-                        try {
-                          CustomerInfo customerInfo = await Purchases.purchasePackage(
-                            widget.offering!.availablePackages[selectedPackageIndex],
-                          );
-                          // Handle the purchase and entitlement activation here.
-                        } catch (e) {
-                          print(e);
-                        }
-                      }
-                    },
-                    child: Text('Start Free Trial',
-                        style: TextStyle(fontSize: 18)),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 25, top: 15),
-                child: Text(
-                  "7 days free, then 19.99/year",
-                  style: TextStyle(color: Colors.black45),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      Padding(
-        padding: EdgeInsets.only(top: 30, right: 10),
-        child: Align(
-          alignment: Alignment.topRight,
-          child: IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 30, right: 10),
+          child: Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }
+
+class CheckRow extends StatelessWidget {
+  final String text;
+
+  const CheckRow({Key? key, required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Icon(
+          Icons.check,
+          color: kPrimaryColor,
+        ),
+        SizedBox(width: 5),
+        Text(text, style: TextStyle(fontSize: 18)),
+      ],
+    );
+  }
+}
+
+
