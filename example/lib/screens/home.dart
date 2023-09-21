@@ -13,6 +13,7 @@ import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../app_data.dart';
+import '../theme/theme_constants.dart';
 import '../utils/constant.dart';
 import '../utils/store_config.dart';
 
@@ -48,21 +49,22 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
         // current offering is available, show paywall
         // ignore: use_build_context_synchronously
         await showModalBottomSheet(
-          useRootNavigator: true,
           isDismissible: true,
           isScrollControlled: true,
-          backgroundColor: Colors.white,
-          shape: const RoundedRectangleBorder(
+          backgroundColor: kBackgroundColor,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
           ),
           context: context,
           builder: (BuildContext context) {
-            return StatefulBuilder(
-                builder: (BuildContext context, StateSetter setModalState) {
-              return PaywallScreen(
-                offering: offerings?.current,
-              );
-            });
+            return FractionallySizedBox(
+              child: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setModalState) {
+                return PaywallScreen(
+                  offering: offerings?.current,
+                );
+              }),
+            );
           },
         );
       }
@@ -144,8 +146,9 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     final res = await showModalBottomSheet<bool?>(
         context: context,
         isScrollControlled: true,
+        backgroundColor: kBackgroundColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
         ),
         builder: (context) {
           return FractionallySizedBox(
