@@ -21,8 +21,8 @@ class PackageContainer extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          width: 150,
-          height: 180,
+          width: 160,
+          height: 190,
           margin: const EdgeInsets.all(5),
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -56,10 +56,11 @@ class PackageContainer extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                (package.storeProduct.price == 19.99)
+                (package.storeProduct.priceString == "\$19.99")
                     ? package.storeProduct.priceString + "/year"
                     : package.storeProduct.priceString + "/month",
                 style: TextStyle(
+                  letterSpacing: -0.5,
                   color: Colors.red.withOpacity(0.9),
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -68,7 +69,7 @@ class PackageContainer extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               Text(
-                (package.storeProduct.price == 19.99)
+                (package.storeProduct.priceString == "\$19.99")
                     ? "Renew every year"
                     : "Renew every month",
                 style: TextStyle(
@@ -83,11 +84,11 @@ class PackageContainer extends StatelessWidget {
             ],
           ),
         ),
-        if (package.storeProduct.price == 19.99) // Only show for the annual plan
+        if (package.storeProduct.priceString == "\$19.99") // Only show for the annual plan
           Positioned(
             top: 0,
             child: Container(
-              width: 150,
+              width: 160,
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                 color: kPrimaryColor,
@@ -97,7 +98,7 @@ class PackageContainer extends StatelessWidget {
                 '7 days free trial',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),

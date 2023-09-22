@@ -84,7 +84,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _nextPage() {
-    if (_currentPage < 4) {
+    if (_currentPage < 3) {
       _pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.ease,
@@ -105,7 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < 5; i++)
+                  for (int i = 0; i < 4; i++)
                     Container(
                       margin: EdgeInsets.all(14),
                       width: 12,
@@ -133,7 +133,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       onNext: _nextPage,
                     ),
                     OnBoardingPage(
-                      pageText: "Transformative mission that dispel sleep inertia",
+                      pageText: "“What we do first thing in the morning, over time, says a lot about our true priorities.”",
                       onNext: _nextPage,
                     ),
                     OnBoardingTimePickerPage(
@@ -174,11 +174,14 @@ class OnBoardingPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          child: Center(
-            child: Text(
-              pageText,
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Center(
+              child: Text(
+                pageText,
+                style: TextStyle(fontSize: 24),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),

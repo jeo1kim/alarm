@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 
 import '../theme/theme_constants.dart';
 
-class ExampleAlarmEditScreen extends StatefulWidget {
+class AlarmEditScreen extends StatefulWidget {
   final AlarmSettings? alarmSettings;
 
-  const ExampleAlarmEditScreen({Key? key, this.alarmSettings})
+  const AlarmEditScreen({Key? key, this.alarmSettings})
       : super(key: key);
 
   @override
-  State<ExampleAlarmEditScreen> createState() => _ExampleAlarmEditScreenState();
+  State<AlarmEditScreen> createState() => _AlarmEditScreenState();
 }
 
-class _ExampleAlarmEditScreenState extends State<ExampleAlarmEditScreen> {
+class _AlarmEditScreenState extends State<AlarmEditScreen> {
   bool loading = false;
 
   late bool creating;

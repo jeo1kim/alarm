@@ -30,20 +30,20 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   void updateButtonText() {
     final selectedPackage =
-    widget.offering!.availablePackages[selectedPackageIndex];
-    buttonText = (selectedPackage.storeProduct.price == 19.99)
+        widget.offering!.availablePackages[selectedPackageIndex];
+    buttonText = (selectedPackage.storeProduct.priceString == "\$19.99")
         ? 'Start Free Trial'
         : 'Start Premium';
-    ctaText = (selectedPackage.storeProduct.price == 19.99)
+    ctaText = (selectedPackage.storeProduct.priceString == "\$19.99")
         ? '7 days free, then ${selectedPackage.storeProduct.priceString} /year'
         : '${selectedPackage.storeProduct.priceString}/month';
-    headerText = (selectedPackage.storeProduct.price == 19.99)
+    headerText = (selectedPackage.storeProduct.priceString == "\$19.99")
         ? 'Start Your Free Trial'
         : 'Unlock Premium';
-    subtitle1 = (selectedPackage.storeProduct.price == 19.99)
+    subtitle1 = (selectedPackage.storeProduct.priceString == "\$19.99")
         ? 'Try free and subscribe'
         : 'Subscribe now';
-    subtitle2 = (selectedPackage.storeProduct.price == 19.99)
+    subtitle2 = (selectedPackage.storeProduct.priceString == "\$19.99")
         ? 'No charge until your 7 day free trial ends. Cancel anytime.'
         : '';
   }
@@ -57,28 +57,30 @@ class _PaywallScreenState extends State<PaywallScreen> {
             Expanded(
               child: ListView(
                 children: <Widget>[
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 120),
                   Center(
                     child: Text(
                       headerText,
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Center(
                     child: Text(
                       'Get unlimited features today!',
-                      style: TextStyle(fontSize: 16, color: Colors.black87.withOpacity(0.7)),
+                      style: TextStyle(
+                          fontSize: 16, color: Colors.black87.withOpacity(0.7)),
                     ),
                   ),
                   const SizedBox(height: 20),
                   const Padding(
-                    padding: EdgeInsets.only(left: 80),
+                    padding: EdgeInsets.only(left: 100),
                     child: Column(
                       children: [
                         CheckRow(text: 'Multiple alarms'),
                         CheckRow(text: 'Premium songs'),
-                        CheckRow(text: '10 vs 100 Bible verse'),
+                        CheckRow(text: '100+ Bible verses'),
                       ],
                     ),
                   ),
@@ -86,13 +88,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   Center(
                     child: Text(
                       subtitle1,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      padding: const EdgeInsets.symmetric(horizontal: 80),
                       child: Text(
                         subtitle2,
                         style: TextStyle(fontSize: 13),
@@ -106,8 +109,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: List.generate(
                       widget.offering?.availablePackages.length ?? 0,
-                          (index) {
-                        final package = widget.offering!.availablePackages[index];
+                      (index) {
+                        final package =
+                            widget.offering!.availablePackages[index];
                         final isSelected = selectedPackageIndex == index;
 
                         return GestureDetector(
@@ -139,7 +143,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         footerText,
                         style: TextStyle(
                           color: Colors.black45,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ),
@@ -151,7 +155,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         'Privacy',
                         style: TextStyle(
                           color: Colors.blue,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                       SizedBox(width: 16),
@@ -159,7 +163,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         'Terms',
                         style: TextStyle(
                           color: Colors.blue,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       ),
                     ],
@@ -177,21 +181,22 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     width: 320,
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (selectedPackageIndex >= 0) {
-                          try {
-                            final customerInfo = await Purchases.purchasePackage(
-                              widget.offering!
-                                  .availablePackages[selectedPackageIndex],
-                            );
-                            final entitlement =
-                            customerInfo.entitlements.all[entitlementID];
-                            appData.entitlementIsActive =
-                                entitlement?.isActive ?? false;
-                            // Handle the purchase and entitlement activation here.
-                          } catch (e) {
-                            print(e);
-                          }
+                        try {
+                          final customerInfo = await Purchases.purchasePackage(
+                            widget.offering!
+                                .availablePackages[selectedPackageIndex],
+                          );
+                          final entitlement =
+                              customerInfo.entitlements.all[entitlementID];
+                          appData.entitlementIsActive =
+                              entitlement?.isActive ?? false;
+                          // Handle the purchase and entitlement activation here.
+                        } catch (e) {
+                          print("error while subscribing "+e.toString());
+                          // show error message
                         }
+                        setState(() {});
+                        Navigator.pop(context);
                       },
                       child: Text(buttonText, style: TextStyle(fontSize: 18)),
                     ),
@@ -209,7 +214,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 30, right: 10),
+          padding: const EdgeInsets.only(top: 50, right: 10),
           child: Align(
             alignment: Alignment.topRight,
             child: IconButton(
@@ -245,5 +250,3 @@ class CheckRow extends StatelessWidget {
     );
   }
 }
-
-
