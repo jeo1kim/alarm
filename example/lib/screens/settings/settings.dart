@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/theme/theme_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../utils/constant.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -18,26 +21,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _themeManager.addListener(themeListener);
     super.initState();
   }
 
   themeListener() {
     if (mounted) {
-      setState(() {
+      setState(() {});
+    }
+  }
 
-      });
+  // Function to open a URL in the browser
+  Future<void> _launchURL(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Access the theme manager
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'), // Set the title for the Settings screen
+        title: Text('Settings'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,11 +61,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Switch(
                   value: _themeManager.themeMode == ThemeMode.dark,
                   onChanged: (value) {
-                    // Toggle the theme when the switch changes
                     _themeManager.toggleTheme(value);
                   },
                 ),
               ],
+            ),
+            SizedBox(height: 20), // Add some space
+
+            // About Section
+            Text(
+              'About',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            // Privacy Tile
+            InkWell(
+              onTap: () {
+                _launchURL(privacy);
+              },
+              child: ListTile(
+                title: Text('Privacy Policy'),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+            ),
+            // Terms Tile
+            InkWell(
+              onTap: () {
+                _launchURL(terms);
+              },
+              child: ListTile(
+                title: Text('Terms of Service'),
+                trailing: Icon(Icons.arrow_forward),
+              ),
             ),
           ],
         ),

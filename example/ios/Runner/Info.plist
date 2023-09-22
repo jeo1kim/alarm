@@ -55,5 +55,9 @@
 	<false/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Audio use for alarm</string>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>https</string>
+    </array>
 </dict>
 </plist>

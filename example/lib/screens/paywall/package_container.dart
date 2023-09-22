@@ -38,7 +38,7 @@ class PackageContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Radio(
-                value: isSelected,
+                value: true,
                 groupValue: isSelected,
                 onChanged: (value) {
                   onTap();
