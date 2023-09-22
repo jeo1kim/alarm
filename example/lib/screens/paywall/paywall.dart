@@ -4,6 +4,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../app_data.dart';
 import '../../theme/theme_constants.dart';
 import '../../utils/constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaywallScreen extends StatefulWidget {
   final Offering? offering;
@@ -46,6 +47,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
     subtitle2 = (selectedPackage.storeProduct.priceString == "\$19.99")
         ? 'No charge until your 7 day free trial ends. Cancel anytime.'
         : '';
+  }
+
+  // Function to open a URL in the browser
+  Future<void> launchURL(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override
@@ -148,22 +156,34 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       ),
                     ),
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Privacy',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 12,
+                      GestureDetector(
+                        onTap: () {
+                          launchURL(privacy); // Replace with your Privacy URL
+                        },
+                        child: Text(
+                          'Privacy',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 12,
+                            decoration: TextDecoration.underline, // Add underline for clickable appearance
+                          ),
                         ),
                       ),
                       SizedBox(width: 16),
-                      Text(
-                        'Terms',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 12,
+                      GestureDetector(
+                        onTap: () {
+                          launchURL(terms); // Replace with your Terms URL
+                        },
+                        child: Text(
+                          'Terms',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 12,
+                            decoration: TextDecoration.underline, // Add underline for clickable appearance
+                          ),
                         ),
                       ),
                     ],

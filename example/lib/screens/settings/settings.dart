@@ -32,7 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   // Function to open a URL in the browser
-  Future<void> _launchURL(String url) async {
+  Future<void> launchURL(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }
@@ -49,24 +49,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'Theme',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text('Dark Mode'),
-                Switch(
-                  value: _themeManager.themeMode == ThemeMode.dark,
-                  onChanged: (value) {
-                    _themeManager.toggleTheme(value);
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 20), // Add some space
+            // Text(
+            //   'Theme',
+            //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            // ),
+            // SizedBox(height: 10),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: <Widget>[
+            //     Text('Dark Mode'),
+            //     Switch(
+            //       value: _themeManager.themeMode == ThemeMode.dark,
+            //       onChanged: (value) {
+            //         _themeManager.toggleTheme(value);
+            //       },
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(height: 20), // Add some space
 
             // About Section
             Text(
@@ -77,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // Privacy Tile
             InkWell(
               onTap: () {
-                _launchURL(privacy);
+                launchURL(privacy);
               },
               child: ListTile(
                 title: Text('Privacy Policy'),
@@ -87,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // Terms Tile
             InkWell(
               onTap: () {
-                _launchURL(terms);
+                launchURL(terms);
               },
               child: ListTile(
                 title: Text('Terms of Service'),

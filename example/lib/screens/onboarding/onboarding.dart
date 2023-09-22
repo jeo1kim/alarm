@@ -105,7 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < 4; i++)
+                  for (int i = 0; i < 5; i++)
                     Container(
                       margin: EdgeInsets.all(14),
                       width: 12,

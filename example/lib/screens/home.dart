@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_data.dart';
 import '../theme/theme_constants.dart';
@@ -116,6 +117,9 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
       setState(() {});
     });
     isPremium = await isPremiumUser();
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('firstTimeUser', false);
   }
 
   @override
