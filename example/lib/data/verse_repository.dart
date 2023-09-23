@@ -123,7 +123,7 @@ class PhraseRepository {
     ),
     Verse(
       verse: "Hebrews 13:8",
-      phrase: "Jesus Christ is the same yesterday and today and forever.",
+      phrase: "Jesus Christ is the same yesterday, today and forever.",
     ),
   ];
 

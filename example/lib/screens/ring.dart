@@ -61,26 +61,32 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  RawMaterialButton(
-                    onPressed: isStopButtonEnabled
-                        ? () {
-                            // Alarm.stop(widget.alarmSettings.id)
-                            final now = DateTime.now();
-                            Alarm.set(
-                              alarmSettings: widget.alarmSettings.copyWith(
-                                dateTime: widget.alarmSettings.dateTime
-                                    .add(const Duration(days: 1)),
-                              ),
-                            ).then((_) => Navigator.pop(context));
-                          }
-                        : null, // Disable the button when not enabled
-                    fillColor: isStopButtonEnabled ? Colors.blue : Colors.grey,
-                    child: Text(
-                      "Rise",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          ?.copyWith(color: Colors.white),
+                  SizedBox(
+                    height: 50,
+                    width: 320,
+                    child: ElevatedButton(
+                      onPressed: isStopButtonEnabled
+                          ? () {
+                              // Alarm.stop(widget.alarmSettings.id)
+                              final now = DateTime.now();
+                              Alarm.set(
+                                alarmSettings: widget.alarmSettings.copyWith(
+                                  dateTime: widget.alarmSettings.dateTime
+                                      .add(const Duration(days: 1)),
+                                ),
+                              ).then((_) => Navigator.pop(context));
+                            }
+                          : null, // Disable the button when not enabled
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(isStopButtonEnabled ? Theme.of(context).primaryColor : Colors.grey),
+                      ),
+                      child: Text(
+                        "Type to Unlock",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            ?.copyWith(color: Colors.white),
+                      ),
                     ),
                   ),
                 ],
@@ -95,7 +101,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                   padding: const EdgeInsets.all(20.0),
                   child: RichText(
                     text: TextSpan(
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 25.0,
                         color: Colors.grey, // Initial gray color for the phrase
                       ),
@@ -129,7 +135,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
               // Hidden TextField for user input
               Text(
                 verseTitle,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -146,12 +152,12 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                       isStopButtonEnabled = userInput == correctPhrase;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                   ),
                   cursorColor: Colors.transparent,
                   // Hide the cursor
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.transparent, // Hide the entered text
                   ),
                 ),
