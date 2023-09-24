@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:alarm/alarm.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,10 +35,17 @@ class _AppState extends State<App> {
   final ThemeManager _themeManager = ThemeManager();
   bool isFirstTimeUser = true; // Initialize this as needed
 
+  void _initFirebase() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     _initializeApp();
+    _initFirebase()
   }
 
   Future<void> _initializeApp() async {

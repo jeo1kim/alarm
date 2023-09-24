@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "7055365635",
+    "project_id": "rise-alarm",
+    "storage_bucket": "rise-alarm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7055365635:android:344a29cc9cbc1ed2b46036",
+        "android_client_info": {
+          "package_name": "com.sharepeace.rise_alarm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlmTpJrJfZXmPxv4QZzFWytmBQAr7KCWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
