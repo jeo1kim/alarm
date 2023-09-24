@@ -6,6 +6,7 @@ import 'package:alarm_example/theme/theme_constants.dart';
 import 'package:alarm_example/theme/theme_manager.dart';
 import 'package:alarm_example/utils/constant.dart';
 import 'package:alarm_example/utils/store_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm/alarm.dart';
 import 'package:flutter/services.dart';
@@ -39,6 +40,18 @@ class _AppState extends State<App> {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    await Firebase.initializeApp();
+
+    // Pass all uncaught "fatal" errors from the framework to Crashlytics
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+    };
+    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
   }
 
   @override
