@@ -1,10 +1,13 @@
 import 'package:alarm_example/screens/paywall/package_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../app_data.dart';
 import '../../theme/theme_constants.dart';
 import '../../utils/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../widgets/native_dialog.dart';
 
 class PaywallScreen extends StatefulWidget {
   final Offering? offering;
@@ -47,6 +50,28 @@ class _PaywallScreenState extends State<PaywallScreen> {
     subtitle2 = (selectedPackage.storeProduct.priceString == "\$19.99")
         ? 'No charge until your 7 day free trial ends. Cancel anytime.'
         : '';
+  }
+
+  _restore() async {
+
+    /*
+      How to login and identify your users with the Purchases SDK.
+
+      Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+    */
+
+    try {
+      await Purchases.restorePurchases();
+      appData.appUserID = await Purchases.appUserID;
+    } on PlatformException catch (e) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) => ShowDialogToDismiss(
+              title: "Error",
+              content: e.message ?? "Unknown error",
+              buttonText: 'OK'));
+    }
+
   }
 
   // Function to open a URL in the browser

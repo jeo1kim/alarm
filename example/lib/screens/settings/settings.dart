@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/theme/theme_manager.dart';
+import 'package:flutter/services.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../app_data.dart';
 import '../../utils/constant.dart';
+import '../../widgets/native_dialog.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -36,6 +40,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  _restore() async {
+
+    /*
+      How to login and identify your users with the Purchases SDK.
+
+      Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+    */
+
+    try {
+      await Purchases.restorePurchases();
+      appData.appUserID = await Purchases.appUserID;
+    } on PlatformException catch (e) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) => ShowDialogToDismiss(
+              title: "Error",
+              content: e.message ?? "Unknown error",
+              buttonText: 'OK'));
+    }
+
   }
 
   @override
@@ -90,7 +116,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 launchURL(terms);
               },
               child: ListTile(
-                title: Text('Terms of Service'),
+                title: Text('Terms of Use'),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                _restore();
+              },
+              child: ListTile(
+                title: Text('Restore purchase'),
                 trailing: Icon(Icons.arrow_forward),
               ),
             ),
