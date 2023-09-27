@@ -13,8 +13,10 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -58,7 +60,7 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     _initializeApp();
-    _initFirebase()
+    _initFirebase();
   }
 
   Future<void> _initializeApp() async {

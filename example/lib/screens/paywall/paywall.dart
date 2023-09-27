@@ -211,6 +211,20 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           ),
                         ),
                       ),
+                      SizedBox(width: 16),
+                      GestureDetector(
+                        onTap: () {
+                          _restore(); // Replace with your Terms URL
+                        },
+                        child: Text(
+                          'Restore purchase',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 12,
+                            decoration: TextDecoration.underline, // Add underline for clickable appearance
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 30),
