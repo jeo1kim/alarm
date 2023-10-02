@@ -1,4 +1,5 @@
 import 'package:alarm/alarm.dart';
+import 'package:alarm_example/screens/alarm/verse_preview.dart';
 import 'package:flutter/material.dart';
 
 import '../../app_data.dart';
@@ -16,7 +17,33 @@ class _VerseCategoryScreenState extends State<VerseCategoryScreen> {
   bool loading = false;
   bool isPremium = appData.entitlementIsActive;
 
+  List<Map<String, String>> getVersesForCategory(String category) {
+    // Hardcoded data for example purposes
+    final data = {
+      'General': [
+        {'text': 'For God so loved the world...', 'verse': 'John 3:16'},
+        {
+          'text': 'In the beginning God created the heavens and the earth.',
+          'verse': 'Genesis 1:1'
+        },
+      ],
+      'Prayer': [
+        {
+          'text': 'This, then, is how you should pray...',
+          'verse': 'Matthew 6:9-13'
+        },
+      ],
+      // ... add other categories and verses here
+    };
+
+    // Return the verses for the given category, or an empty list if the category is not found
+    return data[category] ?? [];
+  }
+
   final categories = {
+    "Free": [
+      "General",
+    ],
     "God": [
       "Prayer",
       "Worship",
@@ -124,10 +151,29 @@ class _VerseCategoryScreenState extends State<VerseCategoryScreen> {
                           itemBuilder: (context, index) {
                             final item = category.value[index];
                             return Card(
-                              color: Colors.white.withOpacity(0.05),
+                              shape: Border(),
+                              color: isPremium || category.key == "Free"
+                                  ? kBackgroundColor.withOpacity(.9)
+                                  : Colors.white.withOpacity(0.05),
                               child: InkWell(
                                 onTap: () => {
-                                  if (isPremium) {performMagic(context)} else {}
+                                  if (!isPremium)
+                                    {
+                                      // performMagic(context)
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => VersesScreen(
+                                            title: item,
+                                            verses: getVersesForCategory(
+                                                item), // Replace with your function to get verses for the category
+                                          ),
+                                        ),
+                                      )
+                                    }
+                                  else {
+
+                                  }
                                 },
                                 child: GridTile(
                                   child: Stack(
@@ -138,12 +184,14 @@ class _VerseCategoryScreenState extends State<VerseCategoryScreen> {
                                         right: 4,
                                         top: 4,
                                         child: Icon(
-                                          isPremium
+                                          isPremium || category.key == "Free"
                                               ? Icons.check
                                               : Icons.lock,
-                                          color: isPremium
+                                          color: isPremium ||
+                                                  category.key == "Free"
                                               ? Colors.green
-                                              : Colors.black26, // Replace with your color
+                                              : Colors
+                                                  .black26, // Replace with your color
                                         ),
                                       )
                                     ],
