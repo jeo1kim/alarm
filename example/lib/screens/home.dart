@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:alarm/alarm.dart';
 import 'package:alarm_example/screens/edit_alarm.dart';
@@ -17,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../app_data.dart';
 import '../theme/theme_constants.dart';
 import '../utils/constant.dart';
+import '../utils/premium_user.dart';
 import '../utils/store_config.dart';
 
 class AlarmHomeScreen extends StatefulWidget {
@@ -33,64 +33,10 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   int alarmCount = 0;
   bool isPremium = false;
 
-  Future<bool> isPremiumUser() async {
-    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-    if (customerInfo.entitlements.all[entitlementID] != null &&
-        customerInfo.entitlements.all[entitlementID]?.isActive == true) {
-      // User has subscription, show them the feature
-      return true;
-    }
-    return false;
-  }
-
-  void performMagic() async {
-    if (await isPremiumUser()) {
-      // User has subscription, show them the feature
-    } else {
-      Offerings? offerings;
-      try {
-        offerings = await Purchases.getOfferings();
-      } on PlatformException catch (e) {
-        // Error finding the offerings, handle the error.
-      }
-
-      if (offerings == null || offerings.current == null) {
-        // offerings are empty, show a message to your user
-      } else {
-        // current offering is available, show paywall
-        // ignore: use_build_context_synchronously
-        await showModalBottomSheet(
-          isDismissible: true,
-          isScrollControlled: true,
-          backgroundColor: kBackgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-          ),
-          context: context,
-          builder: (BuildContext context) {
-            return FractionallySizedBox(
-              child: StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setModalState) {
-                return PaywallScreen(
-                  offering: offerings?.current,
-                );
-              }),
-            );
-          },
-        );
-      }
-    }
-  }
-
   Future<void> initPlatformState() async {
     // Enable debug logs before calling `configure`.
     await Purchases.setDebugLogsEnabled(true);
 
-    /*
-    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
-
-    - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
-    */
     PurchasesConfiguration configuration;
     if (StoreConfig.isForGooglePlay()) {
       configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
@@ -192,7 +138,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
             IconButton(
               icon: Icon(Icons.arrow_upward),
               onPressed: () {
-                performMagic();
+                performMagic(context);
               },
             ),
           IconButton(
@@ -251,10 +197,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
             // ),
             FloatingActionButton(
               onPressed: () => {
-                if (alarmCount < 1 || appData.entitlementIsActive)
-                  {launchCreateAlarmDialog(null)}
-                else
-                  {performMagic()}
+                launchCreateAlarmDialog(null)
               },
               child: const Icon(Icons.alarm_add_rounded, size: 33),
             ),

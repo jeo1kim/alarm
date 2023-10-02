@@ -8,7 +8,8 @@ class Verse {
 }
 
 class PhraseRepository {
-  static final List<Verse> verses = [
+  static final List<Verse> verses
+  = [
     Verse(
       verse: "John 3:16",
       phrase: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",

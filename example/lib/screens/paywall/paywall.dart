@@ -25,6 +25,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   String headerText = 'Start Your Free Trial';
   String subtitle1 = 'Try free and subscribe';
   String subtitle2 = 'No charge until';
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -53,7 +54,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   _restore() async {
-
+    setState(() {
+      _isLoading = true;
+    });
     /*
       How to login and identify your users with the Purchases SDK.
 
@@ -71,7 +74,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
               content: e.message ?? "Unknown error",
               buttonText: 'OK'));
     }
-
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   // Function to open a URL in the browser
@@ -108,12 +113,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   ),
                   const SizedBox(height: 20),
                   const Padding(
-                    padding: EdgeInsets.only(left: 100),
+                    padding: EdgeInsets.only(left: 50),
                     child: Column(
                       children: [
-                        CheckRow(text: 'Multiple alarms'),
+                        CheckRow(text: 'Support development 🙂'),
+                        CheckRow(text: 'Unlimited alarms'),
+                        CheckRow(text: '365 Unique Bible verses'),
                         CheckRow(text: 'Premium songs'),
-                        CheckRow(text: '100+ Bible verses'),
                       ],
                     ),
                   ),
