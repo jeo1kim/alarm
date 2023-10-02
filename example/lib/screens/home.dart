@@ -18,6 +18,7 @@ import '../theme/theme_constants.dart';
 import '../utils/constant.dart';
 import '../utils/premium_user.dart';
 import '../utils/store_config.dart';
+import 'alarm/verse_category.dart';
 
 class AlarmHomeScreen extends StatefulWidget {
   const AlarmHomeScreen({Key? key}) : super(key: key);
@@ -122,6 +123,24 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     if (res != null && res == true) loadAlarms();
   }
 
+  Future<void> launchCategorySelectionDialog() async {
+    final res = await showModalBottomSheet<bool?>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: kBackgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+        ),
+        builder: (context) {
+          return FractionallySizedBox(
+            heightFactor: 0.9,
+            child: VerseCategoryScreen(),
+          );
+        });
+
+    if (res != null && res == true) loadAlarms();
+  }
+
   @override
   void dispose() {
     subscription?.cancel();
@@ -178,7 +197,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(30),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // FloatingActionButton(
             //   onPressed: () {
@@ -196,9 +215,11 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
             //   child: const Text("RING NOW", textAlign: TextAlign.center),
             // ),
             FloatingActionButton(
-              onPressed: () => {
-                launchCreateAlarmDialog(null)
-              },
+              onPressed: () => {launchCategorySelectionDialog()},
+              child: const Icon(Icons.category_outlined, size: 33),
+            ),
+            FloatingActionButton(
+              onPressed: () => {launchCreateAlarmDialog(null)},
               child: const Icon(Icons.alarm_add_rounded, size: 33),
             ),
           ],
