@@ -57,8 +57,17 @@ class VersesScreen extends StatelessWidget {
                   filter: ImageFilter.blur(sigmaX: 2, sigmaY: 3),
                   child: Container(
                     height: 500,
-                    color: Colors.grey.withOpacity(0.1),
-
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.grey.withOpacity(0.1),
+                        ],
+                        stops: [0.0, 0.5], // Adjust stops to control the blending effect
+                      ),
+                    ),
                   ),
                 ),
               ),
