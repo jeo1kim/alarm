@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../app_data.dart';
 import '../../utils/constant.dart';
+import '../../utils/premium_user.dart';
 import '../../widgets/native_dialog.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -126,6 +127,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
               child: ListTile(
                 title: Text('Restore purchase'),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                performMagic(context);
+              },
+              child: ListTile(
+                title: Text('Upgrade to Premium'),
                 trailing: Icon(Icons.arrow_forward),
               ),
             ),

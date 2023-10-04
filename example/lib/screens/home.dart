@@ -136,19 +136,18 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rise Alarm'),
-        actions: [
-          if (!isPremium)
-            IconButton(
-              icon: Icon(Icons.arrow_upward),
-              onPressed: () {
-                performMagic(context);
-              },
-            ),
-          IconButton(
-            icon: Icon(Icons.settings),
+        leading: Builder( // Add this Builder widget
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu), // Hamburger menu icon
             onPressed: () {
               navigateToSettingsScreen();
             },
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => launchCreateAlarmDialog(null),
           ),
         ],
       ),
@@ -202,7 +201,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
                       title: categoryTitle,
                       verseCount: verses.length,
                       isUnlocked:
-                          true, // You can adjust this based on your logic
+                          categoryTitle == "Free" ? true : isPremium
                     ),
                   );
                 },
@@ -211,35 +210,6 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(30),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            // FloatingActionButton(
-            //   onPressed: () {
-            //     final alarmSettings = AlarmSettings(
-            //       id: 42,
-            //       dateTime: DateTime.now(),
-            //       assetAudioPath: 'assets/piano.mp3',
-            //       vibrate: false,
-            //       volumeMax: false,
-            //     );
-            //     Alarm.set(alarmSettings: alarmSettings);
-            //   },
-            //   backgroundColor: Colors.red,
-            //   heroTag: null,
-            //   child: const Text("RING NOW", textAlign: TextAlign.center),
-            // ),
-
-            FloatingActionButton(
-              onPressed: () => {launchCreateAlarmDialog(null)},
-              child: const Icon(Icons.alarm_add_rounded, size: 33),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
