@@ -879,7 +879,7 @@ class PhraseRepository {
 
   static Map<String, List<Verse>> getVerseCategories() {
     return {
-      'Free': freeVerses,
+      'Free verses': freeVerses,
       'Calm': calmVerses,
       'Wealth': wealthVerses,
       'Love': loveVerses,

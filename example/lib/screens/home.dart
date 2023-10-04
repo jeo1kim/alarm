@@ -136,7 +136,8 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rise Alarm'),
-        leading: Builder( // Add this Builder widget
+        leading: Builder(
+          // Add this Builder widget
           builder: (context) => IconButton(
             icon: Icon(Icons.menu), // Hamburger menu icon
             onPressed: () {
@@ -196,12 +197,17 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
                       .elementAt(index);
                   final verses =
                       PhraseRepository.getVerseCategories()[categoryTitle]!;
-                  return VerseCategoryContainer(
-                    category: VerseCategory(
-                      title: categoryTitle,
-                      verseCount: verses.length,
-                      isUnlocked:
-                          categoryTitle == "Free" ? true : isPremium
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      right: index == PhraseRepository.getVerseCategories().keys.length - 1 ? 20 : 0, 
+                    ),
+                    child: VerseCategoryContainer(
+                      category: VerseCategory(
+                        title: categoryTitle,
+                        verseCount: verses.length,
+                        isUnlocked:
+                        categoryTitle == "Free verses" ? true : isPremium,
+                      ),
                     ),
                   );
                 },

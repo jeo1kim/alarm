@@ -11,7 +11,7 @@ class VerseCategoryContainer extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      width: screenWidth - 60,
+      width: screenWidth - 80,
       margin: EdgeInsets.only(left: 20, bottom: 40),
       padding: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
