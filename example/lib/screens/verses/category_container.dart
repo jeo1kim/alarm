@@ -13,12 +13,17 @@ class VerseCategoryContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return InkWell( // Wrap the Container with InkWell
+    return InkWell(
+      // Wrap the Container with InkWell
       onTap: () {
         // Navigate to VerseScreen on tap
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => VersesScreen(title: category.title, verses: category.verses)), // Assuming you have a VerseScreen that takes a category as an argument
+          MaterialPageRoute(
+              builder: (context) => VersesScreen(
+                  title: category.title,
+                  verses: category.verses,
+                  isUnlocked: category.isUnlocked)),
         );
       },
       child: Container(
@@ -51,8 +56,13 @@ class VerseCategoryContainer extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VersesScreen(title: category.title, verses: category.verses)), // Assuming you have a VerseScreen that takes a category as an argument
-                );              },
+                  MaterialPageRoute(
+                      builder: (context) => VersesScreen(
+                          title: category.title,
+                          verses: category.verses,
+                          isUnlocked: category.isUnlocked,)),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue,
                 shape: RoundedRectangleBorder(
@@ -68,7 +78,6 @@ class VerseCategoryContainer extends StatelessWidget {
   }
 }
 
-
 // Assuming you have a VerseCategory model like this:
 class VerseCategory {
   final String title;
@@ -76,10 +85,9 @@ class VerseCategory {
   final bool isUnlocked;
   final List<Verse> verses;
 
-  VerseCategory({
-    required this.title,
-    required this.verseCount,
-    required this.isUnlocked,
-    required this.verses
-  });
+  VerseCategory(
+      {required this.title,
+      required this.verseCount,
+      required this.isUnlocked,
+      required this.verses});
 }
