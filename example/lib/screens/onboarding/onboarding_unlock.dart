@@ -29,7 +29,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
   void initState() {
     super.initState();
 
-    verse = PhraseRepository.getRandomVerse();
+    verse = PhraseRepository.getRandomFreeVerse();
     verseTitle = "Psalm 119:147";
     correctPhrase = "I rise before dawn and cry for help. I wait for your words.";
 

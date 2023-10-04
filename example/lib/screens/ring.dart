@@ -29,7 +29,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   void initState() {
     super.initState();
 
-    verse = PhraseRepository.getRandomVerse();
+    verse = PhraseRepository.getRandomFreeVerse();
     verseTitle = verse.verse;
     correctPhrase = verse.phrase;
 
