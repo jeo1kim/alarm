@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:alarm/alarm.dart';
 import 'package:alarm_example/screens/edit_alarm.dart';
-import 'package:alarm_example/screens/paywall/paywall.dart';
 import 'package:alarm_example/screens/ring.dart';
 import 'package:alarm_example/screens/settings/settings.dart';
 import 'package:alarm_example/screens/verses/category_container.dart';
 import 'package:alarm_example/widgets/tile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +18,6 @@ import '../theme/theme_constants.dart';
 import '../utils/constant.dart';
 import '../utils/premium_user.dart';
 import '../utils/store_config.dart';
-import 'alarm/verse_category.dart';
 
 class AlarmHomeScreen extends StatefulWidget {
   const AlarmHomeScreen({Key? key}) : super(key: key);
@@ -199,14 +196,14 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
                       PhraseRepository.getVerseCategories()[categoryTitle]!;
                   return Padding(
                     padding: EdgeInsets.only(
-                      right: index == PhraseRepository.getVerseCategories().keys.length - 1 ? 20 : 0, 
+                      right: index == PhraseRepository.getVerseCategories().keys.length - 1 ? 20 : 0,
                     ),
                     child: VerseCategoryContainer(
                       category: VerseCategory(
                         title: categoryTitle,
                         verseCount: verses.length,
-                        isUnlocked:
-                        categoryTitle == "Free verses" ? true : isPremium,
+                        isUnlocked: categoryTitle == "Free verses" ? true : isPremium,
+                        verses: verses
                       ),
                     ),
                   );

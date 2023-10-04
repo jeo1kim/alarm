@@ -1,9 +1,11 @@
 // verses_screen.dart
 import 'package:flutter/material.dart';
 
+import '../../data/verse_repository.dart';
+
 class VersesScreen extends StatelessWidget {
   final String title;
-  final List<Map<String, String>> verses;
+  final List<Verse> verses;
 
   VersesScreen({required this.title, required this.verses});
 
@@ -18,8 +20,24 @@ class VersesScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final verse = verses[index];
           return ListTile(
-            title: Text(verse['text']!),
-            subtitle: Text(verse['verse']!),
+            minVerticalPadding: 30,
+            title: Text(
+              verse.verse,
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Padding( // Wrap the subtitle with Padding
+              padding: const EdgeInsets.only(top: 14.0), // Add padding to the top
+              child: Text(
+                verse.phrase,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
           );
         },
       ),
