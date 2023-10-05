@@ -1,3 +1,4 @@
+import 'package:alarm_example/utils/premium_user.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/data/verse_repository.dart';
 
@@ -26,10 +27,12 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
   final FocusNode _hiddenTextFieldFocus = FocusNode();
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
 
-    verse = PhraseRepository.getRandomFreeVerse();
+    verse = await isPremiumUser()
+        ? PhraseRepository.getPremiumRandomFreeVerse()
+        : PhraseRepository.getRandomFreeVerse();
     verseTitle = "Psalm 119:147";
     correctPhrase = "I rise before dawn and cry for help. I wait for your words.";
 

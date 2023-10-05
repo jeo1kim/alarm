@@ -838,10 +838,6 @@ class PhraseRepository {
       phrase: "Do to others as you would have them do to you.",
     ),
     Verse(
-      verse: "John 14:6",
-      phrase: "Jesus answered, I am the way and the truth and the life. No one comes to the Father except through me.",
-    ),
-    Verse(
       verse: "Proverbs 10:22",
       phrase: "The blessing of the Lord brings wealth, without painful toil for it.",
     ),
@@ -862,10 +858,6 @@ class PhraseRepository {
       phrase: "Let all that you do be done in love.",
     ),
     Verse(
-      verse: "1 Corinthians 13:4-7",
-      phrase: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. It always protects, always trusts, always hopes, always perseveres.",
-    ),
-    Verse(
       verse: "Hebrews 13:8",
       phrase: "Jesus Christ is the same yesterday, today and forever.",
     ),
@@ -874,6 +866,13 @@ class PhraseRepository {
   static Verse getRandomFreeVerse() {
     final random = Random();
     final index = random.nextInt(freeVerses.length);
+    return freeVerses[index];
+  }
+
+  static Verse getPremiumRandomFreeVerse() {
+    final random = Random();
+    final allVerses = getVerseCategories().values.expand((verses) => verses).toList();
+    final index = random.nextInt(allVerses.length);
     return freeVerses[index];
   }
 

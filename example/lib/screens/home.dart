@@ -143,8 +143,13 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
           ),
         ),
         actions: [
+          if (!isPremium)
+            IconButton(
+              icon: Icon(Icons.add_shopping_cart),
+              onPressed: () => performMagic(context),
+            ),
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add_alarm),
             onPressed: () => launchCreateAlarmDialog(null),
           ),
         ],
@@ -181,7 +186,6 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
                       ),
                     ),
             ),
-            // The new horizontal scroll view with multiple PackageContainer items
             Container(
               height: 200, // Adjust the height as needed
               width: 400,
