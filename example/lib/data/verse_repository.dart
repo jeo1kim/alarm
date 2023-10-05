@@ -7,537 +7,353 @@ class Verse {
   Verse({required this.verse, required this.phrase});
 }
 
-class PremiumPhraseRepository {
-  static final List<Verse> verses
-  = [
-    // Spiritual Growth and Virtues
+
+class PhraseRepository {
+
+  static Verse getRandomFreeVerse() {
+    final random = Random();
+    final index = random.nextInt(freeVerses.length);
+    return freeVerses[index];
+  }
+
+  static Verse getPremiumRandomFreeVerse() {
+    final random = Random();
+    final allVerses = getVerseCategories().values.expand((verses) => verses).toList();
+    final index = random.nextInt(allVerses.length);
+    return freeVerses[index];
+  }
+
+  static Map<String, List<Verse>> getVerseCategories() {
+    return {
+      'Free verses': freeVerses,
+      'Calm': calmVerses,
+      'Happy': happyVerses,
+      'Wealth': wealthVerses,
+      'Love': loveVerses,
+      'Motivation': motivationVerses,
+      'Wisdom': wisdomVerses,
+    };
+  }
+
+  static final List<Verse> wisdomVerses = [
     Verse(
-      verse: "Proverbs 3:5",
-      phrase: "Trust in the Lord with all your heart and lean not on your own understanding.",
-    ),
-    Verse(
-      verse: "Psalm 46:10",
-      phrase: "Be still and know that I am God.",
-    ),
-    Verse(
-      verse: "Philippians 4:13",
-      phrase: "I can do all things through Christ who strengthens me.",
-    ),
-    Verse(
-      verse: "1 John 4:8",
-      phrase: "God is love.",
-    ),
-    Verse(
-      verse: "2 Timothy 1:7",
-      phrase: "For God gave us a spirit not of fear but of power and love and self-control.",
+      verse: "Proverbs 3:7",
+      phrase: "Do not be wise in your own eyes; fear the LORD and shun evil.",
     ),
 
-// Personal Development and Well-being
-    Verse(
-      verse: "Psalm 23:1",
-      phrase: "The Lord is my shepherd, I shall not want.",
-    ),
-    Verse(
-      verse: "Matthew 11:28",
-      phrase: "Come to me, all who labor and are heavy laden, and I will give you rest.",
-    ),
-    Verse(
-      verse: "Proverbs 17:22",
-      phrase: "A cheerful heart is good medicine.",
-    ),
-
-// Relationships and Community
-    Verse(
-      verse: "Proverbs 27:17",
-      phrase: "As iron sharpens iron, so one person sharpens another.",
-    ),
-    Verse(
-      verse: "Ephesians 4:26",
-      phrase: "In your anger do not sin.",
-    ),
-    Verse(
-      verse: "1 Peter 4:8",
-      phrase: "Above all, love each other deeply, because love covers over a multitude of sins.",
-    ),
-
-// Practical Living and Ethics
-    Verse(
-      verse: "Matthew 6:21",
-      phrase: "For where your treasure is, there your heart will be also.",
-    ),
-    Verse(
-      verse: "Colossians 3:23",
-      phrase: "Whatever you do, work at it with all your heart, as working for the Lord.",
-    ),
-    Verse(
-      verse: "Micah 6:8",
-      phrase: "Act justly, love mercy and walk humbly with your God.",
-    ),
-
-// Purpose and Life Calling
-    Verse(
-      verse: "Jeremiah 29:11",
-      phrase: "For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.",
-    ),
-    Verse(
-      verse: "Ephesians 2:10",
-      phrase: "For we are his workmanship, created in Christ Jesus for good works.",
-    ),
-
-// Dealing with Adversity
-    Verse(
-      verse: "Romans 8:28",
-      phrase: "And we know that in all things God works for the good of those who love him.",
-    ),
-    Verse(
-      verse: "James 1:2-3",
-      phrase: "Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds, because you know that the testing of your faith produces perseverance.",
-    ),
-
-// Leadership
-    Verse(
-      verse: "Proverbs 11:14",
-      phrase: "Where there is no guidance, a people falls, but in an abundance of counselors there is safety.",
-    ),
-    Verse(
-      verse: "Mark 10:45",
-      phrase: "For even the Son of Man did not come to be served, but to serve.",
-    ),
-
-// Additional Verses
-    Verse(
-      verse: "Psalm 119:105",
-      phrase: "Your word is a lamp to my feet and a light to my path.",
-    ),
-    Verse(
-      verse: "Romans 12:2",
-      phrase: "Do not conform to the pattern of this world, but be transformed by the renewing of your mind.",
-    ),
-    Verse(
-      verse: "Galatians 5:22-23",
-      phrase: "The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control.",
-    ),
-    Verse(
-      verse: "Matthew 28:19-20",
-      phrase: "Go and make disciples of all nations, baptizing them and teaching them to obey everything I have commanded you.",
-    ),
-    Verse(
-      verse: "Romans 5:8",
-      phrase: "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us.",
-    ),
-    Verse(
-      verse: "Philippians 4:6",
-      phrase: "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.",
-    ),
-    Verse(
-      verse: "Isaiah 40:31",
-      phrase: "But those who hope in the Lord will renew their strength. They will soar on wings like eagles.",
-    ),
-    Verse(
-      verse: "Psalm 37:4",
-      phrase: "Delight yourself in the Lord, and he will give you the desires of your heart.",
-    ),
-    Verse(
-      verse: "1 Corinthians 10:13",
-      phrase: "No temptation has overtaken you except what is common to mankind. And God is faithful.",
-    ),
-    Verse(
-      verse: "Psalm 150:6",
-      phrase: "Let everything that has breath praise the Lord.",
-    ),
-    Verse(
-      verse: "John 14:6",
-      phrase: "Jesus said, I am the way and the truth and the life. No one comes to the Father except through me.",
-    ),
-    Verse(
-      verse: "Romans 6:23",
-      phrase: "For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.",
-    ),
-    Verse(
-      verse: "Psalm 136:1",
-      phrase: "Give thanks to the Lord, for he is good. His love endures forever.",
-    ),
-    Verse(
-      verse: "Romans 8:38-39",
-      phrase: "Neither death nor life, neither angels nor demons, can separate us from the love of God that is in Christ Jesus our Lord.",
-    ),
-    Verse(
-      verse: "Matthew 22:37",
-      phrase: "Love the Lord your God with all your heart and with all your soul and with all your mind.",
-    ),
-    Verse(
-      verse: "Isaiah 41:10",
-      phrase: "Do not fear, for I am with you; do not be dismayed, for I am your God.",
-    ),
-    Verse(
-      verse: "2 Corinthians 5:17",
-      phrase: "If anyone is in Christ, the new creation has come: The old has gone, the new is here.",
-    ),
-    Verse(
-      verse: "Hebrews 13:8",
-      phrase: "Jesus Christ is the same yesterday and today and forever.",
-    ),
-    Verse(
-      verse: "Psalm 18:2",
-      phrase: "The Lord is my rock, my fortress and my deliverer.",
-    ),
-    Verse(
-      verse: "1 John 1:9",
-      phrase: "If we confess our sins, he is faithful and just and will forgive us our sins and purify us from all unrighteousness.",
-    ),
-    Verse(
-      verse: "Revelation 21:4",
-      phrase: "He will wipe every tear from their eyes. There will be no more death or mourning or crying or pain.",
-    ),
-    Verse(
-      verse: "Proverbs 3:6",
-      phrase: "In all your ways submit to him, and he will make your paths straight.",
-    ),
-    Verse(
-      verse: "John 10:10",
-      phrase: "I have come that they may have life, and have it to the full.",
-    ),
-    Verse(
-      verse: "Isaiah 53:5",
-      phrase: "He was pierced for our transgressions, he was crushed for our iniquities.",
-    ),
-    Verse(
-      verse: "Psalm 27:1",
-      phrase: "The Lord is my light and my salvation, whom shall I fear.",
-    ),
-    Verse(
-      verse: "Psalm 19:14",
-      phrase: "May the words of my mouth and the meditation of my heart be pleasing to you, O Lord.",
-    ),
-    Verse(
-      verse: "Romans 15:4",
-      phrase: "Everything that was written in the past was written to teach us, so that through the endurance taught in the Scriptures we might have hope.",
-    ),
-    Verse(
-      verse: "James 4:7",
-      phrase: "Submit yourselves, then, to God. Resist the devil, and he will flee from you.",
-    ),
-    Verse(
-      verse: "Psalm 119:11",
-      phrase: "I have hidden your word in my heart that I might not sin against you.",
-    ),
-    Verse(
-      verse: "Proverbs 18:10",
-      phrase: "The name of the Lord is a fortified tower; the righteous run to it and are safe.",
-    ),
-    Verse(
-      verse: "John 8:32",
-      phrase: "Then you will know the truth, and the truth will set you free.",
-    ),
-    Verse(
-      verse: "Psalm 34:8",
-      phrase: "Taste and see that the Lord is good; blessed is the one who takes refuge in him.",
-    ),
-    Verse(
-      verse: "Romans 10:9",
-      phrase: "If you declare with your mouth, Jesus is Lord, and believe in your heart that God raised him from the dead, you will be saved.",
-    ),
-    Verse(
-      verse: "Psalm 28:7",
-      phrase: "The Lord is my strength and my shield; my heart trusts in him, and he helps me.",
-    ),
-    Verse(
-      verse: "Psalm 37:5",
-      phrase: "Commit your way to the Lord; trust in him and he will do this.",
-    ),
-    Verse(
-      verse: "John 15:12",
-      phrase: "This is my commandment, Love each other as I have loved you.",
-    ),
-    Verse(
-      verse: "Romans 12:12",
-      phrase: "Be joyful in hope, patient in affliction, faithful in prayer.",
-    ),
-    Verse(
-      verse: "Psalm 56:3",
-      phrase: "When I am afraid, I put my trust in you.",
-    ),
-    Verse(
-      verse: "Philippians 4:8",
-      phrase: "Whatever is true, whatever is noble, whatever is right, think about such things.",
-    ),
-    Verse(
-      verse: "Psalm 16:8",
-      phrase: "I keep my eyes always on the Lord. With him at my right hand, I will not be shaken.",
-    ),
-    // Spiritual Growth and Virtues
-    Verse(
-      verse: "Psalm 119:105",
-      phrase: "Your word is a lamp to my feet and a light to my path.",
-    ),
     Verse(
       verse: "James 1:5",
       phrase: "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you.",
     ),
+
     Verse(
-      verse: "1 Peter 5:7",
-      phrase: "Cast all your anxiety on him because he cares for you.",
-    ),
-    Verse(
-      verse: "2 Corinthians 12:9",
-      phrase: "My grace is sufficient for you, for my power is made perfect in weakness.",
+      verse: "Proverbs 1:7",
+      phrase: "The fear of the LORD is the beginning of knowledge, but fools despise wisdom and instruction.",
     ),
 
-// Personal Development and Well-being
     Verse(
-      verse: "Psalm 139:14",
-      phrase: "I praise you because I am fearfully and wonderfully made.",
-    ),
-    Verse(
-      verse: "Proverbs 16:3",
-      phrase: "Commit to the Lord whatever you do, and he will establish your plans.",
-    ),
-    Verse(
-      verse: "Isaiah 26:3",
-      phrase: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.",
+      verse: "Proverbs 2:6",
+      phrase: "For the LORD gives wisdom; from his mouth come knowledge and understanding.",
     ),
 
-// Relationships and Community
-    Verse(
-      verse: "1 John 4:7",
-      phrase: "Dear friends, let us love one another, for love comes from God.",
-    ),
-    Verse(
-      verse: "Proverbs 15:1",
-      phrase: "A gentle answer turns away wrath, but a harsh word stirs up anger.",
-    ),
-    Verse(
-      verse: "Hebrews 10:24-25",
-      phrase: "And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together.",
-    ),
-
-// Practical Living and Ethics
-    Verse(
-      verse: "Luke 6:31",
-      phrase: "Do to others as you would have them do to you.",
-    ),
-    Verse(
-      verse: "Proverbs 11:25",
-      phrase: "A generous person will prosper; whoever refreshes others will be refreshed.",
-    ),
-    Verse(
-      verse: "Micah 7:18",
-      phrase: "Who is a God like you, who pardons sin and forgives the transgression of the remnant of his inheritance?",
-    ),
-
-// Purpose and Life Calling
-    Verse(
-      verse: "Ecclesiastes 3:1",
-      phrase: "There is a time for everything, and a season for every activity under the heavens.",
-    ),
-    Verse(
-      verse: "Romans 8:14",
-      phrase: "For those who are led by the Spirit of God are the children of God.",
-    ),
-
-// Dealing with Adversity
-    Verse(
-      verse: "Psalm 34:18",
-      phrase: "The Lord is close to the brokenhearted and saves those who are crushed in spirit.",
-    ),
-    Verse(
-      verse: "1 Corinthians 16:14",
-      phrase: "Do everything in love.",
-    ),
-    Verse(
-      verse: "Romans 5:3-4",
-      phrase: "We also glory in our sufferings, because we know that suffering produces perseverance; perseverance, character; and character, hope.",
-    ),
-
-// Leadership
     Verse(
       verse: "Proverbs 4:7",
-      phrase: "Wisdom is the principal thing; therefore get wisdom. And in all your getting, get understanding.",
-    ),
-    Verse(
-      verse: "Luke 22:26",
-      phrase: "But you are not to be like that. Instead, the greatest among you should be like the youngest, and the one who rules like the one who serves.",
+      phrase: "Wisdom is the principal thing; therefore get wisdom: and with all thy getting get understanding.",
     ),
 
-// Additional Verses
     Verse(
-      verse: "Psalm 90:12",
-      phrase: "Teach us to number our days, that we may gain a heart of wisdom.",
-    ),
-    Verse(
-      verse: "Matthew 5:16",
-      phrase: "Let your light shine before others, that they may see your good deeds and glorify your Father in heaven.",
-    ),
-    Verse(
-      verse: "Galatians 6:9",
-      phrase: "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.",
-    ),
-    Verse(
-      verse: "Psalm 37:7",
-      phrase: "Be still before the Lord and wait patiently for him.",
-    ),
-    Verse(
-      verse: "John 14:27",
-      phrase: "Peace I leave with you; my peace I give you. Not as the world gives do I give to you. Let not your hearts be troubled, neither let them be afraid.",
-    ),
-    Verse(
-      verse: "Psalm 20:4",
-      phrase: "May he give you the desire of your heart and make all your plans succeed.",
-    ),
-    Verse(
-      verse: "Isaiah 40:29",
-      phrase: "He gives strength to the weary and increases the power of the weak.",
-    ),
-    Verse(
-      verse: "1 Corinthians 6:19-20",
-      phrase: "Do you not know that your bodies are temples of the Holy Spirit, who is in you, whom you have received from God? You are not your own; you were bought at a price.",
-    ),
-    Verse(
-      verse: "1 Thessalonians 5:18",
-      phrase: "Give thanks in all circumstances; for this is God's will for you in Christ Jesus.",
-    ),
-    Verse(
-      verse: "Psalm 31:24",
-      phrase: "Be strong and take heart, all you who hope in the Lord.",
-    ),
-    Verse(
-      verse: "Proverbs 3:6",
-      phrase: "In all your ways acknowledge him, and he will make straight your paths.",
-    ),
-    Verse(
-      verse: "Isaiah 43:2",
-      phrase: "When you pass through the waters, I will be with you; and when you pass through the rivers, they will not sweep over you.",
-    ),
-    Verse(
-      verse: "Psalm 138:8",
-      phrase: "The Lord will fulfill his purpose for me; your steadfast love, O Lord, endures forever.",
-    ),
-    Verse(
-      verse: "Galatians 5:14",
-      phrase: "For the entire law is fulfilled in keeping this one command: Love your neighbor as yourself.",
-    ),
-    Verse(
-      verse: "Psalm 51:10",
-      phrase: "Create in me a pure heart, O God, and renew a steadfast spirit within me.",
-    ),
-    Verse(
-      verse: "Psalm 73:26",
-      phrase: "My flesh and my heart may fail, but God is the strength of my heart and my portion forever.",
-    ),
-    Verse(
-      verse: "Romans 8:18",
-      phrase: "I consider that our present sufferings are not worth comparing with the glory that will be revealed in us.",
-    ),
-    Verse(
-      verse: "Philippians 1:6",
-      phrase: "Being confident of this, that he who began a good work in you will carry it on to completion until the day of Christ Jesus.",
-    ),
-    Verse(
-      verse: "Psalm 145:9",
-      phrase: "The Lord is good to all; he has compassion on all he has made.",
-    ),
-    Verse(
-      verse: "Isaiah 54:10",
-      phrase: "Though the mountains be shaken and the hills be removed, yet my unfailing love for you will not be shaken.",
-    ),
-    Verse(
-      verse: "Psalm 16:11",
-      phrase: "You make known to me the path of life; you will fill me with joy in your presence, with eternal pleasures at your right hand.",
-    ),
-    Verse(
-      verse: "Proverbs 16:9",
-      phrase: "In their hearts humans plan their course, but the Lord establishes their steps.",
-    ),
-    Verse(
-      verse: "Romans 8:31",
-      phrase: "If God is for us, who can be against us?",
-    ),
-    Verse(
-      verse: "Psalm 143:8",
-      phrase: "Let the morning bring me word of your unfailing love, for I have put my trust in you.",
-    ),
-    Verse(
-      verse: "Romans 14:8",
-      phrase: "If we live, we live for the Lord; and if we die, we die for the Lord. So, whether we live or die, we belong to the Lord.",
-    ),
-    Verse(
-      verse: "Psalm 62:7",
-      phrase: "My salvation and my honor depend on God; he is my mighty rock, my refuge.",
-    ),
-    Verse(
-      verse: "Romans 12:15",
-      phrase: "Rejoice with those who rejoice; mourn with those who mourn.",
-    ),
-    Verse(
-      verse: "Psalm 147:3",
-      phrase: "He heals the brokenhearted and binds up their wounds.",
-    ),
-    Verse(
-      verse: "Romans 12:9",
-      phrase: "Love must be sincere. Hate what is evil; cling to what is good.",
-    ),
-    Verse(
-      verse: "Psalm 42:11",
-      phrase: "Why, my soul, are you downcast? Put your hope in God, for I will yet praise him, my Savior and my God.",
-    ),
-    Verse(
-      verse: "1 Corinthians 15:58",
-      phrase: "Stand firm. Let nothing move you. Always give yourselves fully to the work of the Lord, because you know that your labor in the Lord is not in vain.",
-    ),
-    Verse(
-      verse: "Psalm 118:24",
-      phrase: "This is the day the Lord has made; let us rejoice and be glad in it.",
-    ),
-    Verse(
-      verse: "Psalm 119:89",
-      phrase: "Your word, Lord, is eternal; it stands firm in the heavens.",
-    ),
-    Verse(
-      verse: "Psalm 136:1",
-      phrase: "Give thanks to the Lord, for he is good. His love endures forever.",
-    ),
-    Verse(
-      verse: "Isaiah 12:2",
-      phrase: "Surely God is my salvation; I will trust and not be afraid.",
+      verse: "Proverbs 9:10",
+      phrase: "The fear of the LORD is the beginning of wisdom, and knowledge of the Holy One is understanding.",
     ),
 
-  ];
-
-  static Verse getRandomVerse() {
-    final random = Random();
-    final index = random.nextInt(verses.length);
-    return verses[index];
-  }
-}
-
-class PhraseRepository {
-
-  static final List<Verse> wisdomVerses = [
     Verse(
-      verse: "Philippians 4:7",
-      phrase: "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+      verse: "Ecclesiastes 7:12",
+      phrase: "For wisdom is a defense as money is a defense, but the excellence of knowledge is that wisdom gives life to those who have it.",
+    ),
+
+    Verse(
+      verse: "Colossians 2:3",
+      phrase: "In whom are hidden all the treasures of wisdom and knowledge.",
+    ),
+
+    Verse(
+      verse: "Proverbs 13:10",
+      phrase: "Where there is strife, there is pride, but wisdom is found in those who take advice.",
+    ),
+
+    Verse(
+      verse: "Proverbs 16:16",
+      phrase: "How much better to get wisdom than gold, to get insight rather than silver!",
+    ),
+
+    Verse(
+      verse: "Proverbs 19:8",
+      phrase: "The one who gets wisdom loves life; the one who cherishes understanding will soon prosper.",
+    ),
+
+    Verse(
+      verse: "Proverbs 24:14",
+      phrase: "Know also that wisdom is like honey for you: If you find it, there is a future hope for you, and your hope will not be cut off.",
+    ),
+
+    Verse(
+      verse: "Ecclesiastes 10:12",
+      phrase: "Words from the mouth of the wise are gracious, but fools are consumed by their own lips.",
+    ),
+
+    Verse(
+      verse: "1 Corinthians 1:30",
+      phrase: "It is because of him that you are in Christ Jesus, who has become for us wisdom from God—that is, our righteousness, holiness and redemption.",
+    ),
+
+    Verse(
+      verse: "Ephesians 5:15-16",
+      phrase: "Be very careful, then, how you live—not as unwise but as wise, making the most of every opportunity, because the days are evil.",
+    ),
+
+    Verse(
+      verse: "Colossians 4:5-6",
+      phrase: "Be wise in the way you act toward outsiders; make the most of every opportunity. Let your conversation be always full of grace, seasoned with salt, so that you may know how to answer everyone.",
+    ),
+
+    Verse(
+      verse: "James 3:17",
+      phrase: "But the wisdom that comes from heaven is first of all pure; then peace-loving, considerate, submissive, full of mercy and good fruit, impartial and sincere.",
     ),
   ];
 
   static final List<Verse> loveVerses = [
     Verse(
-      verse: "Philippians 4:7",
-      phrase: "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+      verse: "1 John 4:8",
+      phrase: "Whoever does not love does not know God, because God is love.",
     ),
+
+    Verse(
+      verse: "Proverbs 10:12",
+      phrase: "Hatred stirs up conflict, but love covers over all wrongs.",
+    ),
+
+    Verse(
+      verse: "1 Corinthians 13:4-7",
+      phrase: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs. Love does not delight in evil but rejoices with the truth. It always protects, always trusts, always hopes, always perseveres.",
+    ),
+
+    Verse(
+      verse: "Romans 13:10",
+      phrase: "Love does no harm to a neighbor. Therefore love is the fulfillment of the law.",
+    ),
+
+    Verse(
+      verse: "1 Peter 4:8",
+      phrase: "Above all, love each other deeply, because love covers over a multitude of sins.",
+    ),
+
+    Verse(
+      verse: "1 John 4:19",
+      phrase: "We love because he first loved us.",
+    ),
+
+    Verse(
+      verse: "John 15:12",
+      phrase: "My command is this: Love each other as I have loved you.",
+    ),
+
+    Verse(
+      verse: "Romans 12:9",
+      phrase: "Love must be sincere. Hate what is evil; cling to what is good.",
+    ),
+
+    Verse(
+      verse: "1 Corinthians 16:14",
+      phrase: "Do everything in love.",
+    ),
+
+    Verse(
+      verse: "Song of Solomon 8:7",
+      phrase: "Many waters cannot quench love; rivers cannot sweep it away.",
+    ),
+
+    Verse(
+      verse: "Ephesians 4:2",
+      phrase: "Be completely humble and gentle; be patient, bearing with one another in love.",
+    ),
+
+    Verse(
+      verse: "Colossians 3:14",
+      phrase: "And over all these virtues put on love, which binds them all together in perfect unity.",
+    ),
+
   ];
 
-  static final List<Verse> motiveVerses = [
+  static final List<Verse> motivationVerses = [
     Verse(
-      verse: "Philippians 4:7",
-      phrase: "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+      verse: "Philippians 4:13",
+      phrase: "I can do all things through Christ who strengthens me.",
     ),
+
+    Verse(
+      verse: "Joshua 1:9",
+      phrase: "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go.",
+    ),
+
+    Verse(
+      verse: "Proverbs 16:3",
+      phrase: "Commit to the LORD whatever you do, and he will establish your plans.",
+    ),
+
+    Verse(
+      verse: "Galatians 6:9",
+      phrase: "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.",
+    ),
+
+    Verse(
+      verse: "2 Timothy 1:7",
+      phrase: "For God has not given us a spirit of fear, but of power and of love and of a sound mind.",
+    ),
+
+    Verse(
+      verse: "1 Corinthians 15:58",
+      phrase: "Therefore, my dear brothers and sisters, stand firm. Let nothing move you. Always give yourselves fully to the work of the Lord, because you know that your labor in the Lord is not in vain.",
+    ),
+
+    Verse(
+      verse: "Romans 8:28",
+      phrase: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
+    ),
+
+    Verse(
+      verse: "Proverbs 18:10",
+      phrase: "The name of the LORD is a fortified tower; the righteous run to it and are safe.",
+    ),
+
+    Verse(
+      verse: "Hebrews 12:1",
+      phrase: "Therefore, since we are surrounded by such a great cloud of witnesses, let us throw off everything that hinders and the sin that so easily entangles. And let us run with perseverance the race marked out for us.",
+    ),
+
+    Verse(
+      verse: "Colossians 3:23",
+      phrase: "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters.",
+    ),
+
+    Verse(
+      verse: "Psalm 37:5",
+      phrase: "Commit your way to the LORD; trust in him and he will do this.",
+    ),
+
+    Verse(
+      verse: "Isaiah 40:31",
+      phrase: "But those who hope in the LORD will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
+    ),
+
   ];
 
   static final List<Verse> wealthVerses = [
     Verse(
-      verse: "Philippians 4:7",
-      phrase: "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+      verse: "Proverbs 10:22",
+      phrase: "The blessing of the LORD brings wealth, without painful toil for it.",
     ),
+
+    Verse(
+      verse: "Proverbs 13:11",
+      phrase: "Dishonest money dwindles away, but whoever gathers money little by little makes it grow.",
+    ),
+
+    Verse(
+      verse: "Proverbs 22:1",
+      phrase: "A good name is more desirable than great riches; to be esteemed is better than silver or gold.",
+    ),
+
+    Verse(
+      verse: "Ecclesiastes 5:10",
+      phrase: "Whoever loves money never has enough; whoever loves wealth is never satisfied with their income.",
+    ),
+
+    Verse(
+      verse: "Proverbs 23:4",
+      phrase: "Do not wear yourself out to get rich; do not trust your own cleverness.",
+    ),
+
+    Verse(
+      verse: "1 Timothy 6:10",
+      phrase: "For the love of money is a root of all kinds of evil. Some people, eager for money, have wandered from the faith and pierced themselves with many griefs.",
+    ),
+
+    Verse(
+      verse: "Proverbs 28:20",
+      phrase: "A faithful person will be richly blessed, but one eager to get rich will not go unpunished.",
+    ),
+
+    Verse(
+      verse: "Matthew 6:21",
+      phrase: "For where your treasure is, there your heart will be also.",
+    ),
+
+    Verse(
+      verse: "Proverbs 11:28",
+      phrase: "Whoever trusts in his riches will fall, but the righteous will thrive like a green leaf.",
+    ),
+
+    Verse(
+      verse: "Proverbs 15:16",
+      phrase: "Better a little with the fear of the LORD than great wealth with turmoil.",
+    ),
+
+    Verse(
+      verse: "Proverbs 21:20",
+      phrase: "The wise store up choice food and olive oil, but fools gulp theirs down.",
+    ),
+
+    Verse(
+      verse: "Ecclesiastes 7:12",
+      phrase: "Wisdom is a shelter as money is a shelter, but the advantage of knowledge is this: Wisdom preserves those who have it.",
+    ),
+
+    Verse(
+      verse: "Luke 12:15",
+      phrase: "Then he said to them, Watch out! Be on your guard against all kinds of greed; life does not consist in an abundance of possessions.",
+    ),
+
+    Verse(
+      verse: "1 Timothy 6:17",
+      phrase: "Command those who are rich in this present world not to be arrogant nor to put their hope in wealth, which is so uncertain, but to put their hope in God, who richly provides us with everything for our enjoyment.",
+    ),
+
+    Verse(
+      verse: "Proverbs 3:9-10",
+      phrase: "Honor the LORD with your wealth, with the firstfruits of all your crops; then your barns will be filled to overflowing, and your vats will brim over with new wine.",
+    ),
+
+    Verse(
+      verse: "Proverbs 8:18",
+      phrase: "With me are riches and honor, enduring wealth and prosperity.",
+    ),
+
+    Verse(
+      verse: "Proverbs 10:4",
+      phrase: "Lazy hands make for poverty, but diligent hands bring wealth.",
+    ),
+
+    Verse(
+      verse: "Proverbs 14:24",
+      phrase: "The wealth of the wise is their crown, but the folly of fools yields folly.",
+    ),
+
+    Verse(
+      verse: "Proverbs 18:11",
+      phrase: "The wealth of the rich is their fortified city; they imagine it a wall too high to scale.",
+    ),
+
+    Verse(
+      verse: "Proverbs 24:4",
+      phrase: "Through knowledge its rooms are filled with rare and beautiful treasures.",
+    ),
+
+    Verse(
+      verse: "Ecclesiastes 2:26",
+      phrase: "To the person who pleases him, God gives wisdom, knowledge and happiness, but to the sinner he gives the task of gathering and storing up wealth to hand it over to the one who pleases God.",
+    ),
+
   ];
 
   static final List<Verse> happyVerses = [
@@ -814,6 +630,14 @@ class PhraseRepository {
       verse: "Psalm 120:7",
       phrase: "I am for peace; but when I speak, they are for war.",
     ),
+    Verse(
+      verse: "Proverbs 15:18",
+      phrase: "Hot tempers cause arguments, but patience brings peace.",
+    ),
+    Verse(
+      verse: "Philippians 4:13",
+      phrase: "I can do all this through him who gives me strength.",
+    ),
   ];
 
 
@@ -862,28 +686,4 @@ class PhraseRepository {
       phrase: "Jesus Christ is the same yesterday, today and forever.",
     ),
   ];
-
-  static Verse getRandomFreeVerse() {
-    final random = Random();
-    final index = random.nextInt(freeVerses.length);
-    return freeVerses[index];
-  }
-
-  static Verse getPremiumRandomFreeVerse() {
-    final random = Random();
-    final allVerses = getVerseCategories().values.expand((verses) => verses).toList();
-    final index = random.nextInt(allVerses.length);
-    return freeVerses[index];
-  }
-
-  static Map<String, List<Verse>> getVerseCategories() {
-    return {
-      'Free verses': freeVerses,
-      'Calm': calmVerses,
-      'Wealth': wealthVerses,
-      'Love': loveVerses,
-      'Motivation': motiveVerses,
-      'Wisdom': wisdomVerses,
-    };
-  }
 }

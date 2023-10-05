@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/verse_repository.dart';
+import '../../theme/theme_constants.dart';
 
 class VerseCategoryContainer extends StatelessWidget {
   final VerseCategory category;
@@ -29,7 +30,7 @@ class VerseCategoryContainer extends StatelessWidget {
       child: Container(
         width: screenWidth - 80,
         margin: EdgeInsets.only(left: 20, bottom: 40),
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.only(right: 12.0, left: 12),
         decoration: BoxDecoration(
           color: category.isUnlocked ? Colors.white : Colors.grey[300],
           borderRadius: BorderRadius.circular(15.0),
@@ -52,6 +53,7 @@ class VerseCategoryContainer extends StatelessWidget {
               ),
             ),
             Text('${category.verseCount} verses'),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -64,7 +66,7 @@ class VerseCategoryContainer extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
+                primary: kPrimaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),

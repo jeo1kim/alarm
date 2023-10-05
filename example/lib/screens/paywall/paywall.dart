@@ -116,10 +116,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     padding: EdgeInsets.only(left: 50),
                     child: Column(
                       children: [
-                        CheckRow(text: 'Support development 🙂'),
-                        CheckRow(text: 'Unlimited alarms'),
-                        CheckRow(text: '365 Unique Bible verses'),
-                        CheckRow(text: 'Premium songs'),
+                        CheckRow(text: 'Unlock all verses'),
+                        CheckRow(text: 'Support Rise development 🙂'),
+                        CheckRow(text: 'Remove subscription screen'),
                       ],
                     ),
                   ),
