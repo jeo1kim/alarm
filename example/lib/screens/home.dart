@@ -200,6 +200,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
                       PhraseRepository.getVerseCategories()[categoryTitle]!;
                   return Padding(
                     padding: EdgeInsets.only(
+                      top: 8,
                       right: index == PhraseRepository.getVerseCategories().keys.length - 1 ? 20 : 0,
                     ),
                     child: VerseCategoryContainer(

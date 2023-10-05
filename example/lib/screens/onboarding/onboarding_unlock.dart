@@ -27,12 +27,9 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
   final FocusNode _hiddenTextFieldFocus = FocusNode();
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
 
-    verse = await isPremiumUser()
-        ? PhraseRepository.getPremiumRandomFreeVerse()
-        : PhraseRepository.getRandomFreeVerse();
     verseTitle = "1 Corinthians 16:14";
     correctPhrase = "Do everything in love.";
 

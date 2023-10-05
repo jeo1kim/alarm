@@ -13,7 +13,7 @@ class OnBoardingIntroPage extends StatefulWidget {
 
 class _OnBoardingIntroPage extends State<OnBoardingIntroPage> {
   final String pageText = "Awaken to the Wisdom of His Word";
-  final String additionalText = "RISE to your faithful morning call";
+  final String additionalText = "Rise to your faithful morning call";
 
   @override
   void initState() {
@@ -40,11 +40,11 @@ class _OnBoardingIntroPage extends State<OnBoardingIntroPage> {
                 padding: EdgeInsets.symmetric(horizontal: 20), // Add left and right margins
                 child: Text(
                   pageText,
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 40), // Adjust the spacing between the texts
+              SizedBox(height: 20), // Adjust the spacing between the texts
               Text(
                 additionalText,
                 style: TextStyle(fontSize: 20),
