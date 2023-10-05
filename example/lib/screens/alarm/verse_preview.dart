@@ -88,7 +88,7 @@ class VersesScreen extends StatelessWidget {
                         backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
                       ),
                       child: Text(
-                        "Unlock all",
+                        "Get all packs!",
                         style: Theme.of(context)
                             .textTheme
                             .headline6
