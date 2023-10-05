@@ -25,19 +25,31 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
   // Create a focus node for the hidden TextField
   final FocusNode _hiddenTextFieldFocus = FocusNode();
 
+  getVerse() async {
+    return await PhraseRepository.getRandomVerse();
+  }
+
   @override
   void initState() {
     super.initState();
 
-    verse = PhraseRepository.getRandomFreeVerse();
-    verseTitle = verse.verse;
-    correctPhrase = verse.phrase;
+    _initializeState();
+  }
+
+  Future<void> _initializeState() async {
+    Verse fetchedVerse = await getVerse();
+    setState(() {
+      verse = fetchedVerse;
+      verseTitle = widget.alarmSettings.verse ?? verse.verse;
+      correctPhrase = widget.alarmSettings.verseText ?? verse.phrase;
+    });
 
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_hiddenTextFieldFocus);
     });
   }
+
 
   @override
   void dispose() {

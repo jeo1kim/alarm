@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import '../utils/premium_user.dart';
+
 class Verse {
   final String verse;
   final String phrase;
@@ -9,6 +11,11 @@ class Verse {
 
 
 class PhraseRepository {
+
+  static Future<Verse> getRandomVerse() async {
+    bool isPremium = await isPremiumUser();
+    return isPremium ? getPremiumRandomFreeVerse() : getRandomFreeVerse();
+  }
 
   static Verse getRandomFreeVerse() {
     final random = Random();

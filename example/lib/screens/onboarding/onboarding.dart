@@ -2,6 +2,7 @@ import 'package:alarm/alarm.dart';
 import 'package:alarm/model/alarm_settings.dart';
 import 'package:alarm_example/screens/home.dart';
 import 'package:flutter/material.dart';
+import '../../data/verse_repository.dart';
 import 'onboarding_intro.dart';
 import 'onboarding_sound_picker.dart';
 import 'onboarding_time_picker.dart';
@@ -29,6 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   late String assetAudio;
   bool loading = false;
 
+
   AlarmSettings alarmSettings = AlarmSettings(
     id: 42,
     dateTime: DateTime.now(),
@@ -37,10 +39,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     vibrate: false,
     volumeMax: false,
     fadeDuration: 10,
-    notificationTitle: 'Time to Rise',
-    notificationBody: 'Daily Word of God',
+    notificationTitle: 'Romans 15:33',
+    notificationBody: 'May the God of peace be with you all. Amen.',
     stopOnNotificationOpen: false,
   );
+
+  getVerse() async {
+    return await PhraseRepository.getRandomVerse();
+  }
 
   void updateAlarmSettings(AlarmSettings updatedSettings) {
     setState(() {

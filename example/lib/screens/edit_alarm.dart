@@ -1,13 +1,13 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 
+import '../data/verse_repository.dart';
 import '../theme/theme_constants.dart';
 
 class AlarmEditScreen extends StatefulWidget {
   final AlarmSettings? alarmSettings;
 
-  const AlarmEditScreen({Key? key, this.alarmSettings})
-      : super(key: key);
+  const AlarmEditScreen({Key? key, this.alarmSettings}) : super(key: key);
 
   @override
   State<AlarmEditScreen> createState() => _AlarmEditScreenState();
@@ -68,6 +68,10 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
     }
   }
 
+  getVerse() async {
+    return await PhraseRepository.getRandomVerse();
+  }
+
   Future<void> pickTime() async {
     final res = await showTimePicker(
       initialTime: selectedTime,
@@ -76,7 +80,7 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
     if (res != null) setState(() => selectedTime = res);
   }
 
-  AlarmSettings buildAlarmSettings() {
+  Future<AlarmSettings> buildAlarmSettings() async {
     final now = DateTime.now();
     final id = creating
         ? DateTime.now().millisecondsSinceEpoch % 100000
@@ -95,25 +99,28 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
       dateTime = dateTime.add(const Duration(days: 1));
     }
 
+    final verse = await getVerse();
+
     final alarmSettings = AlarmSettings(
-      id: id,
-      dateTime: dateTime,
-      loopAudio: loopAudio,
-      vibrate: vibrate,
-      volumeMax: volumeMax,
-      notificationTitle: showNotification ? 'Alarm example' : null,
-      notificationBody: showNotification ? 'Your alarm ($id) is ringing' : null,
-      assetAudioPath: assetAudio,
-      stopOnNotificationOpen: false,
-    );
+        id: id,
+        dateTime: dateTime,
+        loopAudio: loopAudio,
+        vibrate: vibrate,
+        volumeMax: volumeMax,
+        notificationTitle: showNotification ? verse.verse : null,
+        notificationBody: showNotification ? verse.phrase : null,
+        assetAudioPath: assetAudio,
+        stopOnNotificationOpen: false,
+        verse: verse.verse,
+        verseText: verse.phrase);
     return alarmSettings;
   }
 
-  void saveAlarm() {
+  void saveAlarm() async {
     setState(() => loading = true);
-    Alarm.set(alarmSettings: buildAlarmSettings()).then((res) {
-      if (res) Navigator.pop(context, true);
-    });
+    AlarmSettings alarmSettings = await buildAlarmSettings();
+    bool res = await Alarm.set(alarmSettings: alarmSettings);
+    if (res) Navigator.pop(context, true);
     setState(() => loading = false);
   }
 
@@ -185,7 +192,6 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
               ),
             ),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

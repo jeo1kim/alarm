@@ -124,7 +124,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
 
   @override
   void dispose() {
-    subscription?.cancel();
+    // subscription?.cancel();
     super.dispose();
   }
 

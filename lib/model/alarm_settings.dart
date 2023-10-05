@@ -49,6 +49,10 @@ class AlarmSettings {
   /// Stops the alarm on opened notification.
   final bool stopOnNotificationOpen;
 
+  final String? verse;
+
+  final String? verseText;
+
   /// Returns a hash code for this `AlarmSettings` instance using Jenkins hash function.
   @override
   int get hashCode {
@@ -87,6 +91,8 @@ class AlarmSettings {
     this.notificationBody,
     this.enableNotificationOnKill = true,
     this.stopOnNotificationOpen = true,
+    this.verse,
+    this.verseText
   });
 
   /// Constructs an `AlarmSettings` instance from the given JSON data.
@@ -118,6 +124,8 @@ class AlarmSettings {
     String? notificationBody,
     bool? enableNotificationOnKill,
     bool? stopOnNotificationOpen,
+    String? verse,
+    String? verseText,
   }) {
     return AlarmSettings(
       id: id ?? this.id,

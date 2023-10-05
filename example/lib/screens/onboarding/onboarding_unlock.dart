@@ -33,8 +33,8 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
     verse = await isPremiumUser()
         ? PhraseRepository.getPremiumRandomFreeVerse()
         : PhraseRepository.getRandomFreeVerse();
-    verseTitle = "Psalm 119:147";
-    correctPhrase = "I rise before dawn and cry for help. I wait for your words.";
+    verseTitle = "1 Corinthians 16:14";
+    correctPhrase = "Do everything in love.";
 
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance?.addPostFrameCallback((_) {
