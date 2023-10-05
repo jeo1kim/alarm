@@ -18,7 +18,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
 
   late Verse verse;
   late String verseTitle;
-  late String correctPhrase;
+  late String correctPhrase = "";
 
   int currentIndex = 0;
 
