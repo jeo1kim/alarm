@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/screens/paywall/paywall.dart';
@@ -6,31 +5,24 @@ import '../theme/theme_constants.dart';
 import 'constant.dart';
 
 Future<bool> isPremiumUser() async {
-  CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-  if (customerInfo.entitlements.all[entitlementID] != null &&
-      customerInfo.entitlements.all[entitlementID]?.isActive == true) {
-    // User has subscription, show them the feature
-    return true;
+  try {
+    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+    return customerInfo.entitlements.all[entitlementID]?.isActive ?? false;
+  } catch (e) {
+    print("Error checking premium user status: $e");
+    return false;
   }
-  return false;
 }
 
-void performMagic(context) async {
+Future<void> performMagic(BuildContext context) async {
   if (await isPremiumUser()) {
     // User has subscription, show them the feature
-  } else {
-    Offerings? offerings;
-    try {
-      offerings = await Purchases.getOfferings();
-    } on PlatformException catch (e) {
-      // Error finding the offerings, handle the error.
-    }
+    return;
+  }
 
-    if (offerings == null || offerings.current == null) {
-      // offerings are empty, show a message to your user
-    } else {
-      // current offering is available, show paywall
-      // ignore: use_build_context_synchronously
+  try {
+    Offerings? offerings = await Purchases.getOfferings();
+    if (offerings?.current != null) {
       await showModalBottomSheet(
         isDismissible: true,
         isScrollControlled: true,
@@ -42,14 +34,20 @@ void performMagic(context) async {
         builder: (BuildContext context) {
           return FractionallySizedBox(
             child: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setModalState) {
-                  return PaywallScreen(
-                    offering: offerings?.current,
-                  );
-                }),
+              builder: (BuildContext context, StateSetter setModalState) {
+                return PaywallScreen(
+                  offering: offerings.current,
+                );
+              },
+            ),
           );
         },
       );
+    } else {
+      // Handle the case where offerings are empty
+      print("No offerings available.");
     }
+  } catch (e) {
+    print("Error fetching offerings: $e");
   }
 }
