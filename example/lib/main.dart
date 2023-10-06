@@ -18,10 +18,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  WidgetsFlutterBinding.ensureInitialized();
 
   if (Platform.isIOS) {
     StoreConfig(
@@ -34,11 +31,17 @@ void main() async {
       apiKey: googleApiKey,
     );
   }
-  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   await _configureSDK();
   await _initFirebase();
   runApp(MyApp());
 }
+
 
 Future<void> _configureSDK() async {
   // Enable debug logs before calling `configure`.
