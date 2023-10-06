@@ -37,20 +37,6 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     // Enable debug logs before calling `configure`.
     await Purchases.setDebugLogsEnabled(true);
 
-    PurchasesConfiguration configuration;
-    if (StoreConfig.isForGooglePlay()) {
-      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
-        ..appUserID = null
-        ..observerMode = false;
-    } else {
-      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
-        ..appUserID = null
-        ..observerMode = false;
-    }
-    await Purchases.configure(configuration);
-
-    appData.appUserID = await Purchases.appUserID;
-
     Purchases.addCustomerInfoUpdateListener((customerInfo) async {
       appData.appUserID = await Purchases.appUserID;
 
@@ -63,7 +49,6 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
       setState(() {});
     });
     isPremium = await isPremiumUser();
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('firstTimeUser', false);
   }

@@ -4,7 +4,6 @@ import 'package:alarm_example/theme/theme_manager.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../app_data.dart';
 import '../../utils/constant.dart';
 import '../../utils/premium_user.dart';
@@ -44,26 +43,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   _restore() async {
-
-    /*
-      How to login and identify your users with the Purchases SDK.
-
-      Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
-    */
-
     try {
-      await Purchases.restorePurchases();
+      CustomerInfo purchaserInfo = await Purchases.restorePurchases();
       appData.appUserID = await Purchases.appUserID;
-    } on PlatformException catch (e) {
-      await showDialog(
+
+      // Check if the user has an active entitlement
+      if (purchaserInfo.entitlements.all[entitlementID]?.isActive != true) {
+        // No active entitlement found, show the dialog
+        await showDialog(
           context: context,
           builder: (BuildContext context) => ShowDialogToDismiss(
-              title: "Error",
-              content: e.message ?? "Unknown error",
-              buttonText: 'OK'));
+            title: "Rise premium",
+            content: "Subscription not found",
+            buttonText: 'OK',
+          ),
+        );
+      }
+    } on PlatformException catch (e) {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => ShowDialogToDismiss(
+          title: "Error",
+          content: e.message ?? "Unknown error",
+          buttonText: 'OK',
+        ),
+      );
     }
-
   }
+
 
   @override
   Widget build(BuildContext context) {

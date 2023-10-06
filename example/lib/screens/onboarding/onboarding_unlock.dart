@@ -31,7 +31,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
     super.initState();
 
     verseTitle = "1 Corinthians 16:14";
-    correctPhrase = "Do everything in love.";
+    correctPhrase = "Do everything in love";
 
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance?.addPostFrameCallback((_) {
@@ -53,6 +53,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      SizedBox(height: 20),
                       SizedBox(
                         height: 50,
                         width: 320,

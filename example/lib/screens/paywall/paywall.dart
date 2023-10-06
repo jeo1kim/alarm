@@ -54,29 +54,32 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   _restore() async {
-    setState(() {
-      _isLoading = true;
-    });
-    /*
-      How to login and identify your users with the Purchases SDK.
-
-      Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
-    */
-
     try {
-      await Purchases.restorePurchases();
+      CustomerInfo purchaserInfo = await Purchases.restorePurchases();
       appData.appUserID = await Purchases.appUserID;
-    } on PlatformException catch (e) {
-      await showDialog(
+
+      // Check if the user has an active entitlement
+      if (purchaserInfo.entitlements.all[entitlementID]?.isActive != true) {
+        // No active entitlement found, show the dialog
+        await showDialog(
           context: context,
           builder: (BuildContext context) => ShowDialogToDismiss(
-              title: "Error",
-              content: e.message ?? "Unknown error",
-              buttonText: 'OK'));
+            title: "Rise premium",
+            content: "Subscription not found",
+            buttonText: 'OK',
+          ),
+        );
+      }
+    } on PlatformException catch (e) {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => ShowDialogToDismiss(
+          title: "Error",
+          content: e.message ?? "Unknown error",
+          buttonText: 'OK',
+        ),
+      );
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   // Function to open a URL in the browser
@@ -222,7 +225,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           _restore(); // Replace with your Terms URL
                         },
                         child: Text(
-                          'Restore purchase',
+                          'Restore',
                           style: TextStyle(
                             color: Colors.blue,
                             fontSize: 12,
