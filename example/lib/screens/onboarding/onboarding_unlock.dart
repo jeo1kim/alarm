@@ -20,7 +20,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
 
   late Verse verse;
   late String verseTitle;
-  late String correctPhrase;
+  late String correctPhrase = "";
   int currentIndex = 0;
 
   // Create a focus node for the hidden TextField

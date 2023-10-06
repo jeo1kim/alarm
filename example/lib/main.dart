@@ -10,14 +10,60 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm/alarm.dart';
 import 'package:flutter/services.dart';
+import 'package:purchases_flutter/models/purchases_configuration.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-void main() {
+void main() async {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  if (Platform.isIOS) {
+    StoreConfig(
+      store: Store.appStore,
+      apiKey: appleApiKey,
+    );
+  } else if (Platform.isAndroid) {
+    StoreConfig(
+      store: Store.playStore,
+      apiKey: googleApiKey,
+    );
+  }
   WidgetsFlutterBinding.ensureInitialized();
+  await _configureSDK();
+  await _initFirebase();
   runApp(MyApp());
+}
+
+Future<void> _configureSDK() async {
+  // Enable debug logs before calling `configure`.
+  await Purchases.setLogLevel(LogLevel.debug);
+
+  PurchasesConfiguration configuration;
+
+  configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
+    ..appUserID = null
+    ..observerMode = false;
+
+  await Purchases.configure(configuration);
+}
+
+Future<void> _initFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 }
 
 class MyApp extends StatelessWidget {
@@ -36,60 +82,32 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final ThemeManager _themeManager = ThemeManager();
-  bool isFirstTimeUser = true; // Initialize this as needed
-
-  void _initFirebase() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-
-    await Firebase.initializeApp();
-
-    // Pass all uncaught "fatal" errors from the framework to Crashlytics
-    FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-    };
-    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-      return true;
-    };
-  }
+  bool? isFirstTimeUser;
 
   @override
   void initState() {
     super.initState();
     _initializeApp();
-    _initFirebase();
   }
 
   Future<void> _initializeApp() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    isFirstTimeUser = prefs.getBool('firstTimeUser') ?? true;
-
-    if (Platform.isIOS) {
-      StoreConfig(
-        store: Store.appleStore,
-        apiKey: appleApiKey,
-      );
-    } else if (Platform.isAndroid) {
-      StoreConfig(
-        store: Store.googlePlay,
-        apiKey: googleApiKey,
-      );
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      isFirstTimeUser = prefs.getBool('firstTimeUser') ?? true;
+      await Alarm.init(showDebugLogs: true);
+      setState(() {});
+    } catch (e) {
+      // Handle the error, maybe show a user-friendly message or log it
     }
-    await Alarm.init(showDebugLogs: true);
-
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget homeScreen =
-    isFirstTimeUser ? OnboardingScreen() : AlarmHomeScreen();
+    if (isFirstTimeUser == null) {
+      return const CircularProgressIndicator(); // Show a loading indicator while waiting
+    }
+
+    Widget homeScreen = isFirstTimeUser! ? const OnboardingScreen() : const AlarmHomeScreen();
 
     return MaterialApp(
       theme: lightThemeData(context),
@@ -99,3 +117,4 @@ class _AppState extends State<App> {
     );
   }
 }
+
