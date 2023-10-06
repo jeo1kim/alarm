@@ -6,6 +6,11 @@ class Verse {
   final String verse;
   final String phrase;
 
+  static Verse defaultVerse = Verse(
+    verse: "Colossians 2:3",
+    phrase: "In whom are hidden all the treasures of wisdom and knowledge.",
+  );
+
   Verse({required this.verse, required this.phrase});
 }
 

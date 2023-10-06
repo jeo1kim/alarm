@@ -203,6 +203,33 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
           ],
         ),
       ),
+      floatingActionButton: kDebugMode
+          ? Padding(
+        padding: const EdgeInsets.all(30),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                final alarmSettings = AlarmSettings(
+                  id: 42,
+                  dateTime: DateTime.now(),
+                  assetAudioPath: 'assets/piano.mp3',
+                  vibrate: false,
+                  volumeMax: false,
+                );
+                Alarm.set(alarmSettings: alarmSettings);
+              },
+              backgroundColor: Colors.red,
+              heroTag: null,
+              child: const Text("RING NOW", textAlign: TextAlign.center),
+            ),
+
+          ],
+        ),
+      )
+          : null, // Set the FloatingActionButton to null in production mode
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

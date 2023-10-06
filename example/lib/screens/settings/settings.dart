@@ -83,24 +83,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Text(
-            //   'Theme',
-            //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            // ),
-            // SizedBox(height: 10),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: <Widget>[
-            //     Text('Dark Mode'),
-            //     Switch(
-            //       value: _themeManager.themeMode == ThemeMode.dark,
-            //       onChanged: (value) {
-            //         _themeManager.toggleTheme(value);
-            //       },
-            //     ),
-            //   ],
-            // ),
-            // SizedBox(height: 20), // Add some space
 
             // About Section
             Text(

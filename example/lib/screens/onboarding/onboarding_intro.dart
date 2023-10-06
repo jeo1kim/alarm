@@ -1,5 +1,6 @@
-import 'package:alarm_example/animation/sunrise_animation.dart';
 import 'package:flutter/material.dart';
+
+import '../../theme/theme_constants.dart';
 
 
 class OnBoardingIntroPage extends StatefulWidget {
@@ -34,7 +35,14 @@ class _OnBoardingIntroPage extends State<OnBoardingIntroPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SunriseAnimation(),
+              Container(
+                width: 100.0,  // specify the desired width
+                height: 100.0, // specify the desired height
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
               SizedBox(height: 100),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20), // Add left and right margins
