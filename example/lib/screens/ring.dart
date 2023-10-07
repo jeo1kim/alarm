@@ -1,6 +1,9 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/data/verse/verse_repository.dart';
+import 'package:hive_flutter/adapters.dart';
+
+import '../data/history/habit_database.dart';
 
 class ExampleAlarmRingScreen extends StatefulWidget {
   final AlarmSettings alarmSettings;
@@ -22,6 +25,9 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
 
   int currentIndex = 0;
 
+  HabitDatabase db = HabitDatabase();
+  final _myBox = Hive.box("Habit_Database");
+
   // Create a focus node for the hidden TextField
   final FocusNode _hiddenTextFieldFocus = FocusNode();
 
@@ -31,9 +37,25 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
 
   @override
   void initState() {
+    if (_myBox.get("CURRENT_HABIT_LIST") == null) {
+      db.createDefaultData();
+    } else {
+      db.loadData();
+    }
+
+    db.updateDatabase();
     super.initState();
 
     _initializeState();
+  }
+
+  void logHabit() {
+    setState(() {
+      db.todaysHabitList[0][4] = true;
+      //BoxDecoration(color: Colors.amber[100]);
+      //new ListTileTheme(selectedColor: Colors.amber[100],);
+    });
+    db.updateDatabase();
   }
 
   Future<void> _initializeState() async {

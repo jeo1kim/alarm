@@ -50,7 +50,7 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
 
   void logHabit() {
     setState(() {
-      db.todaysHabitList[0][1] = true;
+      db.todaysHabitList[0][4] = true;
       //BoxDecoration(color: Colors.amber[100]);
       //new ListTileTheme(selectedColor: Colors.amber[100],);
     });
@@ -103,9 +103,9 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
               height: 50,
               width: 320, // Set the desired width
               child: ElevatedButton(
-                onPressed: () => {
-                  logHabit(),
-                  widget.onNext
+                onPressed: () {
+                  logHabit();
+                  widget.onNext();
                 },
                 child: Text(
                   "Let's go",

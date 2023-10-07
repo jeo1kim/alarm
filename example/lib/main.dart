@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm/alarm.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:purchases_flutter/models/purchases_configuration.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,9 +40,15 @@ void main() async {
 
   await _configureSDK();
   await _initFirebase();
+  await _loadDependencies();
   runApp(MyApp());
 }
 
+Future<void> _loadDependencies() async {
+  await Hive.initFlutter();
+  await Hive.openBox("Habit_Database");
+
+}
 
 Future<void> _configureSDK() async {
   // Enable debug logs before calling `configure`.
