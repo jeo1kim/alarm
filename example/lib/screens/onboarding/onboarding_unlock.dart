@@ -83,10 +83,9 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
                         child: ElevatedButton(
                           onPressed: () {
                             logHabit();
-                            isStopButtonEnabled
-                                ? widget.onNext
-                                : null;
-                             // Disable the button when not enabled
+                            if (isStopButtonEnabled) {
+                              widget.onNext();
+                            }
                           },
                           style:
                           ButtonStyle(
