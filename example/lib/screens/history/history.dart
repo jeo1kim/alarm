@@ -41,8 +41,19 @@ class _HistoryScreen extends State<HistoryScreen> {
     }
 
     db.updateDatabase();
+    _initializeTodayData();
     super.initState();
     initLocal();
+  }
+
+  void _initializeTodayData() {
+    DateTime today = DateTime.now();
+    List<String> data = db.getVerseAndPhraseForDate(today);
+    setState(() {
+      date = DateFormat('MMM d, y').format(today);
+      verse = data[0];
+      phrase = data[1];
+    });
   }
 
   Future<void> initLocal() async {

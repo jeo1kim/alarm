@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app_data.dart';
 import '../../data/verse/verse_repository.dart';
+import '../../main.dart';
 import '../../theme/theme_constants.dart';
 import '../../utils/constant.dart';
 import '../../utils/premium_user.dart';
@@ -79,14 +80,14 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   }
 
   Future<void> navigateToRingScreen(AlarmSettings alarmSettings) async {
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              ExampleAlarmRingScreen(alarmSettings: alarmSettings),
-        ));
+    await navigatorKey.currentState?.push(
+      MaterialPageRoute(
+        builder: (context) => ExampleAlarmRingScreen(alarmSettings: alarmSettings),
+      ),
+    );
     loadAlarms();
   }
+
 
   Future<void> launchCreateAlarmDialog(AlarmSettings? settings) async {
     final res = await showModalBottomSheet<bool?>(

@@ -88,7 +88,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class App extends StatefulWidget {
+
   @override
   _AppState createState() => _AppState();
 }
@@ -123,6 +126,7 @@ class _AppState extends State<App> {
     Widget homeScreen = isFirstTimeUser! ? const OnboardingScreen() : const NavigationScreen();
 
     return MaterialApp(
+      navigatorKey: navigatorKey,
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
       themeMode: _themeManager.themeMode,
