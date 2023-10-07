@@ -19,7 +19,6 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
   final String additionalText = "";
   late final AnimationController _controller;
 
-
   @override
   void initState() {
     super.initState();

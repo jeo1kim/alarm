@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/data/verse/verse_repository.dart';
+import 'package:hive_flutter/adapters.dart';
+
+import '../../data/history/habit_database.dart';
 
 class OnBoardingUnlockPage extends StatefulWidget {
   final String pageText = "Type to unlock";
@@ -23,11 +26,21 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
   late String correctPhrase = "";
   int currentIndex = 0;
 
+  HabitDatabase db = HabitDatabase();
+  final _myBox = Hive.box("Habit_Database");
   // Create a focus node for the hidden TextField
   final FocusNode _hiddenTextFieldFocus = FocusNode();
 
   @override
   void initState() {
+    if (_myBox.get("CURRENT_HABIT_LIST") == null) {
+      db.createDefaultData();
+    } else {
+      db.loadData();
+    }
+
+    db.updateDatabase();
+
     super.initState();
 
     verseTitle = "1 Corinthians 16:14";
@@ -36,6 +49,16 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_hiddenTextFieldFocus);
+    });
+  }
+
+  void logHabit() {
+    setState(() {
+      db.todaysHabitList[0][1] = true;
+      db.todaysHabitList[0][2] = verseTitle;
+      db.todaysHabitList[0][3] = correctPhrase;
+      //BoxDecoration(color: Colors.amber[100]);
+      //new ListTileTheme(selectedColor: Colors.amber[100],);
     });
   }
 
@@ -58,9 +81,13 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
                         height: 50,
                         width: 300,
                         child: ElevatedButton(
-                          onPressed: isStopButtonEnabled
-                              ? widget.onNext
-                              : null, // Disable the button when not enabled
+                          onPressed: () {
+                            logHabit();
+                            isStopButtonEnabled
+                                ? widget.onNext
+                                : null;
+                             // Disable the button when not enabled
+                          },
                           style:
                           ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(isStopButtonEnabled ? Theme.of(context).primaryColor : Colors.grey),
