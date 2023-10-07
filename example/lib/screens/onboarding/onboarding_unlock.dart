@@ -1,4 +1,4 @@
-import 'package:alarm_example/utils/premium_user.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/data/verse/verse_repository.dart';
 
@@ -31,7 +31,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
     super.initState();
 
     verseTitle = "1 Corinthians 16:14";
-    correctPhrase = "Do everything in love";
+    correctPhrase = kDebugMode ? "test" : "Do everything in love";
 
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance.addPostFrameCallback((_) {

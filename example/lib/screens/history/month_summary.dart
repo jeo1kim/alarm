@@ -18,7 +18,7 @@ class MonthlySummary extends StatelessWidget {
       //     color: Colors.grey[400],
       //     border: Border.all(),
       //     borderRadius: BorderRadius.circular(20)),
-      padding: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(15),
       child: HeatMapCalendar(
         initDate: createDateTimeObject(startDate),
         //initDate: DateTime.now(),
@@ -45,8 +45,8 @@ class MonthlySummary extends StatelessWidget {
         weekTextColor: Colors.grey[600],
         //margin: ,
         flexible: false,
-        monthFontSize: 16,
-        size: 30,
+        monthFontSize: 18,
+        size: 42,
         colorsets: const {
           1: Color.fromARGB(40, 255, 193, 8),
           2: Color.fromARGB(60, 255, 193, 8),

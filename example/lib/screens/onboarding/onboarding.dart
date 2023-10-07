@@ -45,6 +45,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     notificationTitle: 'Romans 15:33',
     notificationBody: 'May the God of peace be with you all. Amen.',
     stopOnNotificationOpen: false,
+    verse: 'Romans 15:33',
+    verseText: 'May the God of peace be with you all. Amen.'
   );
 
   getVerse() async {

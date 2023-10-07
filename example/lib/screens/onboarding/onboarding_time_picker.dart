@@ -1,4 +1,5 @@
 import 'package:alarm/model/alarm_settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -7,15 +8,15 @@ class OnBoardingTimePickerPage extends StatefulWidget {
   final AlarmSettings alarmSettings;
   final Function(AlarmSettings) updateAlarmSettings; // Add this callback
 
-  const OnBoardingTimePickerPage({
-    super.key,
-    required this.alarmSettings,
-    required this.updateAlarmSettings, // Add this line
-    required this.onNext
-  });
+  const OnBoardingTimePickerPage(
+      {super.key,
+      required this.alarmSettings,
+      required this.updateAlarmSettings, // Add this line
+      required this.onNext});
 
   @override
-  State<OnBoardingTimePickerPage> createState() => _OnBoardingTimePickerPageState();
+  State<OnBoardingTimePickerPage> createState() =>
+      _OnBoardingTimePickerPageState();
 }
 
 class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
@@ -76,8 +77,11 @@ class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
                             const TextStyle(color: Colors.black, fontSize: 40),
                         decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(color: Theme.of(context).primaryColor,),
-                              bottom: BorderSide(color: Theme.of(context).primaryColor)),
+                              top: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              bottom: BorderSide(
+                                  color: Theme.of(context).primaryColor)),
                         ),
                       ),
                       SizedBox(width: 15),
@@ -105,8 +109,11 @@ class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
                             const TextStyle(color: Colors.black, fontSize: 40),
                         decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(color: Theme.of(context).primaryColor,),
-                              bottom: BorderSide(color: Theme.of(context).primaryColor)),
+                              top: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              bottom: BorderSide(
+                                  color: Theme.of(context).primaryColor)),
                         ),
                       ),
                     ],
@@ -140,7 +147,9 @@ class _OnBoardingTimePickerPageState extends State<OnBoardingTimePickerPage> {
                   dateTime = dateTime.add(const Duration(days: 1));
                 }
                 final updatedAlarmSettings = widget.alarmSettings.copyWith(
-                  dateTime: dateTime,
+                  dateTime: kDebugMode
+                      ? DateTime.now().add(const Duration(minutes: 1))
+                      : dateTime,
                 );
                 widget.updateAlarmSettings(updatedAlarmSettings);
 

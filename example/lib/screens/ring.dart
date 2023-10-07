@@ -102,7 +102,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                       onPressed: isStopButtonEnabled
                           ? () {
                               // Alarm.stop(widget.alarmSettings.id)
-                              final now = DateTime.now();
+                              logHabit();
                               Alarm.set(
                                 alarmSettings: widget.alarmSettings.copyWith(
                                   dateTime: widget.alarmSettings.dateTime

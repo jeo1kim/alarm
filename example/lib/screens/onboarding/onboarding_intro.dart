@@ -29,8 +29,9 @@ class _OnBoardingIntroPage extends State<OnBoardingIntroPage>
 
   @override
   void dispose() {
-    super.dispose();
+    _controller.stop();
     _controller.dispose();
+    super.dispose();
   }
 
   @override

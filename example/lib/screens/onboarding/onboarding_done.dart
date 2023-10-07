@@ -18,18 +18,10 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
   final String pageText = "Your Alarm is all set!";
   final String additionalText = "";
   late final AnimationController _controller;
-  HabitDatabase db = HabitDatabase();
-  final _myBox = Hive.box("Habit_Database");
+
 
   @override
   void initState() {
-    if (_myBox.get("CURRENT_HABIT_LIST") == null) {
-      db.createDefaultData();
-    } else {
-      db.loadData();
-    }
-
-    db.updateDatabase();
     super.initState();
     _controller =
         AnimationController(duration: Duration(seconds: 3), vsync: this);
@@ -44,17 +36,9 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
 
   @override
   void dispose() {
-    super.dispose();
+    _controller.stop();
     _controller.dispose();
-  }
-
-  void logHabit() {
-    setState(() {
-      db.todaysHabitList[0][1] = true;
-      //BoxDecoration(color: Colors.amber[100]);
-      //new ListTileTheme(selectedColor: Colors.amber[100],);
-    });
-    db.updateDatabase();
+    super.dispose();
   }
 
   @override
@@ -67,8 +51,8 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 200, // Adjust as needed
-                height: 200, // Adjust as needed
+                width: 150, // Adjust as needed
+                height: 150, // Adjust as needed
                 child: Lottie.asset(
                   'animations/check-circle.json',
                   controller: _controller, // Use the controller
@@ -104,7 +88,6 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
               width: 320, // Set the desired width
               child: ElevatedButton(
                 onPressed: () {
-                  logHabit();
                   widget.onNext();
                 },
                 child: Text(

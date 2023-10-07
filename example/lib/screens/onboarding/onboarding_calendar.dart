@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -29,8 +30,9 @@ class _OnBoardingCalendarPage extends State<OnBoardingCalendarPage>
 
   @override
   void dispose() {
-    super.dispose();
+    _controller.stop();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
