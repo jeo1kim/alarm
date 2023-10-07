@@ -143,10 +143,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     OnBoardingCalendarPage(
                       onNext: _nextPage,
                     ),
-                    // OnBoardingPage(
-                    //   pageText: "“What we do first thing in the morning, over time, says a lot about our true priorities.”",
-                    //   onNext: _nextPage,
-                    // ),
                     OnBoardingTimePickerPage(
                       alarmSettings: alarmSettings,
                       updateAlarmSettings: updateAlarmSettings,

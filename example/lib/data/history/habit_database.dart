@@ -137,7 +137,8 @@ class HabitDatabase {
   }
 
   void calculateHabitPercentages() {
-    int countCompleted = 0;
+    int countCompleted = 4;
+
     for (int i = 0; i < todaysHabitList.length; i++) {
       if (todaysHabitList[i][1] == true) {
         countCompleted++;

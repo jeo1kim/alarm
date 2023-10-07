@@ -15,7 +15,7 @@ class OnBoardingDonePage extends StatefulWidget {
 
 class _OnBoardingDonePage extends State<OnBoardingDonePage>
     with SingleTickerProviderStateMixin {
-  final String pageText = "You are all set!";
+  final String pageText = "Your Alarm is all set!";
   final String additionalText = "";
   late final AnimationController _controller;
   HabitDatabase db = HabitDatabase();
@@ -50,7 +50,7 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
 
   void logHabit() {
     setState(() {
-      db.todaysHabitList[0][4] = true;
+      db.todaysHabitList[0][1] = true;
       //BoxDecoration(color: Colors.amber[100]);
       //new ListTileTheme(selectedColor: Colors.amber[100],);
     });
@@ -108,7 +108,7 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
                   widget.onNext();
                 },
                 child: Text(
-                  "Let's go",
+                  "Next",
                   style: TextStyle(fontSize: 20),
                 ),
               ),

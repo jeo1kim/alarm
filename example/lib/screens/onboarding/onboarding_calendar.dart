@@ -12,7 +12,7 @@ class OnBoardingCalendarPage extends StatefulWidget {
 
 class _OnBoardingCalendarPage extends State<OnBoardingCalendarPage>
     with SingleTickerProviderStateMixin {
-  final String pageText = "Track your habits";
+  final String pageText = "Track your morning accomplishments";
   final String additionalText = "“What we do first thing in the morning, over time, says a lot about our true priorities.”";
   late final AnimationController _controller;
 
