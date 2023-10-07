@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class OnBoardingIntroPage extends StatefulWidget {
+class OnBoardingCalendarPage extends StatefulWidget {
   final VoidCallback onNext;
 
-  const OnBoardingIntroPage({super.key, required this.onNext});
+  const OnBoardingCalendarPage({super.key, required this.onNext});
 
   @override
-  State<OnBoardingIntroPage> createState() => _OnBoardingIntroPage();
+  State<OnBoardingCalendarPage> createState() => _OnBoardingCalendarPage();
 }
 
-class _OnBoardingIntroPage extends State<OnBoardingIntroPage>
+class _OnBoardingCalendarPage extends State<OnBoardingCalendarPage>
     with SingleTickerProviderStateMixin {
-  final String pageText = "Awaken to the Wisdom of His Word";
-  final String additionalText = "Rise to your faithful morning call";
+  final String pageText = "Track your habits";
+  final String additionalText = "“What we do first thing in the morning, over time, says a lot about our true priorities.”";
   late final AnimationController _controller;
 
   @override
@@ -43,10 +43,10 @@ class _OnBoardingIntroPage extends State<OnBoardingIntroPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 150,  // Adjust as needed
+                width: 450,  // Adjust as needed
                 height: 150, // Adjust as needed
                 child: Lottie.asset(
-                  'animations/sun.json',
+                  'animations/calendar.json',
                   repeat: true,
                   fit: BoxFit.fill,
                 ),

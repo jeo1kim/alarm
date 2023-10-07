@@ -51,12 +51,12 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(height: 20),
                       SizedBox(
                         height: 50,
-                        width: 320,
+                        width: 300,
                         child: ElevatedButton(
                           onPressed: isStopButtonEnabled
                               ? widget.onNext

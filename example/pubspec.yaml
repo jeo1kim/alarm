@@ -38,6 +38,8 @@ dependencies:
   firebase_core: ^2.17.0
   firebase_analytics: ^10.5.1
   firebase_crashlytics: ^3.3.7
+  lottie: ^2.6.0
+  smooth_page_indicator: ^1.1.0
 
 
 dev_dependencies:
@@ -68,6 +70,9 @@ flutter:
     - assets/piano.mp3
     - assets/clarinet.mp3
     - assets/violin.mp3
+    - animations/sun.json
+    - animations/check-circle.json
+    - animations/calendar.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

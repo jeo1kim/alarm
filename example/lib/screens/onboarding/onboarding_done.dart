@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class OnBoardingIntroPage extends StatefulWidget {
+class OnBoardingDonePage extends StatefulWidget {
   final VoidCallback onNext;
 
-  const OnBoardingIntroPage({super.key, required this.onNext});
+  const OnBoardingDonePage({super.key, required this.onNext});
 
   @override
-  State<OnBoardingIntroPage> createState() => _OnBoardingIntroPage();
+  State<OnBoardingDonePage> createState() => _OnBoardingDonePage();
 }
 
-class _OnBoardingIntroPage extends State<OnBoardingIntroPage>
+class _OnBoardingDonePage extends State<OnBoardingDonePage>
     with SingleTickerProviderStateMixin {
-  final String pageText = "Awaken to the Wisdom of His Word";
-  final String additionalText = "Rise to your faithful morning call";
+  final String pageText = "You are all set!";
+  final String additionalText = "Let's go";
   late final AnimationController _controller;
 
   @override
@@ -46,7 +46,7 @@ class _OnBoardingIntroPage extends State<OnBoardingIntroPage>
                 width: 150,  // Adjust as needed
                 height: 150, // Adjust as needed
                 child: Lottie.asset(
-                  'animations/sun.json',
+                  'animations/check-circle.json',
                   repeat: true,
                   fit: BoxFit.fill,
                 ),

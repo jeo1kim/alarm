@@ -1,8 +1,11 @@
 import 'package:alarm/alarm.dart';
 import 'package:alarm/model/alarm_settings.dart';
 import 'package:alarm_example/screens/home.dart';
+import 'package:alarm_example/screens/onboarding/onboarding_calendar.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../data/verse_repository.dart';
+import 'onboarding_done.dart';
 import 'onboarding_intro.dart';
 import 'onboarding_sound_picker.dart';
 import 'onboarding_time_picker.dart';
@@ -90,7 +93,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _nextPage() {
-    if (_currentPage < 4) {
+    if (_currentPage < 5) {
       _pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.ease,
@@ -107,24 +110,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (int i = 0; i < 5; i++)
-                    Container(
-                      margin: EdgeInsets.all(14),
-                      width: 12,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentPage == i
-                            ? Colors.blue
-                            : Colors.grey.withOpacity(0.5),
-                      ),
+            children: <Widget>[
+
+              Visibility(
+                visible: _currentPage <= 4,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 30, bottom: 15),
+                  child: SmoothPageIndicator(
+                    controller: _pageController,
+                    count: 4,
+                    effect: ExpandingDotsEffect(
+                      activeDotColor: Colors.amber,
+                      dotColor: Colors.grey.shade400,
                     ),
-                ],
+                  ),
+                ),
               ),
+
               Expanded(
                 child: PageView(
                   controller: _pageController,
@@ -138,10 +140,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     OnBoardingIntroPage(
                       onNext: _nextPage,
                     ),
-                    OnBoardingPage(
-                      pageText: "“What we do first thing in the morning, over time, says a lot about our true priorities.”",
+                    OnBoardingCalendarPage(
                       onNext: _nextPage,
                     ),
+                    // OnBoardingPage(
+                    //   pageText: "“What we do first thing in the morning, over time, says a lot about our true priorities.”",
+                    //   onNext: _nextPage,
+                    // ),
                     OnBoardingTimePickerPage(
                       alarmSettings: alarmSettings,
                       updateAlarmSettings: updateAlarmSettings,
@@ -157,6 +162,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     OnBoardingUnlockPage(
                       onNext: _nextPage,
                     ),
+                    OnBoardingDonePage(
+                      onNext: _nextPage,
+                    )
                   ],
                 ),
               ),
@@ -167,51 +175,3 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 }
-
-class OnBoardingPage extends StatelessWidget {
-  final String pageText;
-  final VoidCallback onNext;
-
-  OnBoardingPage({required this.pageText, required this.onNext});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Center(
-              child: Text(
-                pageText,
-                style: TextStyle(fontSize: 24),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        ),
-        Center(
-          child: Container(
-            margin: EdgeInsets.only(bottom: 100),
-            // Add the desired bottom margin
-            child: SizedBox(
-              height: 50,
-              width: 320, // Set the desired width
-              child: ElevatedButton(
-                onPressed: onNext,
-                child: Text(
-                  "Next",
-                  style: TextStyle(fontSize: 20),
-                ),),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-
-
-
