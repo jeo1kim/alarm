@@ -34,7 +34,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
     correctPhrase = "Do everything in love";
 
     // Add a post-frame callback to show the keyboard after the screen is built
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(_hiddenTextFieldFocus);
     });
   }
