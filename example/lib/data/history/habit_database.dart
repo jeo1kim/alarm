@@ -98,8 +98,7 @@ class HabitDatabase {
   // create initial default data
   void createDefaultData() {
     todaysHabitList = [
-      ["Daily verse", false],
-      ["Custom Habit 2", false],
+      ["Daily verse", false, "", ""],
     ];
 
     _myBox.put("START_DATE", todaysDateFormatted());
@@ -190,4 +189,21 @@ class HabitDatabase {
       print(heatMapDataSet);
     }
   }
+
+  List<String> getVerseAndPhraseForDate(DateTime date) {
+    // Convert the given date to the yyyymmdd format
+    String formattedDate = convertDateTimeToString(date);
+
+    // Fetch the habit list for the given date
+    List? habitListForDate = _myBox.get(formattedDate);
+
+    // If the habit list exists and has the expected structure, return the verse and phrase
+    if (habitListForDate != null && habitListForDate.isNotEmpty && habitListForDate[0].length >= 4) {
+      return [habitListForDate[0][2], habitListForDate[0][3]];
+    }
+
+    // If the habit list doesn't exist or doesn't have the expected structure, return a default value or an empty list
+    return ["", ""];
+  }
+
 }

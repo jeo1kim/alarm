@@ -51,7 +51,9 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
 
   void logHabit() {
     setState(() {
-      db.todaysHabitList[0][4] = true;
+      db.todaysHabitList[0][1] = true;
+      db.todaysHabitList[0][2] = verseTitle;
+      db.todaysHabitList[0][3] = correctPhrase;
       //BoxDecoration(color: Colors.amber[100]);
       //new ListTileTheme(selectedColor: Colors.amber[100],);
     });

@@ -7,13 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../../data/history/habit_database.dart';
-import '../../data/verse/verse_repository.dart';
 import '../../theme/theme_constants.dart';
 import '../../utils/premium_user.dart';
-import '../../widgets/tile.dart';
 import '../edit_alarm.dart';
 import '../settings/settings.dart';
 import 'month_summary.dart';
+import 'package:intl/intl.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -26,6 +25,9 @@ class _HistoryScreen extends State<HistoryScreen> {
   bool isPremium = false;
   late List<AlarmSettings> alarms;
   int alarmCount = 0;
+  String verse = "";
+  String phrase = "";
+  String date = "";
 
   HabitDatabase db = HabitDatabase();
   final _myBox = Hive.box("Habit_Database");
@@ -112,6 +114,44 @@ class _HistoryScreen extends State<HistoryScreen> {
           MonthlySummary(
             datasets: db.heatMapDataSet,
             startDate: _myBox.get("START_DATE"),
+            onHeatMapClick: (date, value) {
+              List<String> data = db.getVerseAndPhraseForDate(date);
+              setState(() {
+                this.date = DateFormat('MMM d, y').format(date);
+                verse = data[0];
+                phrase = data[1];
+              });
+            },
+          ),
+          Padding(
+            padding: EdgeInsets.all(15),
+            child: Text(
+              date,
+              style: const TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          ListTile(
+            minVerticalPadding: 30,
+            title: Text(
+              verse,
+              style: const TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 14.0),
+              child: Text(
+                phrase,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
           ),
           // ListView.builder(
           //   shrinkWrap: true,

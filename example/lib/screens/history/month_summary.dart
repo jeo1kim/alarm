@@ -5,10 +5,12 @@ import '../../utils/date_time.dart';
 class MonthlySummary extends StatelessWidget {
   final Map<DateTime, int>? datasets;
   final String startDate;
+  final Function(DateTime, int)? onHeatMapClick;
   const MonthlySummary({
     super.key,
     required this.datasets,
     required this.startDate,
+    this.onHeatMapClick,
   });
 
   @override
@@ -58,6 +60,11 @@ class MonthlySummary extends StatelessWidget {
           8: Color.fromARGB(190, 255, 193, 8),
           9: Color.fromARGB(210, 255, 193, 8),
           10: Color.fromARGB(250, 255, 193, 8),
+        },
+        onClick: (value) {
+          if (onHeatMapClick != null && datasets != null) {
+            onHeatMapClick!(value, datasets![value] ?? 0);
+          }
         },
         // onClick: (value) {
         //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
