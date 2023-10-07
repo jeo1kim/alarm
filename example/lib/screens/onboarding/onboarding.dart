@@ -4,7 +4,8 @@ import 'package:alarm_example/screens/home.dart';
 import 'package:alarm_example/screens/onboarding/onboarding_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../data/verse_repository.dart';
+import '../../data/history/habit_database.dart';
+import '../../data/verse/verse_repository.dart';
 import 'onboarding_done.dart';
 import 'onboarding_intro.dart';
 import 'onboarding_sound_picker.dart';
@@ -32,7 +33,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   late bool showNotification;
   late String assetAudio;
   bool loading = false;
-
 
   AlarmSettings alarmSettings = AlarmSettings(
     id: 42,

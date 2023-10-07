@@ -1,7 +1,7 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 
-import '../data/verse_repository.dart';
+import '../data/verse/verse_repository.dart';
 import '../theme/theme_constants.dart';
 
 class AlarmEditScreen extends StatefulWidget {

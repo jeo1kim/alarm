@@ -1,6 +1,6 @@
 import 'package:alarm_example/utils/premium_user.dart';
 import 'package:flutter/material.dart';
-import 'package:alarm_example/data/verse_repository.dart';
+import 'package:alarm_example/data/verse/verse_repository.dart';
 
 class OnBoardingUnlockPage extends StatefulWidget {
   final String pageText = "Type to unlock";

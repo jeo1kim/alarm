@@ -4,13 +4,16 @@ import 'package:alarm/alarm.dart';
 import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
-import '../../data/verse_repository.dart';
+import '../../data/history/habit_database.dart';
+import '../../data/verse/verse_repository.dart';
 import '../../theme/theme_constants.dart';
 import '../../utils/premium_user.dart';
 import '../../widgets/tile.dart';
 import '../edit_alarm.dart';
 import '../settings/settings.dart';
+import 'month_summary.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -22,11 +25,20 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreen extends State<HistoryScreen> {
   bool isPremium = false;
   late List<AlarmSettings> alarms;
-  static StreamSubscription? subscription;
   int alarmCount = 0;
+
+  HabitDatabase db = HabitDatabase();
+  final _myBox = Hive.box("Habit_Database");
 
   @override
   void initState() {
+    if (_myBox.get("CURRENT_HABIT_LIST") == null) {
+      db.createDefaultData();
+    } else {
+      db.loadData();
+    }
+
+    db.updateDatabase();
     super.initState();
     initLocal();
   }
@@ -95,20 +107,29 @@ class _HistoryScreen extends State<HistoryScreen> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: Text(
-                  "No alarms set",
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          MonthlySummary(
+            datasets: db.heatMapDataSet,
+            startDate: _myBox.get("START_DATE"),
+          ),
+          // ListView.builder(
+          //   shrinkWrap: true,
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   itemCount: db.todaysHabitList.length,
+          //   itemBuilder: (context, index) {
+          //     return HabitTile(
+          //       habitName: db.todaysHabitList[index][0],
+          //       habitCompleted: db.todaysHabitList[index][1],
+          //       onChanged: (value) => checkBoxTapped(value, index),
+          //       settingsTapped: (context) => openHabitSettings(index),
+          //       deleteTapped: (context) => deleteHabit(index),
+          //     );
+          //   },
+          // ),
+        ],
       ),
+      // floatingActionButton: MyFloatingActionButton(onPressed: createNewHabit),
     );
   }
 }

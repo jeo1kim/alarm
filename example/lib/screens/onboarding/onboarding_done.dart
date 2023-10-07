@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../data/history/habit_database.dart';
 
 class OnBoardingDonePage extends StatefulWidget {
   final VoidCallback onNext;
@@ -15,9 +18,18 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
   final String pageText = "You are all set!";
   final String additionalText = "";
   late final AnimationController _controller;
+  HabitDatabase db = HabitDatabase();
+  final _myBox = Hive.box("Habit_Database");
 
   @override
   void initState() {
+    if (_myBox.get("CURRENT_HABIT_LIST") == null) {
+      db.createDefaultData();
+    } else {
+      db.loadData();
+    }
+
+    db.updateDatabase();
     super.initState();
     _controller =
         AnimationController(duration: Duration(seconds: 3), vsync: this);
@@ -36,6 +48,15 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
     _controller.dispose();
   }
 
+  void logHabit() {
+    setState(() {
+      db.todaysHabitList[0][1] = true;
+      //BoxDecoration(color: Colors.amber[100]);
+      //new ListTileTheme(selectedColor: Colors.amber[100],);
+    });
+    db.updateDatabase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,7 +67,7 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 200,  // Adjust as needed
+                width: 200, // Adjust as needed
                 height: 200, // Adjust as needed
                 child: Lottie.asset(
                   'animations/check-circle.json',
@@ -82,7 +103,10 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
               height: 50,
               width: 320, // Set the desired width
               child: ElevatedButton(
-                onPressed: widget.onNext,
+                onPressed: () => {
+                  logHabit(),
+                  widget.onNext
+                },
                 child: Text(
                   "Let's go",
                   style: TextStyle(fontSize: 20),

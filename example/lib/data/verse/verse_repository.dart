@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../utils/premium_user.dart';
+import '../../utils/premium_user.dart';
 
 class Verse {
   final String verse;

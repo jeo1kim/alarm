@@ -1,6 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
-import 'package:alarm_example/data/verse_repository.dart';
+import 'package:alarm_example/data/verse/verse_repository.dart';
 
 class ExampleAlarmRingScreen extends StatefulWidget {
   final AlarmSettings alarmSettings;

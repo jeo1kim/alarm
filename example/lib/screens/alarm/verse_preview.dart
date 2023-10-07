@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../../data/verse_repository.dart';
+import '../../data/verse/verse_repository.dart';
 import '../../utils/premium_user.dart';
 
 class VersesScreen extends StatelessWidget {

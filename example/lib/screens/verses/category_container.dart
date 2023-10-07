@@ -2,7 +2,7 @@ import 'package:alarm_example/screens/alarm/verse_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/verse_repository.dart';
+import '../../data/verse/verse_repository.dart';
 import '../../theme/theme_constants.dart';
 
 class VerseCategoryContainer extends StatelessWidget {

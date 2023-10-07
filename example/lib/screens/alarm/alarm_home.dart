@@ -13,7 +13,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app_data.dart';
-import '../../data/verse_repository.dart';
+import '../../data/verse/verse_repository.dart';
 import '../../theme/theme_constants.dart';
 import '../../utils/constant.dart';
 import '../../utils/premium_user.dart';
