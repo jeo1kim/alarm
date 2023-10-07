@@ -13,7 +13,7 @@ class OnBoardingDonePage extends StatefulWidget {
 class _OnBoardingDonePage extends State<OnBoardingDonePage>
     with SingleTickerProviderStateMixin {
   final String pageText = "You are all set!";
-  final String additionalText = "Let's go";
+  final String additionalText = "";
   late final AnimationController _controller;
 
   @override
@@ -21,6 +21,9 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
     super.initState();
     _controller =
         AnimationController(duration: Duration(seconds: 3), vsync: this);
+
+    _controller.forward();
+
     // Add a post-frame callback to show the keyboard after the screen is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).unfocus();
@@ -43,11 +46,12 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 150,  // Adjust as needed
-                height: 150, // Adjust as needed
+                width: 200,  // Adjust as needed
+                height: 200, // Adjust as needed
                 child: Lottie.asset(
                   'animations/check-circle.json',
-                  repeat: true,
+                  controller: _controller, // Use the controller
+                  repeat: false, // Set repeat to false
                   fit: BoxFit.fill,
                 ),
               ),
@@ -80,7 +84,7 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
               child: ElevatedButton(
                 onPressed: widget.onNext,
                 child: Text(
-                  "Next",
+                  "Let's go",
                   style: TextStyle(fontSize: 20),
                 ),
               ),

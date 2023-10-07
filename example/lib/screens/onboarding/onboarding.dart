@@ -84,7 +84,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       if (res) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => AlarmHomeScreen(),
+            builder: (_) => NavigationScreen(),
           ),
         );
       }
@@ -113,7 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: <Widget>[
 
               Visibility(
-                visible: _currentPage <= 4,
+                visible: _currentPage <= 3,
                 child: Padding(
                   padding: EdgeInsets.only(top: 30, bottom: 15),
                   child: SmoothPageIndicator(

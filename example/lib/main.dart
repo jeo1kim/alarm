@@ -113,7 +113,7 @@ class _AppState extends State<App> {
       return const CircularProgressIndicator(); // Show a loading indicator while waiting
     }
 
-    Widget homeScreen = isFirstTimeUser! ? const OnboardingScreen() : const AlarmHomeScreen();
+    Widget homeScreen = isFirstTimeUser! ? const OnboardingScreen() : const NavigationScreen();
 
     return MaterialApp(
       theme: lightThemeData(context),

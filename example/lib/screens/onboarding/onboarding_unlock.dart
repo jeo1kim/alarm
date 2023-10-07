@@ -53,7 +53,7 @@ class _OnBoardingUnlockPageState extends State<OnBoardingUnlockPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 20),
+                      SizedBox(height: 100),
                       SizedBox(
                         height: 50,
                         width: 300,
