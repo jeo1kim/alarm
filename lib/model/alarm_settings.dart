@@ -53,6 +53,9 @@ class AlarmSettings {
 
   final String? verseText;
 
+  final bool isRepeating;
+
+
   /// Returns a hash code for this `AlarmSettings` instance using Jenkins hash function.
   @override
   int get hashCode {
@@ -92,7 +95,8 @@ class AlarmSettings {
     this.enableNotificationOnKill = true,
     this.stopOnNotificationOpen = true,
     this.verse,
-    this.verseText
+    this.verseText,
+    this.isRepeating = true,
   });
 
   /// Constructs an `AlarmSettings` instance from the given JSON data.

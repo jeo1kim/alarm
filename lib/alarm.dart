@@ -153,6 +153,13 @@ class Alarm {
     return iOS ? await IOSAlarm.stopAlarm(id) : await AndroidAlarm.stop(id);
   }
 
+  // Pause the alarm
+  static Future<bool> pause(int id) async {
+    AlarmNotification.instance.cancel(id);
+
+    return iOS ? await IOSAlarm.stopAlarm(id) : await AndroidAlarm.stop(id);
+  }
+
   /// Stops all the alarms.
   static Future<void> stopAll() async {
     final alarms = AlarmStorage.getSavedAlarms();

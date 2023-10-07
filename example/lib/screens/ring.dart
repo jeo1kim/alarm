@@ -1,4 +1,5 @@
 import 'package:alarm/alarm.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/data/verse/verse_repository.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -65,7 +66,7 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
     setState(() {
       verse = fetchedVerse;
       verseTitle = widget.alarmSettings.verse ?? verse.verse;
-      correctPhrase = widget.alarmSettings.verseText ?? verse.phrase;
+      correctPhrase = kDebugMode ? "test" : (widget.alarmSettings.verseText ?? verse.phrase);
     });
 
     // Add a post-frame callback to show the keyboard after the screen is built
@@ -101,16 +102,18 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                     height: 50,
                     width: 320,
                     child: ElevatedButton(
-                      onPressed: isStopButtonEnabled
+                      onPressed:
+                      isStopButtonEnabled
                           ? () {
-                              // Alarm.stop(widget.alarmSettings.id)
-                              logHabit();
-                              Alarm.set(
-                                alarmSettings: widget.alarmSettings.copyWith(
-                                  dateTime: widget.alarmSettings.dateTime
-                                      .add(const Duration(days: 1)),
-                                ),
-                              ).then((_) => Navigator.pop(context));
+                        logHabit();
+                        Alarm.pause(widget.alarmSettings.id).then((_) => Navigator.pop(context));
+
+                              // Alarm.set(
+                              //   alarmSettings: widget.alarmSettings.copyWith(
+                              //     dateTime: widget.alarmSettings.dateTime
+                              //         .add(const Duration(days: 1)),
+                              //   ),
+                              // ).then((_) => Navigator.pop(context));
                             }
                           : null, // Disable the button when not enabled
                       style: ButtonStyle(
