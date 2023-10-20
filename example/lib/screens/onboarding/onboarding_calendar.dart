@@ -13,8 +13,8 @@ class OnBoardingCalendarPage extends StatefulWidget {
 
 class _OnBoardingCalendarPage extends State<OnBoardingCalendarPage>
     with SingleTickerProviderStateMixin {
-  final String pageText = "Track your morning accomplishments";
-  final String additionalText = "“What we do first thing in the morning, over time, says a lot about our true priorities.”";
+  final String pageText = "Challenge yourself";
+  final String additionalText = "21 days of affirmation has been proven to increase health, wealth and happiness";
   late final AnimationController _controller;
 
   @override
@@ -64,10 +64,13 @@ class _OnBoardingCalendarPage extends State<OnBoardingCalendarPage>
                 ),
               ),
               SizedBox(height: 20), // Adjust the spacing between the texts
-              Text(
-                additionalText,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  additionalText,
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

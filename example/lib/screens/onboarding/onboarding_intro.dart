@@ -12,8 +12,8 @@ class OnBoardingIntroPage extends StatefulWidget {
 
 class _OnBoardingIntroPage extends State<OnBoardingIntroPage>
     with SingleTickerProviderStateMixin {
-  final String pageText = "Awaken to the Wisdom of His Word";
-  final String additionalText = "Rise to your faithful morning call";
+  final String pageText = "“I am wealthy”";
+  final String additionalText = "The best time to use affirmation is the morning since your brain is in receptive alpha state.";
   late final AnimationController _controller;
 
   @override
@@ -63,10 +63,13 @@ class _OnBoardingIntroPage extends State<OnBoardingIntroPage>
                 ),
               ),
               SizedBox(height: 20), // Adjust the spacing between the texts
-              Text(
-                additionalText,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  additionalText,
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),
@@ -81,7 +84,7 @@ class _OnBoardingIntroPage extends State<OnBoardingIntroPage>
               child: ElevatedButton(
                 onPressed: widget.onNext,
                 child: Text(
-                  "Next",
+                  "Get started",
                   style: TextStyle(fontSize: 20),
                 ),
               ),

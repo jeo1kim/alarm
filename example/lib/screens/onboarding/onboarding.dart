@@ -95,7 +95,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _nextPage() {
-    if (_currentPage < 5) {
+    if (_currentPage < 4) {
       _pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.ease,
@@ -155,9 +155,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       alarmSettings: alarmSettings,
                       updateAlarmSettings: updateAlarmSettings,
                       // Pass the callback
-                      onNext: _nextPage,
-                    ),
-                    OnBoardingUnlockPage(
                       onNext: _nextPage,
                     ),
                     OnBoardingDonePage(
