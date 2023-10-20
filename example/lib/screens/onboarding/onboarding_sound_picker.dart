@@ -16,7 +16,7 @@ class SoundChoice {
 }
 
 class OnBoardingSoundPickPage extends StatefulWidget {
-  final String pageText = "The benefits of affirmations are endless";
+  final String pageText = "Wake up to powerful affirmations";
   final VoidCallback onNext;
   final AlarmSettings alarmSettings;
   final Function(AlarmSettings) updateAlarmSettings; // Add this callback
@@ -33,7 +33,7 @@ class OnBoardingSoundPickPage extends StatefulWidget {
 }
 
 class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
-  SoundChoice soundChoice = SoundChoice(name: "Positive affirmation", assetAudio: 'male-confidence.mp3');
+  SoundChoice soundChoice = SoundChoice(name: "Positive affirmation", assetAudio: 'female-affirmation-1.mp3');
 
   final AudioPlayer audioPlayer = AudioPlayer();
   bool isSongSelected = true;
@@ -105,21 +105,41 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
+              SizedBox(height: 50),
+              InkWell(
+                onTap: () {
                   setState(() {
                     soundChoice.isPlaying = !soundChoice.isPlaying;
                   });
                   if (soundChoice.isPlaying) {
-                    _playAudio("assets/${soundChoice.assetAudio}");
-                    isSongSelected = true;
+                    _playAudio(soundChoice.assetAudio);
                   } else {
                     audioPlayer.stop();
                   }
                 },
-                child: Text(soundChoice.isPlaying ? "Listen" : "Listen"),
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    soundChoice.isPlaying ? Icons.pause : Icons.play_arrow,
+                    color: Colors.white,
+                    size: 30.0,
+                  ),
+                ),
               ),
               SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "Press to play",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ],
           ),
         ),
@@ -146,7 +166,7 @@ class _OnBoardingSoundPickPageState extends State<OnBoardingSoundPickPage> {
                       : Colors.grey, // Set button color
                 ),
                 child: const Text(
-                  "Next",
+                  "I like it",
                   style: TextStyle(fontSize: 20),
                 ),
               ),

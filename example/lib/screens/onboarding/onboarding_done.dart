@@ -90,7 +90,7 @@ class _OnBoardingDonePage extends State<OnBoardingDonePage>
                   widget.onNext();
                 },
                 child: Text(
-                  "Next",
+                  "Awesome!",
                   style: TextStyle(fontSize: 20),
                 ),
               ),
