@@ -69,7 +69,7 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
   }
 
   getVerse() async {
-    return await PhraseRepository.getRandomVerse();
+    return await PhraseRepository.getRandomAffirmation();
   }
 
   Future<void> pickTime() async {

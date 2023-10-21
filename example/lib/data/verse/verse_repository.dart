@@ -22,6 +22,12 @@ class PhraseRepository {
     return isPremium ? getPremiumRandomFreeVerse() : getRandomFreeVerse();
   }
 
+  static Verse getRandomAffirmation() {
+    final random = Random();
+    final index = random.nextInt(affirmations.length);
+    return affirmations[index];
+  }
+
   static Verse getRandomFreeVerse() {
     final random = Random();
     final index = random.nextInt(freeVerses.length);
@@ -46,6 +52,23 @@ class PhraseRepository {
       'Wisdom': wisdomVerses,
     };
   }
+
+  static final List<Verse> affirmations
+  = [
+
+    Verse(
+      verse: "",
+      phrase: "I am strong",
+    ),
+    Verse(
+      verse: "",
+      phrase: "I am wealthy",
+    ),
+    Verse(
+      verse: "",
+      phrase: "I am healthy",
+    ),
+  ];
 
   static final List<Verse> wisdomVerses = [
     Verse(

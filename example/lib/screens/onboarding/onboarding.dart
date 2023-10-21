@@ -42,11 +42,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     vibrate: false,
     volumeMax: false,
     fadeDuration: 10,
-    notificationTitle: 'Romans 15:33',
-    notificationBody: 'May the God of peace be with you all. Amen.',
+    notificationTitle: 'Rise',
+    notificationBody: 'Today is a perfect day for me',
     stopOnNotificationOpen: false,
-    verse: 'Romans 15:33',
-    verseText: 'May the God of peace be with you all. Amen.'
+    verse: '',
+    verseText: 'I am loved'
   );
 
   getVerse() async {
