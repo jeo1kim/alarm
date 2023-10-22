@@ -53,7 +53,7 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
     updatePremium();
 
     soundChoices = [
-      SoundChoice(name: "Good morning", assetAudio: 'female-affirmation-1.mp3', isUnlocked: true),
+      SoundChoice(name: "Good morning", assetAudio: 'female-affirmation-1.mp3', isUnlocked: true, isSelected: true),
       SoundChoice(name: "Wealth", assetAudio: 'male-goals.mp3', isUnlocked: isPremium),
       SoundChoice(name: "Health", assetAudio: 'female-health.mp3', isUnlocked: isPremium),
       SoundChoice(name: "Relationship", assetAudio: 'female-relationship.mp3', isUnlocked: isPremium),
@@ -89,6 +89,7 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
 
   Future<void> updatePremium() async {
     isPremium = await isPremiumUser();
+    setState(() {});
   }
 
   Future<void> pickTime() async {
@@ -151,6 +152,7 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: Column(
@@ -263,15 +265,14 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
                       ),
                       child: SoundContainer(
                         index: index,
+                        isSelected: soundChoices[index].isSelected,
                         soundChoice: soundChoices[index],
                         onSelected: (choice) {
+                          print("Selected sound: ${choice.name}");
                           setState(() {
-                            assetAudio = soundChoices[index].assetAudio;
-                            // Deselect other sounds and select the current one
                             for (var sound in soundChoices) {
-                              sound.isSelected = false;
+                              sound.isSelected = sound == choice;
                             }
-                            soundChoices[index].isSelected = true;
                           });
                         },
                       ),

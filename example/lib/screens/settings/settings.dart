@@ -2,12 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_example/theme/theme_manager.dart';
 import 'package:flutter/services.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../app_data.dart';
 import '../../utils/constant.dart';
 import '../../utils/premium_user.dart';
 import '../../widgets/native_dialog.dart';
+import 'dart:io' show Platform;
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -16,6 +19,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   ThemeManager _themeManager = ThemeManager();
+  final InAppReview inAppReview = InAppReview.instance;
 
   @override
   void dispose() {
@@ -40,6 +44,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  void shareAppLink() {
+    final String link = Platform.isIOS
+        ? 'https://apps.apple.com/us/app/rise-alarm-clock-daily-verse/id6466729156'
+        : (Platform.isAndroid
+            ? 'https://play.google.com/store/apps/details?id=com.sharepeace.rise_alarm'
+            : 'https://risealarm.app'); // Default link for other platforms
+
+    Share.share('Check out my app: $link');
   }
 
   _restore() async {
@@ -71,7 +85,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +96,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-
             // About Section
             Text(
               'About',
@@ -125,6 +137,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
               child: ListTile(
                 title: Text('Upgrade to Premium'),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+            ),
+            InkWell(
+              onTap: () async {
+                if (await inAppReview.isAvailable()) {
+                  inAppReview.requestReview();
+                }
+              },
+              child: ListTile(
+                title: Text('Leave a feedback'),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+            ),
+            InkWell(
+              onTap: () async {
+                inAppReview.openStoreListing(appStoreId: 'id6466729156');
+              },
+              child: ListTile(
+                title: Text('Visit app store'),
+                trailing: Icon(Icons.arrow_forward),
+              ),
+            ),
+            InkWell(
+              onTap: shareAppLink,
+
+              child: ListTile(
+                title: Text('Share with friends'),
                 trailing: Icon(Icons.arrow_forward),
               ),
             ),

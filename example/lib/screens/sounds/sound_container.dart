@@ -8,16 +8,14 @@ class SoundContainer extends StatefulWidget {
   final SoundChoice soundChoice;
   final Function(SoundChoice) onSelected;
   final int index;
+  final bool isSelected;
 
   SoundContainer({
     required this.soundChoice,
+    required this.isSelected,
     required this.onSelected,
     required this.index,
-  }) {
-    if (index == 0) {
-      soundChoice.isSelected = true;
-    }
-  }
+  });
 
   @override
   _SoundContainerState createState() => _SoundContainerState();
@@ -26,6 +24,7 @@ class SoundContainer extends StatefulWidget {
 class _SoundContainerState extends State<SoundContainer> {
   late AudioPlayer _audioPlayer;
   static _SoundContainerState? currentPlayingInstance;
+  bool isPremium = false;
 
   @override
   void initState() {
@@ -65,6 +64,7 @@ class _SoundContainerState extends State<SoundContainer> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    print("Building SoundContainer with isSelected: ${widget.soundChoice.name} ${widget.isSelected}");
 
     return GestureDetector(
       onTap: () {
@@ -72,8 +72,8 @@ class _SoundContainerState extends State<SoundContainer> {
           performMagic(context);
         } else {
           widget.onSelected(widget.soundChoice);
-          setState(() {});
         }
+        setState(() {});
       },
       child: Container(
         width: screenWidth - 200,
@@ -83,7 +83,7 @@ class _SoundContainerState extends State<SoundContainer> {
           color: widget.soundChoice.isUnlocked ? Colors.white : Colors.grey[300],
           borderRadius: BorderRadius.circular(15.0),
           border: Border.all(
-            color: widget.soundChoice.isSelected
+            color: widget.isSelected
                 ? Theme.of(context).primaryColor
                 : Colors.transparent,
             width: 2.0,
