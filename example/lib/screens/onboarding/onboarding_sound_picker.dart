@@ -6,13 +6,15 @@ class SoundChoice {
   final String name;
   bool isSelected;
   bool isPlaying;
+  bool isUnlocked;
   final String assetAudio;
 
   SoundChoice(
       {required this.name,
         required this.assetAudio,
         this.isSelected = false,
-        this.isPlaying = false});
+        this.isPlaying = false,
+        this.isUnlocked = false});
 }
 
 class OnBoardingSoundPickPage extends StatefulWidget {

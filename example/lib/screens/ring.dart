@@ -202,32 +202,32 @@ class _ExampleAlarmRingScreenState extends State<ExampleAlarmRingScreen> {
                 ),
               ),
 
-              SizedBox(
-                height: 50,
-                width: 320,
-                child: ElevatedButton(
-                  onPressed: () {
-                    logHabit();
-
-                    Alarm.set(
-                      alarmSettings: widget.alarmSettings.copyWith(
-                        dateTime: widget.alarmSettings.dateTime
-                            .add(const Duration(minutes: 10)),
-                      ),
-                    ).then((_) => Navigator.pop(context));
-                  }, // Disable the button when not enabled
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(isStopButtonEnabled ? Theme.of(context).primaryColor : Colors.grey),
-                  ),
-                  child: Text(
-                    "Snooze",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        ?.copyWith(color: Colors.white),
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   height: 50,
+              //   width: 320,
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       logHabit();
+              //
+              //       Alarm.set(
+              //         alarmSettings: widget.alarmSettings.copyWith(
+              //           dateTime: widget.alarmSettings.dateTime
+              //               .add(const Duration(minutes: 10)),
+              //         ),
+              //       ).then((_) => Navigator.pop(context));
+              //     }, // Disable the button when not enabled
+              //     style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              //     ),
+              //     child: Text(
+              //       "Snooze",
+              //       style: Theme.of(context)
+              //           .textTheme
+              //           .headline6
+              //           ?.copyWith(color: Colors.white),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

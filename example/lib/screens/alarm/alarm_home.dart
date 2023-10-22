@@ -18,6 +18,8 @@ import '../../main.dart';
 import '../../theme/theme_constants.dart';
 import '../../utils/constant.dart';
 import '../../utils/premium_user.dart';
+import '../onboarding/onboarding_sound_picker.dart';
+import '../sounds/sound_container.dart';
 
 class AlarmHomeScreen extends StatefulWidget {
   const AlarmHomeScreen({Key? key}) : super(key: key);
@@ -57,6 +59,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   void initState() {
     initPlatformState();
     super.initState();
+
     loadAlarms();
     subscription ??= Alarm.ringStream.stream.listen(
       (alarmSettings) => navigateToRingScreen(alarmSettings),
@@ -99,7 +102,7 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
         ),
         builder: (context) {
           return FractionallySizedBox(
-            heightFactor: 0.7,
+            heightFactor: 0.8,
             child: AlarmEditScreen(alarmSettings: settings),
           );
         });
@@ -171,35 +174,36 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
                       ),
                     ),
             ),
-            Container(
-              height: 200, // Adjust the height as needed
-              width: 400,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: PhraseRepository.getVerseCategories().keys.length,
-                itemBuilder: (context, index) {
-                  final categoryTitle = PhraseRepository.getVerseCategories()
-                      .keys
-                      .elementAt(index);
-                  final verses =
-                      PhraseRepository.getVerseCategories()[categoryTitle]!;
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      top: 8,
-                      right: index == PhraseRepository.getVerseCategories().keys.length - 1 ? 20 : 0,
-                    ),
-                    child: VerseCategoryContainer(
-                      category: VerseCategory(
-                        title: categoryTitle,
-                        verseCount: verses.length,
-                        isUnlocked: categoryTitle == "Free verses" ? true : isPremium,
-                        verses: verses
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+
+            // Container(
+            //   height: 200, // Adjust the height as needed
+            //   width: 400,
+            //   child: ListView.builder(
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: PhraseRepository.getVerseCategories().keys.length,
+            //     itemBuilder: (context, index) {
+            //       final categoryTitle = PhraseRepository.getVerseCategories()
+            //           .keys
+            //           .elementAt(index);
+            //       final verses =
+            //           PhraseRepository.getVerseCategories()[categoryTitle]!;
+            //       return Padding(
+            //         padding: EdgeInsets.only(
+            //           top: 8,
+            //           right: index == PhraseRepository.getVerseCategories().keys.length - 1 ? 20 : 0,
+            //         ),
+            //         child: VerseCategoryContainer(
+            //           category: VerseCategory(
+            //             title: categoryTitle,
+            //             verseCount: verses.length,
+            //             isUnlocked: categoryTitle == "Free verses" ? true : isPremium,
+            //             verses: verses
+            //           ),
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

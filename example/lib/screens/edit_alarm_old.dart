@@ -1,22 +1,19 @@
 import 'package:alarm/alarm.dart';
-import 'package:alarm_example/screens/sounds/sound_container.dart';
 import 'package:flutter/material.dart';
 
 import '../data/verse/verse_repository.dart';
 import '../theme/theme_constants.dart';
-import '../utils/premium_user.dart';
-import 'onboarding/onboarding_sound_picker.dart';
 
-class AlarmEditScreen extends StatefulWidget {
+class AlarmEditScreen2 extends StatefulWidget {
   final AlarmSettings? alarmSettings;
 
-  const AlarmEditScreen({Key? key, this.alarmSettings}) : super(key: key);
+  const AlarmEditScreen2({Key? key, this.alarmSettings}) : super(key: key);
 
   @override
-  State<AlarmEditScreen> createState() => _AlarmEditScreenState();
+  State<AlarmEditScreen2> createState() => _AlarmEditScreenState2();
 }
 
-class _AlarmEditScreenState extends State<AlarmEditScreen> {
+class _AlarmEditScreenState2 extends State<AlarmEditScreen2> {
   bool loading = false;
 
   late bool creating;
@@ -26,9 +23,6 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
   late bool volumeMax;
   late bool showNotification;
   late String assetAudio;
-
-  bool isPremium = false;
-  List<SoundChoice> soundChoices = [];
 
   bool isToday() {
     final now = DateTime.now();
@@ -50,15 +44,6 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
     super.initState();
     creating = widget.alarmSettings == null;
 
-    updatePremium();
-
-    soundChoices = [
-      SoundChoice(name: "Good morning", assetAudio: 'female-affirmation-1.mp3', isUnlocked: true),
-      SoundChoice(name: "Wealth", assetAudio: 'male-goals.mp3', isUnlocked: isPremium),
-      SoundChoice(name: "Health", assetAudio: 'female-health.mp3', isUnlocked: isPremium),
-      SoundChoice(name: "Relationship", assetAudio: 'female-relationship.mp3', isUnlocked: isPremium),
-    ];
-
     if (creating) {
       final dt = DateTime.now().add(const Duration(minutes: 1));
       selectedTime = TimeOfDay(hour: dt.hour, minute: dt.minute);
@@ -66,7 +51,7 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
       vibrate = true;
       volumeMax = true;
       showNotification = true;
-      assetAudio = 'assets/female-affirmation-1.mp3';
+      assetAudio = 'assets/piano.mp3';
     } else {
       selectedTime = TimeOfDay(
         hour: widget.alarmSettings!.dateTime.hour,
@@ -84,11 +69,7 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
   }
 
   getVerse() async {
-    return PhraseRepository.getRandomAffirmation();
-  }
-
-  Future<void> updatePremium() async {
-    isPremium = await isPremiumUser();
+    return await PhraseRepository.getRandomVerse();
   }
 
   Future<void> pickTime() async {
@@ -215,6 +196,19 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
+                'Loop alarm audio',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Switch(
+                value: loopAudio,
+                onChanged: (value) => setState(() => loopAudio = value),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
                 'Vibrate',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
@@ -241,44 +235,45 @@ class _AlarmEditScreenState extends State<AlarmEditScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Sound',
+                'Show notification',
                 style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Switch(
+                value: showNotification,
+                onChanged: (value) => setState(() => showNotification = value),
               ),
             ],
           ),
-          Column(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 200,
-                width: 400,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: soundChoices.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        top: 8,
-                        right: index == soundChoices.length - 1 ? 20 : 0,
-                      ),
-                      child: SoundContainer(
-                        index: index,
-                        soundChoice: soundChoices[index],
-                        onSelected: (choice) {
-                          setState(() {
-                            assetAudio = soundChoices[index].assetAudio;
-                            // Deselect other sounds and select the current one
-                            for (var sound in soundChoices) {
-                              sound.isSelected = false;
-                            }
-                            soundChoices[index].isSelected = true;
-                          });
-                        },
-                      ),
-                    );
-                  },
-                ),
-              )
+              Text(
+                'Sound',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              DropdownButton(
+                value: assetAudio,
+                dropdownColor: kBackgroundColor,
+                items: const [
+                  DropdownMenuItem<String>(
+                    value: 'assets/piano.mp3',
+                    child: Text('Piano'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: 'assets/violin.mp3',
+                    child: Text('Violin & Piano'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: 'assets/clarinet.mp3',
+                    child: Text('Clarinet'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: 'assets/cello.mp3',
+                    child: Text('Cello'),
+                  ),
+                ],
+                onChanged: (value) => setState(() => assetAudio = value!),
+              ),
             ],
           ),
           if (!creating)
